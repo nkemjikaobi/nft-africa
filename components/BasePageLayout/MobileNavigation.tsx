@@ -3,9 +3,13 @@ import { GiHamburgerMenu } from 'react-icons/gi';
 import { AiOutlineClose } from 'react-icons/ai';
 import { DesktopNav } from 'Data/Navigation/DesktopNav';
 import Link from 'next/link';
+import useClickOutside from 'CustomHooks/useClickOutside';
 
 const MobileNavigation = () => {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
+	const node = useClickOutside(() => {
+		setIsOpen(false);
+	});
 	return (
 		<div className='bg-white'>
 			<div className='flex justify-between items-center  py-5 px-10 drop-shadow-md'>
@@ -17,7 +21,7 @@ const MobileNavigation = () => {
 				)}
 			</div>
 			{isOpen && (
-				<ul className='w-3/5 px-10 py-4'>
+				<ul className='w-3/5 px-10 py-4' ref={node}>
 					{DesktopNav.map(data => (
 						<li
 							key={data.id}
