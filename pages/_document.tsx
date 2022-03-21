@@ -17,7 +17,7 @@ class MyDocument extends Document {
 						rel='stylesheet'
 					></link>
 				</Head>
-				<body className='text-gray-900 bg-gray-100 font-roboto'>
+				<body className='text-gray-900 bg-gray-100 font-roboto box-border'>
 					<Main />
 					<NextScript />
 				</body>

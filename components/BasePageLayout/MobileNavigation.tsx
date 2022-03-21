@@ -1,9 +1,39 @@
-import React from 'react'
+import React, { useState } from 'react';
+import { GiHamburgerMenu } from 'react-icons/gi';
+import { AiOutlineClose } from 'react-icons/ai';
+import { DesktopNav } from 'Data/Navigation/DesktopNav';
+import Link from 'next/link';
 
 const MobileNavigation = () => {
-  return (
-    <div>MobileNavigation</div>
-  )
-}
+	const [isOpen, setIsOpen] = useState<boolean>(false);
+	return (
+		<div className='bg-white'>
+			<div className='flex justify-between items-center  py-5 px-10 drop-shadow-md'>
+				<h4 className='font-bold cursor-pointer text-xl'>NFT AFRICA</h4>
+				{isOpen ? (
+					<AiOutlineClose onClick={() => setIsOpen(false)} />
+				) : (
+					<GiHamburgerMenu onClick={() => setIsOpen(true)} />
+				)}
+			</div>
+			{isOpen && (
+				<ul className='w-3/5 px-10 py-4'>
+					{DesktopNav.map(data => (
+						<li
+							key={data.id}
+							className={`mb-3 ${
+								data.id === 4 && 'border border-black rounded-md py-3 px-8 '
+							}`}
+						>
+							<Link href={data.route}>
+								<a href='#'>{data.name}</a>
+							</Link>
+						</li>
+					))}
+				</ul>
+			)}
+		</div>
+	);
+};
 
-export default MobileNavigation
+export default MobileNavigation;
