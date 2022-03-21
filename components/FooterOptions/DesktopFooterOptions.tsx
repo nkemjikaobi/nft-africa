@@ -2,12 +2,12 @@ import IFooterOption from 'dto/Footer/IFooterOption';
 import Link from 'next/link';
 import React from 'react';
 
-interface IFooterOptions {
+interface IDesktopFooterOptions {
 	options: Array<IFooterOption>;
 	title: string;
 	hasIcons: boolean;
 }
-const FooterOptions = ({ options, title, hasIcons }: IFooterOptions) => {
+const DesktopFooterOptions = ({ options, title, hasIcons }: IDesktopFooterOptions) => {
 	return (
 		<div>
 			<h4 className='font-bold mb-3 text-xl'>{title}</h4>
@@ -40,8 +40,8 @@ const FooterOptions = ({ options, title, hasIcons }: IFooterOptions) => {
 	);
 };
 
-export default FooterOptions;
+export default DesktopFooterOptions;
 
-FooterOptions.defaultProps = {
+DesktopFooterOptions.defaultProps = {
 	hasIcons: false,
 };

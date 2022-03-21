@@ -1,4 +1,4 @@
-import FooterOptions from 'components/FooterOptions/FooterOptions';
+import DesktopFooterOptions from 'components/FooterOptions/DesktopFooterOptions';
 import { AboutUs } from 'Data/Footer/AboutUs';
 import { Community } from 'Data/Footer/Community';
 import { Support } from 'Data/Footer/Support';
@@ -26,13 +26,13 @@ const DesktopFooter = () => {
 				</p>
 			</div>
 			<div className='w-1/5 laptop:w-1/4 laptop:mt-7'>
-				<FooterOptions title='About Us' options={AboutUs} />
+				<DesktopFooterOptions title='About Us' options={AboutUs} />
 			</div>
 			<div className='w-1/5 laptop:w-1/4 laptop:mt-7'>
-				<FooterOptions title='Support' options={Support} />
+				<DesktopFooterOptions title='Support' options={Support} />
 			</div>
 			<div className='w-1/5 laptop:w-1/4 -mt-16 laptop:-mt-8'>
-				<FooterOptions title='Community' options={Community} hasIcons={true} />
+				<DesktopFooterOptions title='Community' options={Community} hasIcons={true} />
 			</div>
 		</div>
 	);
