@@ -4,9 +4,9 @@ import React from 'react';
 
 const DesktopNavigation = () => {
 	return (
-		<div className='flex justify-between items-center bg-white py-5 px-10 laptop:px-40 drop-shadow-md'>
+		<div className='flex justify-between items-center bg-white py-5 px-10 tablet:px-20 laptop:px-40 drop-shadow-md'>
 			<h4 className='font-bold cursor-pointer text-2xl'>NFT AFRICA</h4>
-			<ul className='flex justify-between items-center w-3/5 laptop:w-2/6'>
+			<ul className='flex justify-between items-center w-3/5 tablet:w-3/5 laptop:w-3/5 desktop:w-2/6'>
 				{DesktopNav.map(data => (
 					<li
 						key={data.id}

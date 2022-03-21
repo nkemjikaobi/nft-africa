@@ -30,7 +30,7 @@ const BasePageLayout = ({
 			<main className='container'>{children}</main>
 			{showFooter && (
 				<>
-					<div className='hidden tablet:block'>
+					<div className='hidden tablet:block tablet:absolute w-full bottom-0'>
 						<DesktopFooter />
 					</div>
 					<div className='block tablet:hidden'>
