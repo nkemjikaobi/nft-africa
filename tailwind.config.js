@@ -7,7 +7,28 @@ module.exports = {
 		container: {
 			center: true,
 		},
-		extend: {},
+		fontFamily: {
+			roboto: ['Montserrat', 'sans-serif'],
+			montserrat: ['Roboto', 'sans-serif'],
+		},
+		screens: {
+			mobile: '640px',
+
+			tablet: '768px',
+
+			laptop: '1024px',
+
+			desktop: '1280px',
+
+			television: '1536px',
+		},
+		extend: {
+			colors: {
+				blue: {
+					950: '#0066FF',
+				},
+			},
+		},
 	},
 	plugins: [],
 };

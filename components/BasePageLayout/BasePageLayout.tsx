@@ -16,24 +16,24 @@ const BasePageLayout = ({
 	showFooter,
 }: IBasePageLayout) => {
 	return (
-		<section className=''>
+		<section>
 			{showNavigation && (
 				<>
-					<div className='sm:hidden'>
+					<div className='hidden tablet:block'>
 						<DesktopNavigation />
 					</div>
-					<div className='md:hidden'>
+					<div className='block tablet:hidden'>
 						<MobileNavigation />
 					</div>
 				</>
 			)}
-			<main className=''>{children}</main>
+			<main className='container'>{children}</main>
 			{showFooter && (
 				<>
-					<div className='sm:hidden'>
+					<div className='hidden tablet:block'>
 						<DesktopFooter />
 					</div>
-					<div className='md:hidden'>
+					<div className='block tablet:hidden'>
 						<MobileFooter />
 					</div>
 				</>
