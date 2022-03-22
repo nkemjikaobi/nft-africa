@@ -16,7 +16,7 @@ export const DesktopNav = [
 	},
 	{
 		id: 4,
-		name: 'Register',
-		route: '/auth/register',
+		name: 'Create',
+		route: '#',
 	},
 ];

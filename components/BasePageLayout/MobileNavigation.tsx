@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { AiOutlineClose } from 'react-icons/ai';
-import { DesktopNav } from 'Data/Navigation/DesktopNav';
+import { DesktopNav } from 'data/Navigation/DesktopNav';
 import Link from 'next/link';
 import useClickOutside from 'customHooks/useClickOutside';
 
@@ -13,7 +13,11 @@ const MobileNavigation = () => {
 	return (
 		<div className='bg-white'>
 			<div className='flex justify-between items-center  py-5 px-10 drop-shadow-md'>
-				<h4 className='font-bold cursor-pointer text-xl'>NFT AFRICA</h4>
+				<Link href='/'>
+					<a href='#' className='font-bold cursor-pointer text-xl'>
+						NFT AFRICA
+					</a>
+				</Link>
 				{isOpen ? (
 					<AiOutlineClose onClick={() => setIsOpen(false)} />
 				) : (
@@ -26,7 +30,8 @@ const MobileNavigation = () => {
 						<li
 							key={data.id}
 							className={`mb-3 ${
-								data.id === 4 && 'border border-black rounded-md py-3 px-8 '
+								data.id === 4 &&
+								'border border-black rounded-md py-3 px-8 flex justify-center items-center'
 							}`}
 						>
 							<Link href={data.route}>

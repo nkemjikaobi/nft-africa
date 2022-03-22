@@ -19,10 +19,10 @@ const BasePageLayout = ({
 		<section>
 			{showNavigation && (
 				<>
-					<div className='hidden tablet:block'>
+					<div className='hidden tablet:block tablet:fixed tablet:w-full tablet:top-0'>
 						<DesktopNavigation />
 					</div>
-					<div className='block fixed w-full tablet:hidden'>
+					<div className='block fixed w-full top-0 tablet:hidden'>
 						<MobileNavigation />
 					</div>
 				</>
@@ -30,11 +30,11 @@ const BasePageLayout = ({
 			<main className='container'>{children}</main>
 			{showFooter && (
 				<>
-					<div className='hidden tablet:block tablet:absolute tablet:w-full tablet:bottom-0'>
+					<div className='hidden tablet:block tablet:fixed tablet:w-full tablet:bottom-0'>
 					{/* <div className='hidden tablet:blocktablet:w-full'> */}
 						<DesktopFooter />
 					</div>
-					<div className='block absolute w-full bottom-0 tablet:hidden'>
+					<div className='block fixed w-full bottom-0 tablet:hidden'>
 					{/* <div className='block w-full tablet:hidden'> */}
 						<MobileFooter />
 					</div>
