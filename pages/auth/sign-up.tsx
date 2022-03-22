@@ -6,7 +6,7 @@ import { BsArrowRight } from 'react-icons/bs';
 const SignUpPage = () => {
 	return (
 		<BasePageLayout>
-			<div className='container w-600 text-center'>
+			<div className='tablet:container tablet:w-600 text-center'>
 				<h1 className='uppercase text-base tablet:text-3xl font-extrabold mb-4 mt-32'>
 					Sign Up
 				</h1>

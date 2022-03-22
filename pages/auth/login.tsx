@@ -7,7 +7,7 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 const LoginPage = () => {
 	return (
 		<BasePageLayout>
-			<div className='container w-600 text-center'>
+			<div className='tablet:w-600 tablet:container text-center'>
 				<h1 className='uppercase text-3xl tablet:text-5xl font-extrabold mb-4 mt-32'>
 					Welcome
 				</h1>
