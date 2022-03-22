@@ -21,13 +21,13 @@ const LoginPage = () => {
 						placeholder='Email Address'
 					/>
 				</div>
-				<div>
+				<div className='relative'>
 					<input
 						className='bg-gray-200 p-5 border border-gray-300 rounded-md w-2/3 focus:border-black focus:outline-black my-5'
 						type='password'
 						placeholder='Password'
 					/>
-					{/* <AiOutlineEye /> */}
+					<AiOutlineEye className='absolute top-10 right-20 tablet:right-32  text-2xl'/>
 				</div>
 				<Link href='#'>
 					<a
