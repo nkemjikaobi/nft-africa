@@ -1,7 +1,7 @@
 import DesktopFooterOptions from 'components/FooterOptions/DesktopFooterOptions';
-import { AboutUs } from 'Data/Footer/AboutUs';
-import { Community } from 'Data/Footer/Community';
-import { Support } from 'Data/Footer/Support';
+import { AboutUs } from 'data/Footer/AboutUs';
+import { Community } from 'data/Footer/Community';
+import { Support } from 'data/Footer/Support';
 import Link from 'next/link';
 import React from 'react';
 import { FiMail } from 'react-icons/fi';

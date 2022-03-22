@@ -3,7 +3,7 @@ import { GiHamburgerMenu } from 'react-icons/gi';
 import { AiOutlineClose } from 'react-icons/ai';
 import { DesktopNav } from 'Data/Navigation/DesktopNav';
 import Link from 'next/link';
-import useClickOutside from 'CustomHooks/useClickOutside';
+import useClickOutside from 'customHooks/useClickOutside';
 
 const MobileNavigation = () => {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
