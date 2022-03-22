@@ -28,6 +28,10 @@ module.exports = {
 					950: '#0066FF',
 				},
 			},
+			width: {
+				600: '600px',
+				500: '500px',
+			},
 		},
 	},
 	plugins: [],
