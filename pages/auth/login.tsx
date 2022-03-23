@@ -27,7 +27,7 @@ const LoginPage = () => {
 						type='password'
 						placeholder='Password'
 					/>
-					<AiOutlineEye className='absolute top-10 right-20 tablet:right-32  text-2xl'/>
+					<AiOutlineEye className='absolute top-10 right-20 tablet:right-32  text-2xl' />
 				</div>
 				<Link href='#'>
 					<a
