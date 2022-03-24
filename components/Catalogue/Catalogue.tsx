@@ -25,7 +25,7 @@ const Catalogue = () => {
 							width={500}
 							height={500}
 						/>
-						<p className='text-white capitalize font-bold text-base w-2/4 absolute top-10 left-10'>
+						<p className='text-white capitalize font-bold text-sm tablet:text-base tablet:w-2/4 absolute top-5 left-5 tablet:top-10 tablet:left-10'>
 							{data.text}
 						</p>
 					</div>
