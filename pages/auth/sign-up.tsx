@@ -27,7 +27,7 @@ const SignUpPage = () => {
 						type='password'
 						placeholder='Password'
 					/>
-					<AiOutlineEye className='absolute top-10 right-20 tablet:right-32  text-2xl' />
+					<AiOutlineEye className='absolute top-10 right-20 tablet:right-32  text-2xl cursor-pointer' />
 				</div>
 				<div className='relative'>
 					<input
@@ -35,49 +35,7 @@ const SignUpPage = () => {
 						type='password'
 						placeholder='Confirm Password'
 					/>
-					<AiOutlineEye className='absolute top-10 right-20 tablet:right-32  text-2xl' />
-				</div>
-				<div className='flex justify-center'>
-					<Link href='#'>
-						<a
-							href='#'
-							className='bg-black flex items-center justify-center p-5 w-2/3 rounded-md text-white mt-4 hover:bg-white hover:text-black hover:border hover:border-black'
-						>
-							{' '}
-							Sign Up <BsArrowRight className='ml-4' />
-						</a>
-					</Link>
-				</div>
-				<div className='flex justify-center'>
-					<Link href='/auth/login'>
-						<a
-							href='#'
-							className='bg-white flex items-center justify-center p-5 w-2/3 border border-black rounded-md text-black my-5 hover:bg-black hover:text-white '
-						>
-							Have an Account? Sign In
-						</a>
-					</Link>
-				</div>
-				<div className='flex justify-center'>
-					<Link href='#'>
-						<a
-							href='#'
-							className='bg-black flex items-center justify-center p-5 w-2/3 rounded-md text-white mt-4 hover:bg-white hover:text-black hover:border hover:border-black'
-						>
-							{' '}
-							Sign Up <BsArrowRight className='ml-4' />
-						</a>
-					</Link>
-				</div>
-				<div className='flex justify-center'>
-					<Link href='/auth/login'>
-						<a
-							href='#'
-							className='bg-white flex items-center justify-center p-5 w-2/3 border border-black rounded-md text-black my-5 hover:bg-black hover:text-white '
-						>
-							Have an Account? Sign In
-						</a>
-					</Link>
+					<AiOutlineEye className='absolute top-10 right-20 tablet:right-32  text-2xl cursor-pointer' />
 				</div>
 				<div className='flex justify-center'>
 					<Link href='#'>
