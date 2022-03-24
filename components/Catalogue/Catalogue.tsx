@@ -4,7 +4,7 @@ import React from 'react';
 
 const Catalogue = () => {
 	return (
-		<div className='grid grid-cols-[600px_minmax(900px,_1fr)_100px] gap-4'>
+		<div className='grid p-5 tablet:p-5 desktop:grid-cols-[600px_minmax(900px,_1fr)_100px] gap-4 tablet:flex tablet:items-center tablet:flex-col laptop:grid'>
 			<div className='row-span-3 relative'>
 				<Image
 					src='/images/hero/african-festival.png'
