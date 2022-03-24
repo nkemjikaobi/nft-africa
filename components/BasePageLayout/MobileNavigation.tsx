@@ -4,6 +4,7 @@ import { AiOutlineClose } from 'react-icons/ai';
 import { DesktopNav } from 'data/Navigation/DesktopNav';
 import Link from 'next/link';
 import useClickOutside from 'customHooks/useClickOutside';
+import Image from 'next/image';
 
 const MobileNavigation = () => {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -15,7 +16,12 @@ const MobileNavigation = () => {
 			<div className='flex justify-between items-center  py-5 px-10 drop-shadow-md'>
 				<Link href='/'>
 					<a href='#' className='font-bold cursor-pointer text-xl'>
-						NFT AFRICA
+						<Image
+							src='/images/logo.png'
+							alt='nft-africa'
+							width='70'
+							height='70'
+						/>
 					</a>
 				</Link>
 				{isOpen ? (

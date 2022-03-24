@@ -1,4 +1,5 @@
 import { DesktopNav } from 'data/Navigation/DesktopNav';
+import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
@@ -7,7 +8,7 @@ const DesktopNavigation = () => {
 		<div className='flex justify-between items-center bg-white py-5 px-10 tablet:px-20 laptop:px-40 drop-shadow-md'>
 			<Link href='/'>
 				<a href='#' className='font-bold cursor-pointer text-2xl'>
-					NFT AFRICA
+					<Image src="/images/logo.png" alt="nft-africa" width="80" height="80"/>
 				</a>
 			</Link>
 			<ul className='flex justify-between items-center w-3/5 tablet:w-3/5 laptop:w-3/5 desktop:w-2/6'>
