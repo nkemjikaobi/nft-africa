@@ -29,7 +29,7 @@ const LoginPage = () => {
 					/>
 					<AiOutlineEye className='absolute top-10 right-20 tablet:right-32  text-2xl  cursor-pointer' />
 				</div>
-				<Link href='#'>
+				<Link href='/auth/forgot-password'>
 					<a
 						href='#'
 						className='text-right hover:text-blue-950 inline-block w-4/6'
