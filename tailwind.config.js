@@ -18,6 +18,8 @@ module.exports = {
 
 			laptop: '1024px',
 
+			//smallLaptop: '1440px',
+
 			desktop: '1280px',
 
 			television: '1536px',

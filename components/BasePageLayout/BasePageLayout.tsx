@@ -19,7 +19,7 @@ const BasePageLayout = ({
 		<section>
 			{showNavigation && (
 				<>
-					<div className='hidden tablet:block tablet:fixed tablet:w-full tablet:top-0 tablet:z-10'>
+					<div className='hidden tablet:block tablet:fixed tablet:w-full tablet:top-0 tablet:z-40'>
 						<DesktopNavigation />
 					</div>
 					<div className='block fixed w-full top-0 tablet:hidden'>
