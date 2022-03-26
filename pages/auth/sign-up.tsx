@@ -8,7 +8,7 @@ const SignUpPage = () => {
 	return (
 		<BasePageLayout>
 			<div className='tablet:container tablet:w-600 text-center'>
-				<h1 className='uppercase text-base tablet:text-3xl font-extrabold mb-4 mt-32'>
+				<h1 className='uppercase text-base tablet:text-3xl font-extrabold mb-4 mt-64'>
 					Sign Up
 				</h1>
 				<h4 className='font-bold mb-6 text-sm tablet:text-base'>

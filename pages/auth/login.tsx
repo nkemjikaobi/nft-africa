@@ -8,7 +8,7 @@ const LoginPage = () => {
 	return (
 		<BasePageLayout>
 			<div className='tablet:w-600 tablet:container text-center'>
-				<h1 className='uppercase text-3xl tablet:text-5xl font-extrabold mb-4 mt-32'>
+				<h1 className='uppercase text-3xl tablet:text-5xl font-extrabold mb-4 mt-64'>
 					Welcome
 				</h1>
 				<h4 className='font-bold mb-6 text-sm tablet:text-base'>
