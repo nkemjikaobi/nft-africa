@@ -4,6 +4,8 @@ import { FaEthereum, FaGavel } from 'react-icons/fa';
 import { HiCurrencyDollar } from 'react-icons/hi';
 import { AiTwotoneCloseCircle } from 'react-icons/ai';
 import INFT from 'dto/NFT/INFT';
+import Link from 'next/link';
+import { FaGreaterThan } from 'react-icons/fa';
 
 interface INFTCard {
 	data: Array<INFT>;
@@ -12,7 +14,16 @@ interface INFTCard {
 const NFTCard = ({ data, title }: INFTCard) => {
 	return (
 		<div className='mt-10'>
-			<h2 className='ml-2 tablet:ml-0 p-3 mb-4 tablet:mb-8 font-bold text-3xl tablet:text-4xl capitalize'>{title}</h2>
+			<div className='flex items-center justify-between'>
+				<h2 className='ml-2 tablet:ml-1 p-3 mb-4 tablet:mb-8 font-bold text-3xl tablet:text-4xl capitalize'>
+					{title}
+				</h2>
+				<Link href='#'>
+					<a href='#' className='text-blue-950 mr-10 flex items-center'>
+						View All <FaGreaterThan className='ml-2'/>
+					</a>
+				</Link>
+			</div>
 			<div className='mx-6 tablet:mx-6 mb-10 grid grid-cols-1 tablet:w-3/3 tablet:grid-cols-3 smallLaptop:grid-cols-4 gap-6 tablet:mb-8 cursor-pointer'>
 				{data.map(nft => (
 					<div className='mb-4 bg-gray-200 hover:drop-shadow-lg' key={nft.id}>
@@ -44,7 +55,9 @@ const NFTCard = ({ data, title }: INFTCard) => {
 
 						<div className='p-3 flex justify-between items-center'>
 							<p className='tablet:text-xs smallLaptop:text-base'>Creator</p>
-							<p className='tablet:text-xs smallLaptop:text-base'>{nft.author}</p>
+							<p className='tablet:text-xs smallLaptop:text-base'>
+								{nft.author}
+							</p>
 						</div>
 						<p className='p-3 flex items-center '>
 							{nft.isAcquired ? (
