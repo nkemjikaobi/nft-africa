@@ -18,7 +18,7 @@ module.exports = {
 
 			laptop: '1024px',
 
-			//smallLaptop: '1440px',
+			smallLaptop: '1440px',
 
 			desktop: '1280px',
 

@@ -22,7 +22,7 @@ const BasePageLayout = ({
 					<div className='hidden tablet:block tablet:fixed tablet:w-full tablet:top-0 tablet:z-40'>
 						<DesktopNavigation />
 					</div>
-					<div className='block fixed w-full top-0 tablet:hidden'>
+					<div className='block fixed w-full top-0 z-40 tablet:hidden'>
 						<MobileNavigation />
 					</div>
 				</>
