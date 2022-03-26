@@ -7,7 +7,7 @@ const DesktopNavigation = () => {
 	return (
 		<div className='flex justify-between items-center bg-white py-5 px-10 tablet:px-20 laptop:px-40 drop-shadow-md'>
 			<Link href='/'>
-				<a href='#' className='font-bold cursor-pointer text-2xl'>
+				<a href='' className='font-bold cursor-pointer text-2xl'>
 					<Image src="/images/logo.png" alt="nft-africa" width="80" height="80"/>
 				</a>
 			</Link>
@@ -22,7 +22,7 @@ const DesktopNavigation = () => {
 					>
 						<Link href={data.route}>
 							<a
-								href='#'
+								href={data.route}
 								className={`${data.id !== 4 && 'hover:text-blue-950'}`}
 							>
 								{data.name}

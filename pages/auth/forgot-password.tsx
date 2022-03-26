@@ -24,7 +24,7 @@ const ForgotPasswordPage = () => {
 						Reset Password <BsArrowRight className='ml-4' />
 					</button>
 				</div>
-				<Link href="/auth/login"><a href="#" className='text-left text-blue-950 hover:text-blue-950'>Back to Login</a></Link>
+				<Link href="/auth/login"><a href="" className='text-left text-blue-950 hover:text-blue-950'>Back to Login</a></Link>
 			</div>
 		</BasePageLayout>
 	);

@@ -18,9 +18,12 @@ const NFTCard = ({ data, title }: INFTCard) => {
 				<h2 className='ml-2 tablet:ml-1 p-3 mb-4 tablet:mb-8 font-bold text-3xl tablet:text-4xl capitalize'>
 					{title}
 				</h2>
-				<Link href='#'>
-					<a href='#' className='text-blue-950 mr-10 flex items-center'>
-						View All <FaGreaterThan className='ml-2'/>
+				<Link href={`/${title.toLowerCase()}`}>
+					<a
+						href={`/${title.toLowerCase()}`}
+						className='text-blue-950 mr-10 flex items-center'
+					>
+						View All <FaGreaterThan className='ml-2' />
 					</a>
 				</Link>
 			</div>

@@ -18,7 +18,7 @@ const MobileFooter = () => {
 				<p className='text-sm text-gray-600 flex items-center justify-start'>
 					<FiMail className='mr-1' />{' '}
 					<Link href='mailto:email@example.com'>
-						<a href='#' className='underline'>
+						<a href='mailto:email@example.com' className='underline'>
 							nft.africa@gmail.com
 						</a>
 					</Link>
