@@ -6,26 +6,30 @@ import { AiTwotoneCloseCircle } from 'react-icons/ai';
 import INFT from 'dto/NFT/INFT';
 import Link from 'next/link';
 import { FaGreaterThan } from 'react-icons/fa';
+import { useRouter } from 'next/router';
 
 interface INFTCard {
 	data: Array<INFT>;
 	title: string;
 }
 const NFTCard = ({ data, title }: INFTCard) => {
+	const router = useRouter();
 	return (
 		<div className='mt-10'>
 			<div className='flex items-center justify-between'>
 				<h2 className='ml-2 tablet:ml-1 p-3 mb-4 tablet:mb-8 font-bold text-3xl tablet:text-4xl capitalize'>
 					{title}
 				</h2>
-				<Link href={`/${title.toLowerCase()}`}>
-					<a
-						href={`/${title.toLowerCase()}`}
-						className='text-blue-950 mr-10 flex items-center'
-					>
-						View All <FaGreaterThan className='ml-2' />
-					</a>
-				</Link>
+				{router.pathname === '/' && (
+					<Link href={`/${title.toLowerCase()}`}>
+						<a
+							href={`/${title.toLowerCase()}`}
+							className='text-blue-950 mr-10 flex items-center'
+						>
+							View All <FaGreaterThan className='ml-2' />
+						</a>
+					</Link>
+				)}
 			</div>
 			<div className='mx-6 tablet:mx-6 mb-10 grid grid-cols-1 tablet:w-3/3 tablet:grid-cols-3 smallLaptop:grid-cols-4 gap-6 tablet:mb-8 cursor-pointer'>
 				{data.map(nft => (
