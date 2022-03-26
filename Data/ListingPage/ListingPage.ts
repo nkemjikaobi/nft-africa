@@ -1,7 +1,7 @@
 export const ListingPageData = [
 	{
 		id: 1,
-		imageUrl: '/images/hero/1.png',
+		imageUrl: '/images/hero/3.png',
 		author: 'Tattooed_Kitty_Gang',
 		name: 'MiniBearX #0012',
 		price: 120,
@@ -10,7 +10,7 @@ export const ListingPageData = [
 	},
 	{
 		id: 2,
-		imageUrl: '/images/hero/1.png',
+		imageUrl: '/images/hero/3.png',
 		author: 'Tattooed_Kitty_Gang',
 		name: 'MiniBearX #0012',
 		price: 120,
@@ -19,7 +19,7 @@ export const ListingPageData = [
 	},
 	{
 		id: 3,
-		imageUrl: '/images/hero/1.png',
+		imageUrl: '/images/hero/3.png',
 		author: 'Tattooed_Kitty_Gang',
 		name: 'MiniBearX #0012',
 		price: 120,
@@ -28,7 +28,7 @@ export const ListingPageData = [
 	},
 	{
 		id: 4,
-		imageUrl: '/images/hero/1.png',
+		imageUrl: '/images/hero/3.png',
 		author: 'Tattooed_Kitty_Gang',
 		name: 'MiniBearX #0012',
 		price: 120,
@@ -37,7 +37,7 @@ export const ListingPageData = [
 	},
 	{
 		id: 5,
-		imageUrl: '/images/hero/1.png',
+		imageUrl: '/images/hero/3.png',
 		author: 'Tattooed_Kitty_Gang',
 		name: 'MiniBearX #0012',
 		price: 120,
@@ -46,7 +46,7 @@ export const ListingPageData = [
 	},
 	{
 		id: 6,
-		imageUrl: '/images/hero/1.png',
+		imageUrl: '/images/hero/3.png',
 		author: 'Tattooed_Kitty_Gang',
 		name: 'MiniBearX #0012',
 		price: 120,
@@ -55,7 +55,7 @@ export const ListingPageData = [
 	},
 	{
 		id: 7,
-		imageUrl: '/images/hero/1.png',
+		imageUrl: '/images/hero/3.png',
 		author: 'Tattooed_Kitty_Gang',
 		name: 'MiniBearX #0012',
 		price: 120,
@@ -64,7 +64,7 @@ export const ListingPageData = [
 	},
 	{
 		id: 8,
-		imageUrl: '/images/hero/1.png',
+		imageUrl: '/images/hero/3.png',
 		author: 'Tattooed_Kitty_Gang',
 		name: 'MiniBearX #0012',
 		price: 120,
@@ -73,7 +73,7 @@ export const ListingPageData = [
 	},
 	{
 		id: 9,
-		imageUrl: '/images/hero/1.png',
+		imageUrl: '/images/hero/3.png',
 		author: 'Tattooed_Kitty_Gang',
 		name: 'MiniBearX #0012',
 		price: 120,
@@ -82,7 +82,7 @@ export const ListingPageData = [
 	},
 	{
 		id: 10,
-		imageUrl: '/images/hero/1.png',
+		imageUrl: '/images/hero/3.png',
 		author: 'Tattooed_Kitty_Gang',
 		name: 'MiniBearX #0012',
 		price: 120,
@@ -91,7 +91,7 @@ export const ListingPageData = [
 	},
 	{
 		id: 11,
-		imageUrl: '/images/hero/1.png',
+		imageUrl: '/images/hero/3.png',
 		author: 'Tattooed_Kitty_Gang',
 		name: 'MiniBearX #0012',
 		price: 120,
@@ -100,7 +100,7 @@ export const ListingPageData = [
 	},
 	{
 		id: 12,
-		imageUrl: '/images/hero/1.png',
+		imageUrl: '/images/hero/3.png',
 		author: 'Tattooed_Kitty_Gang',
 		name: 'MiniBearX #0012',
 		price: 120,
@@ -109,7 +109,7 @@ export const ListingPageData = [
 	},
 	{
 		id: 13,
-		imageUrl: '/images/hero/1.png',
+		imageUrl: '/images/hero/3.png',
 		author: 'Tattooed_Kitty_Gang',
 		name: 'MiniBearX #0012',
 		price: 120,
@@ -118,7 +118,7 @@ export const ListingPageData = [
 	},
 	{
 		id: 14,
-		imageUrl: '/images/hero/1.png',
+		imageUrl: '/images/hero/3.png',
 		author: 'Tattooed_Kitty_Gang',
 		name: 'MiniBearX #0012',
 		price: 120,
@@ -127,7 +127,7 @@ export const ListingPageData = [
 	},
 	{
 		id: 15,
-		imageUrl: '/images/hero/1.png',
+		imageUrl: '/images/hero/3.png',
 		author: 'Tattooed_Kitty_Gang',
 		name: 'MiniBearX #0012',
 		price: 120,
@@ -136,7 +136,7 @@ export const ListingPageData = [
 	},
 	{
 		id: 16,
-		imageUrl: '/images/hero/1.png',
+		imageUrl: '/images/hero/3.png',
 		author: 'Tattooed_Kitty_Gang',
 		name: 'MiniBearX #0012',
 		price: 120,
@@ -145,7 +145,7 @@ export const ListingPageData = [
 	},
 	{
 		id: 17,
-		imageUrl: '/images/hero/1.png',
+		imageUrl: '/images/hero/3.png',
 		author: 'Tattooed_Kitty_Gang',
 		name: 'MiniBearX #0012',
 		price: 120,
@@ -154,7 +154,7 @@ export const ListingPageData = [
 	},
 	{
 		id: 18,
-		imageUrl: '/images/hero/1.png',
+		imageUrl: '/images/hero/3.png',
 		author: 'Tattooed_Kitty_Gang',
 		name: 'MiniBearX #0012',
 		price: 120,
@@ -163,7 +163,7 @@ export const ListingPageData = [
 	},
 	{
 		id: 19,
-		imageUrl: '/images/hero/1.png',
+		imageUrl: '/images/hero/3.png',
 		author: 'Tattooed_Kitty_Gang',
 		name: 'MiniBearX #0012',
 		price: 120,
@@ -172,7 +172,7 @@ export const ListingPageData = [
 	},
 	{
 		id: 20,
-		imageUrl: '/images/hero/1.png',
+		imageUrl: '/images/hero/3.png',
 		author: 'Tattooed_Kitty_Gang',
 		name: 'MiniBearX #0012',
 		price: 120,

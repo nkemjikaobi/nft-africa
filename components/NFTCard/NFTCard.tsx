@@ -33,7 +33,11 @@ const NFTCard = ({ data, title }: INFTCard) => {
 			</div>
 			<div className='mx-6 tablet:mx-6 mb-10 grid grid-cols-1 tablet:w-3/3 tablet:grid-cols-3 smallLaptop:grid-cols-4 gap-6 tablet:mb-8 cursor-pointer'>
 				{data.map(nft => (
-					<div className='mb-4 bg-gray-200 hover:drop-shadow-lg' key={nft.id}>
+					<div
+						className='mb-4 bg-gray-200 hover:drop-shadow-lg'
+						key={nft.id}
+						onClick={() => router.push(`${title.toLowerCase()}/${nft.id}`)}
+					>
 						<Image
 							src={nft.imageUrl}
 							width={500}
