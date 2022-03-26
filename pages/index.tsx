@@ -10,7 +10,7 @@ const Home: NextPage = () => {
 			<div className='mt-40'>
 				<Catalogue />
 				<NFTCard title='trending' data={Trending} />
-				<NFTCard title='live auctions' data={Trending} />
+				<NFTCard title='auctions' data={Trending} />
 				<NFTCard title='explore' data={Trending} />
 			</div>
 		</BasePageLayout>
