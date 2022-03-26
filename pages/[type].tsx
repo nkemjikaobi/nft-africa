@@ -9,7 +9,7 @@ interface IListingPage {
 const ListingPage = ({ type }: IListingPage) => {
 	return (
 		<BasePageLayout>
-			<div className='mt-64'>
+			<div className='mt-40 tablet:mt-64'>
 				<NFTCard title={`${type}`} data={ListingPageData} />
 			</div>
 		</BasePageLayout>
