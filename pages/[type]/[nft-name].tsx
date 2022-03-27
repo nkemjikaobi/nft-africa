@@ -106,7 +106,7 @@ const ProductDetailPage = () => {
 					</button>
 					<div className='mt-4 -ml-20 tablet:ml-0'>
 						<h4 className='font-extrabold '>History</h4>
-						<p className='text-orange-300 mb-4'>------------</p>
+						<p className='text-black mb-4'>------------</p>
 					</div>
 					<div className='-ml-20 tablet:ml-0 '>
 						<NFTHistory history={History} />
@@ -114,7 +114,7 @@ const ProductDetailPage = () => {
 				</div>
 			</div>
 			{showMagnified && (
-				<div className='absolute top-40 left-1/4' ref={node}>
+				<div className='absolute top-64 smallLaptop:top-40 4/4 mx-10 smallLaptop:mx-0 smallLaptop:left-1/4' ref={node}>
 					<MagnifiedNFT />
 				</div>
 			)}
