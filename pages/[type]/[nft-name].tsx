@@ -1,18 +1,28 @@
 import BasePageLayout from 'components/BasePageLayout/BasePageLayout';
 import CountdownTimer from 'components/Countdown/CountdownTimer';
+import MagnifiedNFT from 'components/MagnifiedNFT/MagnifiedNFT';
 import NFTHistory from 'components/NFTHistory/NFTHistory';
+import useClickOutside from 'customHooks/useClickOutside';
 import { History } from 'data/DetailPage/History';
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 import { FaEthereum } from 'react-icons/fa';
 
 const ProductDetailPage = () => {
 	const time = new Date();
 	time.setSeconds(time.getSeconds() + 600); // 10 minutes timer
+	const [showMagnified, setShowMagnified] = useState<boolean>(false);
+	const node = useClickOutside(() => {
+		setShowMagnified(false);
+	});
 	return (
 		<BasePageLayout>
-			<div className='mt-64 flex flex-col tablet:flex-row items-center tablet:items-start smallLaptop:items-center justify-between mx-40 tablet:mx-10 smallLaptop:mx-40'>
+			<div
+				className={`mt-64 flex flex-col tablet:flex-row items-center tablet:items-start smallLaptop:items-center justify-between mx-40 tablet:mx-10 smallLaptop:mx-40 ${
+					showMagnified && 'blur-lg'
+				}`}
+			>
 				<div className='flex flex-col -mt-16 tablet:mt-0 tablet:mr-16'>
 					<div className='mb-8 tablet:hidden'>
 						<h4 className='font-extrabold text-2xl'>
@@ -24,7 +34,8 @@ const ProductDetailPage = () => {
 						alt='nft-image'
 						width={500}
 						height={500}
-						className=''
+						className='cursor-pointer'
+						onClick={() => setShowMagnified(true)}
 					/>
 					<div className='mt-8 mb-4'>
 						<h4 className='text-sm text-gray-400'>Contract address</h4>
@@ -43,7 +54,7 @@ const ProductDetailPage = () => {
 					</div>
 				</div>
 
-				<div className='tablet:w-3/4 mt-64 tablet:mt-2 smallLaptop:mt-0'>
+				<div className='tablet:w-3/4 tablet:mt-2 smallLaptop:mt-0'>
 					<div className='hidden tablet:block'>
 						<h4 className='font-extrabold text-2xl'>
 							GiiiO Non-medal role NFT
@@ -102,6 +113,11 @@ const ProductDetailPage = () => {
 					</div>
 				</div>
 			</div>
+			{showMagnified && (
+				<div className='absolute top-40 left-1/4' ref={node}>
+					<MagnifiedNFT />
+				</div>
+			)}
 		</BasePageLayout>
 	);
 };
