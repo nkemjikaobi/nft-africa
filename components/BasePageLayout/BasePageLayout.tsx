@@ -30,7 +30,7 @@ const BasePageLayout = ({
 			<main className='container min-h-[70vh]'>{children}</main>
 			{showFooter && (
 				<>
-					<div className='hidden tablet:block  tablet:w-full'>
+					<div className='hidden tablet:block tablet:w-full'>
 						{/* <div className='hidden tablet:blocktablet:w-full'> */}
 						<DesktopFooter />
 					</div>
