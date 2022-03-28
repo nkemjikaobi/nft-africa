@@ -1,9 +1,24 @@
 import { Hero } from 'data/HeroSection/Hero';
 import Image from 'next/image';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import CatalogueSkeleton from 'skeletons/CatalogueSkeleton';
 
 const Catalogue = () => {
-	return (
+	const [loading, setLoading] = useState(true);
+
+	useEffect(() => {
+		let mounted = true;
+		if (mounted) {
+			setTimeout(() => setLoading(false), 5000);
+		}
+
+		return () => {
+			mounted = false;
+		};
+	}, []);
+	return loading ? (
+		<CatalogueSkeleton />
+	) : (
 		<div className='grid p-5 tablet:p-5 desktop:grid-cols-[600px_minmax(900px,_1fr)_100px] gap-4 tablet:flex tablet:items-center tablet:flex-col laptop:grid'>
 			<div className='row-span-3 relative h-full laptop:mx-auto z-10 hover:scale-105 cursor-pointer hover:z-20 transition duration-700 ease-in-out'>
 				<Image

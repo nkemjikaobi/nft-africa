@@ -9,8 +9,7 @@ const Home: NextPage = () => {
 	return (
 		<BasePageLayout>
 			<div className='mt-40'>
-				{/* <Catalogue /> */}
-				<CatalogueSkeleton />
+				<Catalogue />
 				<NFTCard title='trending' data={Trending} />
 				<NFTCard title='auctions' data={Trending} />
 				<NFTCard title='explore' data={Trending} />
