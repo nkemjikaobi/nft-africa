@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaEthereum, FaGavel } from 'react-icons/fa';
 import { HiCurrencyDollar } from 'react-icons/hi';
 import { AiTwotoneCloseCircle } from 'react-icons/ai';
@@ -7,6 +7,7 @@ import INFT from 'dto/NFT/INFT';
 import Link from 'next/link';
 import { FaGreaterThan } from 'react-icons/fa';
 import { useRouter } from 'next/router';
+import NFTCardSkeleton from 'skeletons/NFTCardSkeleton';
 
 interface INFTCard {
 	data: Array<INFT>;
@@ -14,8 +15,22 @@ interface INFTCard {
 }
 const NFTCard = ({ data, title }: INFTCard) => {
 	const router = useRouter();
-	return (
-		<div className='mt-10'>
+	const [loading, setLoading] = useState(true);
+
+	useEffect(() => {
+		let mounted = true;
+		if (mounted) {
+			//setTimeout(() => setLoading(false), 5000);
+		}
+
+		return () => {
+			mounted = false;
+		};
+	}, []);
+	return loading ? (
+		<NFTCardSkeleton />
+	) : (
+		<div className='mt-10 tablet:p-10 smallLaptop:p-20'>
 			<div className='flex items-center justify-between'>
 				<h2 className='ml-2 tablet:ml-1 p-3 mb-4 tablet:mb-8 font-bold text-3xl tablet:text-4xl capitalize'>
 					{title}
