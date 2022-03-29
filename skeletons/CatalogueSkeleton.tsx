@@ -19,7 +19,7 @@ const CatalogueSkeleton = () => {
 				<div className='grid grid-cols-3 gap-4'>
 					{range(6).map((data, index) => (
 						<div className='relative z-10 cursor-pointer' key={index}>
-							<Skeleton width={200} height={200} />
+							<Skeleton width={300} height={300} />
 						</div>
 					))}
 				</div>
