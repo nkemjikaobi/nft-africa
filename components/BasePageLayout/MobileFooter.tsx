@@ -1,10 +1,28 @@
 import MobileFooterOptions from 'components/FooterOptions/MobileFooterOptions';
-import { AboutUs } from 'data/Footer/AboutUs';
+//import { AboutUs } from 'data/Footer/AboutUs';
 import { Community } from 'data/Footer/Community';
 import { Support } from 'data/Footer/Support';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { FiMail } from 'react-icons/fi';
+
+const AboutUs = [
+	{
+		id: 1,
+		name: 'About NFT Africa',
+		route: '/',
+	},
+	{
+		id: 2,
+		name: 'Careers',
+		route: '/',
+	},
+	{
+		id: 3,
+		name: 'Community',
+		route: '/auth/login',
+	},
+];
 
 const MobileFooter = () => {
 	const [activeIndex, setActiveIndex] = useState<number>(0);
