@@ -21,6 +21,7 @@
 			"libs/*": ["./libs/*"],
 			"assets/*": ["./assets/*"],
 			"componentData/*": ["./componentData/*"],
+			"customHooks/*": ["./customHooks/*"],
 			"dto/*": ["./dto/*"]
 		}
 	},
