@@ -1,4 +1,4 @@
-import { DesktopNav } from 'data/Navigation/DesktopNav';
+import { DesktopNav } from 'componentData/Navigation/DesktopNav';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';

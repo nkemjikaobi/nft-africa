@@ -3,7 +3,7 @@ import CountdownTimer from 'components/Countdown/CountdownTimer';
 import MagnifiedNFT from 'components/MagnifiedNFT/MagnifiedNFT';
 import NFTHistory from 'components/NFTHistory/NFTHistory';
 import useClickOutside from 'customHooks/useClickOutside';
-import { History } from 'data/DetailPage/History';
+import { History } from 'componentData/DetailPage/History';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';

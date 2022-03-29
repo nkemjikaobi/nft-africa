@@ -1,6 +1,6 @@
 import BasePageLayout from 'components/BasePageLayout/BasePageLayout';
 import NFTCard from 'components/NFTCard/NFTCard';
-import { ListingPageData } from 'data/ListingPage/ListingPage';
+import { ListingPageData } from 'componentData/ListingPage/ListingPage';
 import React from 'react';
 
 interface IListingPage {

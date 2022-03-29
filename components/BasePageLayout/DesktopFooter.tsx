@@ -1,29 +1,11 @@
 import DesktopFooterOptions from 'components/FooterOptions/DesktopFooterOptions';
-//import { AboutUs } from 'data/Footer/AboutUs';
-import { Community } from 'data/Footer/Community';
-import { Support } from 'data/Footer/Support';
+import { AboutUs } from 'componentData/Footer/AboutUs';
+import { Community } from 'componentData/Footer/Community';
+import { Support } from 'componentData/Footer/Support';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import { FiMail } from 'react-icons/fi';
-
-const AboutUs = [
-	{
-		id: 1,
-		name: 'About NFT Africa',
-		route: '/',
-	},
-	{
-		id: 2,
-		name: 'Careers',
-		route: '/',
-	},
-	{
-		id: 3,
-		name: 'Community',
-		route: '/auth/login',
-	},
-];
 
 
 const DesktopFooter = () => {

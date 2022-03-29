@@ -1,4 +1,4 @@
-import { Hero } from 'data/HeroSection/Hero';
+import { Hero } from 'componentData/HeroSection/Hero';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import CatalogueSkeleton from 'skeletons/CatalogueSkeleton';

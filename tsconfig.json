@@ -20,7 +20,7 @@
 			"pages/*": ["./pages/*"],
 			"libs/*": ["./libs/*"],
 			"assets/*": ["./assets/*"],
-			"data/*": ["./data/*"],
+			"componentData/*": ["./componentData/*"],
 			"dto/*": ["./dto/*"]
 		}
 	},

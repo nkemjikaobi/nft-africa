@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { AiOutlineClose } from 'react-icons/ai';
-import { DesktopNav } from 'data/Navigation/DesktopNav';
+import { DesktopNav } from 'componentData/Navigation/DesktopNav';
 import Link from 'next/link';
 import useClickOutside from 'customHooks/useClickOutside';
 import Image from 'next/image';
