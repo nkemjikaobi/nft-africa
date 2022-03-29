@@ -15,7 +15,7 @@ interface INFTCard {
 }
 const NFTCard = ({ data, title }: INFTCard) => {
 	const router = useRouter();
-	const [loading, setLoading] = useState(false);
+	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
 		let mounted = true;
@@ -30,7 +30,8 @@ const NFTCard = ({ data, title }: INFTCard) => {
 	return loading ? (
 		<NFTCardSkeleton />
 	) : (
-		<div className='mt-10 tablet:p-10 smallLaptop:p-20'>
+		<div className='mt-10 tablet:p-10 smallLaptop:p-20' id="boom">
+			{/* transition ease-in-out delay-150 hover:-translate-x-32 duration-150 */}
 			<div className='flex items-center justify-between'>
 				<h2 className='ml-2 tablet:ml-1 p-3 mb-4 tablet:mb-8 font-bold text-3xl tablet:text-4xl capitalize'>
 					{title}
