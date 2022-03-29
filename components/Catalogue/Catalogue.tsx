@@ -11,7 +11,7 @@ const Catalogue = () => {
 	useEffect(() => {
 		let mounted = true;
 		if (mounted) {
-			//setTimeout(() => setLoading(false), 5000);
+			setTimeout(() => setLoading(false), 5000);
 		}
 
 		return () => {
