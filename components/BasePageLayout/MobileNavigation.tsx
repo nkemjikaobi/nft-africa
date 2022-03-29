@@ -3,7 +3,7 @@ import { GiHamburgerMenu } from 'react-icons/gi';
 import { AiOutlineClose } from 'react-icons/ai';
 import { DesktopNav } from 'componentData/Navigation/DesktopNav';
 import Link from 'next/link';
-import useClickOutside from 'customHooks/useClickOutside';
+import useClickOutside from 'hooks/useClickOutside';
 import Image from 'next/image';
 
 const MobileNavigation = () => {
