@@ -2,9 +2,11 @@ import { Hero } from 'data/HeroSection/Hero';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import CatalogueSkeleton from 'skeletons/CatalogueSkeleton';
+import { useRouter } from 'next/router';
 
 const Catalogue = () => {
 	const [loading, setLoading] = useState(true);
+	const router = useRouter();
 
 	useEffect(() => {
 		let mounted = true;
@@ -19,7 +21,10 @@ const Catalogue = () => {
 	return loading ? (
 		<CatalogueSkeleton />
 	) : (
-		<div className='grid p-5 tablet:p-5 desktop:grid-cols-[600px_minmax(900px,_1fr)_100px] gap-4 tablet:flex tablet:items-center tablet:flex-col laptop:grid'>
+		<div
+			className='grid p-5 tablet:p-5 desktop:grid-cols-[600px_minmax(900px,_1fr)_100px] gap-4 tablet:flex tablet:items-center tablet:flex-col laptop:grid'
+			onClick={() => router.push('/catalogue/2')}
+		>
 			<div className='row-span-3 relative h-full laptop:mx-auto z-10 hover:scale-105 cursor-pointer hover:z-20 transition duration-700 ease-in-out'>
 				<Image
 					src='/images/hero/african-festival.png'
@@ -36,6 +41,7 @@ const Catalogue = () => {
 					<div
 						className='relative z-10 hover:scale-110 cursor-pointer hover:z-20 transition duration-700 ease-in-out'
 						key={data.id}
+						onClick={() => router.push('/catalogue/4')}
 					>
 						<Image
 							src={data.imageUrl}

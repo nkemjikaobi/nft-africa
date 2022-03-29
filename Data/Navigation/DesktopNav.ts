@@ -7,7 +7,7 @@ export const DesktopNav = [
 	{
 		id: 2,
 		name: 'MarketPlace',
-		route: '/',
+		route: '/explore',
 	},
 	{
 		id: 3,

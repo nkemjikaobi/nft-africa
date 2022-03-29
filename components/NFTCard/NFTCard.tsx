@@ -15,12 +15,12 @@ interface INFTCard {
 }
 const NFTCard = ({ data, title }: INFTCard) => {
 	const router = useRouter();
-	const [loading, setLoading] = useState(true);
+	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
 		let mounted = true;
 		if (mounted) {
-			//setTimeout(() => setLoading(false), 5000);
+			setTimeout(() => setLoading(false), 5000);
 		}
 
 		return () => {

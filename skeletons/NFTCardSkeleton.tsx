@@ -14,18 +14,17 @@ const NFTCardSkeleton = () => {
 					width={200}
 					height={50}
 				/>
-				{router.pathname === '/' && (
-					<Skeleton
-						className='text-blue-950 mr-10 flex items-center'
-						width={150}
-						height={50}
-					/>
-				)}
 			</div>
 			<div className='mx-6 tablet:mx-6 mb-10 grid grid-cols-1 tablet:w-3/3 tablet:grid-cols-3 smallLaptop:grid-cols-4 gap-4 tablet:mb-8 cursor-pointer'>
 				{range(16).map((nft, index) => (
 					<div className='mb-4 bg-gray-200 hover:drop-shadow-lg' key={index}>
-						<Skeleton width={359} height={400} />
+						<div className='hidden tablet:block'>
+							<Skeleton width={359} height={400} />
+						</div>
+						<div className='tablet:hidden'>
+							<Skeleton width={344} height={300} />
+						</div>
+
 						<div className='p-3 flex justify-between items-center'>
 							<Skeleton width={100} />
 							<Skeleton width={100} />
