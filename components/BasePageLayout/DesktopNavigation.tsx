@@ -1,4 +1,5 @@
 import { DesktopNav } from 'componentData/Navigation/DesktopNav';
+import { connectWallet } from 'helpers/connectWallet';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
@@ -29,6 +30,7 @@ const DesktopNavigation = () => {
 							<a
 								href={data.route}
 								className={`${data.id !== 4 && 'hover:text-blue-950'}`}
+								onClick={() => connectWallet()}
 							>
 								{data.name}
 							</a>

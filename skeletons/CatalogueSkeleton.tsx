@@ -18,7 +18,7 @@ const CatalogueSkeleton = () => {
 			<div className='hidden tablet:block'>
 				<div className='grid grid-cols-3 gap-4'>
 					{range(6).map((data, index) => (
-						<div className='relative z-10 cursor-pointer' key={index}>
+						<div className='relative cursor-pointer' key={index}>
 							<Skeleton width={300} height={300} />
 						</div>
 					))}
@@ -28,7 +28,7 @@ const CatalogueSkeleton = () => {
 			<div className='hidden laptop:block'>
 				<div className='grid grid-cols-3 gap-4'>
 					{range(6).map((data, index) => (
-						<div className='relative z-10 cursor-pointer' key={index}>
+						<div className='relative cursor-pointer' key={index}>
 							<Skeleton width={300} height={300} />
 						</div>
 					))}
@@ -38,7 +38,7 @@ const CatalogueSkeleton = () => {
 			<div className='tablet:hidden'>
 				<div className='flex justify-between items-center'>
 					{range(3).map((data, index) => (
-						<div className='relative z-10 cursor-pointer' key={index}>
+						<div className='relative cursor-pointer' key={index}>
 							<Skeleton width={100} height={50} />
 						</div>
 					))}
@@ -47,7 +47,7 @@ const CatalogueSkeleton = () => {
 			<div className='tablet:hidden'>
 				<div className='flex justify-between items-center'>
 					{range(3).map((data, index) => (
-						<div className='relative z-10 cursor-pointer' key={index}>
+						<div className='relative cursor-pointer' key={index}>
 							<Skeleton width={100} height={50} />
 						</div>
 					))}
