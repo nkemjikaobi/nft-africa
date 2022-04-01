@@ -3,8 +3,17 @@ import { connectWallet } from 'helpers/connectWallet';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
+import { useRouter } from 'next/router';
 
 const DesktopNavigation = () => {
+	const router = useRouter();
+
+	const handleClick = (identifier: number, route: string) => {
+		if (identifier === 4) {
+			return connectWallet();
+		}
+		return router.push(route);
+	};
 	return (
 		<div className='flex justify-between items-center bg-white py-5 px-10 tablet:px-20 laptop:px-40 drop-shadow-md'>
 			<Link href='/'>
@@ -26,15 +35,16 @@ const DesktopNavigation = () => {
 							'border border-black rounded-md py-3 px-8 hover:bg-black hover:text-white'
 						}`}
 					>
-						<Link href={data.route}>
-							<a
-								href={data.route}
-								className={`${data.id !== 4 && 'hover:text-blue-950'}`}
-								onClick={() => connectWallet()}
+						<div>
+							<span
+								className={`cursor-pointer ${
+									data.id !== 4 && 'hover:text-blue-950'
+								}`}
+								onClick={() => handleClick(data.id, data.route)}
 							>
 								{data.name}
-							</a>
-						</Link>
+							</span>
+						</div>
 					</li>
 				))}
 			</ul>

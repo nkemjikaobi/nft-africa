@@ -5,12 +5,23 @@ import { DesktopNav } from 'componentData/Navigation/DesktopNav';
 import Link from 'next/link';
 import useClickOutside from 'hooks/useClickOutside';
 import Image from 'next/image';
+import { connectWallet } from 'helpers/connectWallet';
+import { useRouter } from 'next/router';
 
 const MobileNavigation = () => {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 	const node = useClickOutside(() => {
 		setIsOpen(false);
 	});
+
+	const router = useRouter();
+
+	const handleClick = (identifier: number, route: string) => {
+		if (identifier === 4) {
+			return connectWallet();
+		}
+		return router.push(route);
+	};
 	return (
 		<div className='bg-white'>
 			<div className='flex justify-between items-center  py-5 px-10 drop-shadow-md'>
@@ -35,14 +46,15 @@ const MobileNavigation = () => {
 					{DesktopNav.map(data => (
 						<li
 							key={data.id}
-							className={`mb-3 ${
+							className={`mb-3  ${
 								data.id === 4 &&
 								'border border-black rounded-md py-3 px-8 flex justify-center items-center'
 							}`}
+							onClick={() => handleClick(data.id, data.route)}
 						>
-							<Link href={data.route}>
-								<a href='#'>{data.name}</a>
-							</Link>
+							<div>
+								<span>{data.name}</span>
+							</div>
 						</li>
 					))}
 				</ul>
