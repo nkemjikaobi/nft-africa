@@ -1,19 +1,26 @@
 import { DesktopNav } from 'componentData/Navigation/DesktopNav';
-import { connectWallet } from 'helpers/connectWallet';
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import React, { useContext } from 'react';
 import { useRouter } from 'next/router';
+import WalletContext from 'context/wallet/WalletContext';
 
 const DesktopNavigation = () => {
 	const router = useRouter();
+	const walletContext = useContext(WalletContext);
+	const { connectWallet, isConnected, balance, disconnectWallet } =
+		walletContext;
 
-	const handleClick = (identifier: number, route: string) => {
-		if (identifier === 4) {
-			return connectWallet();
+	const handleClick = async (identifier: number, route: string) => {
+		if (isConnected && identifier === 3) {
+			return await disconnectWallet();
+		}
+		if (identifier === 3) {
+			return await connectWallet();
 		}
 		return router.push(route);
 	};
+
 	return (
 		<div className='flex justify-between items-center bg-white py-5 px-10 tablet:px-20 laptop:px-40 drop-shadow-md'>
 			<Link href='/'>
@@ -26,7 +33,7 @@ const DesktopNavigation = () => {
 					/>
 				</a>
 			</Link>
-			<ul className='flex justify-between items-center w-3/5 desktop:w-2/6'>
+			<ul className='flex justify-between items-center w-3/5 desktop:w-3/6'>
 				{DesktopNav.map(data => (
 					<li
 						key={data.id}
@@ -42,11 +49,18 @@ const DesktopNavigation = () => {
 								}`}
 								onClick={() => handleClick(data.id, data.route)}
 							>
-								{data.name}
+								{data.id === 3 && isConnected ? data.altName : data.name}
 							</span>
 						</div>
 					</li>
 				))}
+				{isConnected && (
+					<li className='border border-black rounded-md py-3 px-8 hover:bg-black hover:text-white'>
+						<div>
+							<span className='cursor-pointer'>{balance} ETH</span>
+						</div>
+					</li>
+				)}
 			</ul>
 		</div>
 	);

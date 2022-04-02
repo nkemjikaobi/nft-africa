@@ -86,7 +86,7 @@ const NFTCard = ({ data, title }: INFTCard) => {
 								{nft.author}
 							</p>
 						</div>
-						<p className='p-3 flex items-center '>
+						<div className='p-3 flex items-center '>
 							{nft.isAcquired ? (
 								<p className='flex items-center'>
 									Acquired
@@ -98,7 +98,7 @@ const NFTCard = ({ data, title }: INFTCard) => {
 									<AiTwotoneCloseCircle className='ml-2 text-xs text-green-400' />
 								</p>
 							)}
-						</p>
+						</div>
 					</div>
 				))}
 			</div>

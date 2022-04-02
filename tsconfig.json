@@ -22,7 +22,8 @@
 			"assets/*": ["./assets/*"],
 			"componentData/*": ["./componentData/*"],
 			"hooks/*": ["./hooks/*"],
-			"dto/*": ["./dto/*"]
+			"dto/*": ["./dto/*"],
+			"context/*": ["./context/*"]
 		}
 	},
 	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

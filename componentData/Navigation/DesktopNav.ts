@@ -12,7 +12,8 @@ export const DesktopNav = [
 	{
 		id: 3,
 		name: 'Login',
-		route: '/auth/login',
+		altName: 'Disconnect',
+		route: '#',
 	},
 	{
 		id: 4,

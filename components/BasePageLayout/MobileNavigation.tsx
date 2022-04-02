@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { AiOutlineClose } from 'react-icons/ai';
 import { DesktopNav } from 'componentData/Navigation/DesktopNav';
 import Link from 'next/link';
 import useClickOutside from 'hooks/useClickOutside';
 import Image from 'next/image';
-import { connectWallet } from 'helpers/connectWallet';
 import { useRouter } from 'next/router';
+import WalletContext from 'context/wallet/WalletContext';
 
 const MobileNavigation = () => {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -15,10 +15,16 @@ const MobileNavigation = () => {
 	});
 
 	const router = useRouter();
+	const walletContext = useContext(WalletContext);
+	const { connectWallet, isConnected, balance, disconnectWallet } =
+		walletContext;
 
-	const handleClick = (identifier: number, route: string) => {
-		if (identifier === 4) {
-			return connectWallet();
+	const handleClick = async (identifier: number, route: string) => {
+		if (isConnected && identifier === 3) {
+			return await disconnectWallet();
+		}
+		if (identifier === 3) {
+			return await connectWallet();
 		}
 		return router.push(route);
 	};
@@ -53,10 +59,19 @@ const MobileNavigation = () => {
 							onClick={() => handleClick(data.id, data.route)}
 						>
 							<div>
-								<span>{data.name}</span>
+								<span>
+									{data.id === 3 && isConnected ? data.altName : data.name}
+								</span>
 							</div>
 						</li>
 					))}
+					{isConnected && (
+						<li className='border border-black rounded-md py-3 px-8 flex justify-center items-center'>
+							<div>
+								<span>{balance} ETH</span>
+							</div>
+						</li>
+					)}
 				</ul>
 			)}
 		</div>
