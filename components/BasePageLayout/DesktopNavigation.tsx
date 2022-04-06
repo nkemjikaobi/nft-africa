@@ -8,12 +8,12 @@ import WalletContext from 'context/wallet/WalletContext';
 const DesktopNavigation = () => {
 	const router = useRouter();
 	const walletContext = useContext(WalletContext);
-	const { connectWallet, isConnected, balance, disconnectWallet } =
+	const { connectWallet, isConnected, balance, disconnectWallet, web3Modal } =
 		walletContext;
 
 	const handleClick = async (identifier: number, route: string) => {
 		if (isConnected && identifier === 3) {
-			return await disconnectWallet();
+			return await disconnectWallet(web3Modal);
 		}
 		if (identifier === 3) {
 			return await connectWallet();
@@ -57,7 +57,7 @@ const DesktopNavigation = () => {
 				{isConnected && (
 					<li className='border border-black rounded-md py-3 px-8 hover:bg-black hover:text-white'>
 						<div>
-							<span className='cursor-pointer'>{balance} ETH</span>
+							<span className='cursor-pointer'>{balance} MATIC</span>
 						</div>
 					</li>
 				)}

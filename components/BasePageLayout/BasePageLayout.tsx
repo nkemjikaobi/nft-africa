@@ -28,12 +28,16 @@ const BasePageLayout = ({
 		clearError,
 		monitorAccountChanged,
 		monitorDisconnect,
+		provider,
+		web3,
+		loadContract,
 	} = walletContext;
 
 	const reconnectWallet = async () => {
 		await connectWallet();
 	};
 
+	//Reconnect wallet on page refresh
 	useEffect(() => {
 		let mounted = true;
 
@@ -46,6 +50,7 @@ const BasePageLayout = ({
 		//eslint-disable-next-line
 	}, []);
 
+	//Handle Messages
 	useEffect(() => {
 		let mounted = true;
 
@@ -59,6 +64,7 @@ const BasePageLayout = ({
 		//eslint-disable-next-line
 	}, [message]);
 
+	//Handle Errors
 	useEffect(() => {
 		let mounted = true;
 
@@ -72,18 +78,32 @@ const BasePageLayout = ({
 		//eslint-disable-next-line
 	}, [error]);
 
+	//monitior account changed and monitor disconnect
 	useEffect(() => {
 		let mounted = true;
 
-		if (mounted) {
-			// monitorAccountChanged();
-			// monitorDisconnect();
+		if (mounted && provider !== null) {
+			monitorAccountChanged(provider);
+			monitorDisconnect(provider);
 		}
 		return () => {
 			mounted = false;
 		};
 		//eslint-disable-next-line
-	});
+	}, [provider]);
+
+	//load contract
+	useEffect(() => {
+		let mounted = true;
+
+		if (mounted && web3 !== null) {
+			loadContract(web3);
+		}
+		return () => {
+			mounted = false;
+		};
+		//eslint-disable-next-line
+	}, [web3]);
 	return (
 		<section>
 			{showNavigation && (

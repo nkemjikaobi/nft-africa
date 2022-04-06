@@ -11,13 +11,13 @@ export const DesktopNav = [
 	},
 	{
 		id: 3,
-		name: 'Login',
+		name: 'Connect',
 		altName: 'Disconnect',
 		route: '#',
 	},
 	{
 		id: 4,
 		name: 'Create',
-		route: '#',
+		route: '/nft/create',
 	},
 ];

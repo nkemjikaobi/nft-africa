@@ -1,5 +1,7 @@
 export const CONNECT_WALLET = 'CONNECT_WALLET';
 export const DISCONNECT_WALLET = 'DISCONNECT_WALLET';
+export const LOAD_CONTRACT = 'LOAD_CONTRACT';
+export const CREATE_NFT = 'CREATE_NFT';
 export const ERROR = 'ERROR';
 export const CLEAR_ERROR = 'CLEAR_ERROR';
 export const CLEAR_MESSAGE = 'CLEAR_MESSAGE';

@@ -16,12 +16,12 @@ const MobileNavigation = () => {
 
 	const router = useRouter();
 	const walletContext = useContext(WalletContext);
-	const { connectWallet, isConnected, balance, disconnectWallet } =
+	const { connectWallet, isConnected, balance, disconnectWallet, web3Modal } =
 		walletContext;
 
 	const handleClick = async (identifier: number, route: string) => {
 		if (isConnected && identifier === 3) {
-			return await disconnectWallet();
+			return await disconnectWallet(web3Modal);
 		}
 		if (identifier === 3) {
 			return await connectWallet();

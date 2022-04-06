@@ -6,6 +6,7 @@ import {
 	DISCONNECT_WALLET,
 	MONITOR_ACCOUNT_CHANGED,
 	MONITOR_DISCONNECT,
+	LOAD_CONTRACT,
 } from '../types';
 
 const contactReducer = (state: any, action: any) => {
@@ -17,6 +18,15 @@ const contactReducer = (state: any, action: any) => {
 				isConnected: true,
 				balance: action.payload.balance,
 				message: 'Wallet connected',
+				web3: action.payload.web3,
+				web3Modal: action.payload.web3Modal,
+				providerOptions: action.payload.providerOptions,
+				provider: action.payload.provider,
+			};
+		case LOAD_CONTRACT:
+			return {
+				...state,
+				contract: action.payload,
 			};
 		case DISCONNECT_WALLET:
 			return {
@@ -25,6 +35,10 @@ const contactReducer = (state: any, action: any) => {
 				isConnected: false,
 				balance: '',
 				message: 'Wallet Disconnected',
+				web3: null,
+				web3Modal: null,
+				providerOptions: null,
+				provider: null,
 			};
 		case MONITOR_DISCONNECT:
 			return {

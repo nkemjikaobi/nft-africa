@@ -11,6 +11,8 @@
   "dependencies": {
     "@types/lodash": "^4.14.180",
     "@walletconnect/web3-provider": "^1.7.7",
+    "ethers": "^5.6.2",
+    "ipfs-http-client": "^56.0.1",
     "lodash": "^4.17.21",
     "next": "12.1.0",
     "react": "17.0.2",

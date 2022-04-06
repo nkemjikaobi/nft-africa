@@ -9,12 +9,16 @@ import {
 	DISCONNECT_WALLET,
 	MONITOR_ACCOUNT_CHANGED,
 	MONITOR_DISCONNECT,
+	LOAD_CONTRACT,
 } from '../types';
 import Web3 from 'web3';
 import Web3Modal from 'web3modal';
 import WalletConnectProvider from '@walletconnect/web3-provider';
+import NFTJson from 'artifacts/nft.json';
 
-const { NEXT_PUBLIC_INFURA_API_URL } = process.env;
+//console.log(process.env);
+
+//const { NEXT_PUBLIC_INFURA_APP_ID, NEXT_PUBLIC_CONTRACT_ADDRESS } = process.env;
 
 const WalletState = (props: any) => {
 	const initialState = {
@@ -23,6 +27,12 @@ const WalletState = (props: any) => {
 		balance: '',
 		error: null,
 		message: null,
+		web3: null,
+		provider: null,
+		symbol: '',
+		providerOptions: null,
+		web3Modal: null,
+		contract: null,
 	};
 
 	const [state, dispatch] = useReducer(WalletReducer, initialState);
@@ -33,7 +43,7 @@ const WalletState = (props: any) => {
 			walletconnect: {
 				package: WalletConnectProvider, // required
 				options: {
-					infuraId: NEXT_PUBLIC_INFURA_API_URL,
+					infuraId: process.env.NEXT_PUBLIC_INFURA_APP_ID,
 				},
 			},
 		};
@@ -67,10 +77,36 @@ const WalletState = (props: any) => {
 				});
 				dispatch({
 					type: CONNECT_WALLET,
-					payload: { balance, accounts },
+					payload: {
+						balance,
+						accounts,
+						web3,
+						web3Modal,
+						providerOptions,
+						provider,
+					},
 				});
 				localStorage.setItem('isWalletConnected', 'true');
 			}
+		} catch (error: any) {
+			dispatch({
+				type: ERROR,
+				payload: error.message,
+			});
+		}
+	};
+
+	//Load Contract
+	const loadContract = async (web3: any) => {
+		try {
+			const contract = new web3.eth.Contract(
+				NFTJson,
+				`${process.env.NEXT_PUBLIC_CONTRACT_ADDRESS}`
+			);
+			dispatch({
+				type: LOAD_CONTRACT,
+				payload: contract,
+			});
 		} catch (error: any) {
 			dispatch({
 				type: ERROR,
@@ -94,23 +130,8 @@ const WalletState = (props: any) => {
 	};
 
 	//Disconnect wallet
-	const disconnectWallet = async () => {
-		const providerOptions = {
-			walletconnect: {
-				package: WalletConnectProvider, // required
-				options: {
-					infuraId: NEXT_PUBLIC_INFURA_API_URL,
-				},
-			},
-		};
-		const web3Modal = new Web3Modal({
-			theme: 'dark',
-			network: 'mainnet', // optional
-			cacheProvider: true, // optional
-			providerOptions, // required
-			//disableInjectedProvider: false
-		});
-		web3Modal.clearCachedProvider();
+	const disconnectWallet = async (modal: any) => {
+		modal.clearCachedProvider();
 		dispatch({
 			type: DISCONNECT_WALLET,
 		});
@@ -118,73 +139,25 @@ const WalletState = (props: any) => {
 	};
 
 	//Monitor disconnect
-	const monitorDisconnect = async () => {
-		const providerOptions = {
-			walletconnect: {
-				package: WalletConnectProvider, // required
-				options: {
-					infuraId: NEXT_PUBLIC_INFURA_API_URL,
-				},
-			},
-		};
-		const web3Modal = new Web3Modal({
-			theme: 'dark',
-			network: 'mainnet', // optional
-			cacheProvider: true, // optional
-			providerOptions, // required
-			//disableInjectedProvider: false
-		});
-		try {
-			const provider = await web3Modal.connect();
-			// Subscribe to session disconnection
-			provider.on('disconnect', (code: number, reason: string) => {
-				console.log(code, reason);
-				dispatch({
-					type: MONITOR_DISCONNECT,
-					payload: reason,
-				});
-				localStorage.removeItem('isWalletConnected');
-			});
-		} catch (error: any) {
+	const monitorDisconnect = async (provider: any) => {
+		// Subscribe to session disconnection
+		provider.on('disconnect', (code: number, reason: string) => {
 			dispatch({
-				type: ERROR,
-				payload: error.message,
+				type: MONITOR_DISCONNECT,
+				payload: reason,
 			});
-		}
+			localStorage.removeItem('isWalletConnected');
+		});
 	};
 	//Monitor account changed
-	const monitorAccountChanged = async () => {
-		const providerOptions = {
-			walletconnect: {
-				package: WalletConnectProvider, // required
-				options: {
-					infuraId: NEXT_PUBLIC_INFURA_API_URL,
-				},
-			},
-		};
-		const web3Modal = new Web3Modal({
-			theme: 'dark',
-			network: 'mainnet', // optional
-			cacheProvider: true, // optional
-			providerOptions, // required
-			//disableInjectedProvider: false
-		});
-		try {
-			const provider = await web3Modal.connect();
-			// Subscribe to accounts change
-			provider.on('accountsChanged', (accounts: string[]) => {
-				console.log(accounts);
-				dispatch({
-					type: MONITOR_ACCOUNT_CHANGED,
-				});
-				localStorage.removeItem('isWalletConnected');
-			});
-		} catch (error: any) {
+	const monitorAccountChanged = async (provider: any) => {
+		// Subscribe to accounts change
+		provider.on('accountsChanged', (accounts: string[]) => {
 			dispatch({
-				type: ERROR,
-				payload: error.message,
+				type: MONITOR_ACCOUNT_CHANGED,
 			});
-		}
+			localStorage.removeItem('isWalletConnected');
+		});
 	};
 
 	return (
@@ -195,12 +168,19 @@ const WalletState = (props: any) => {
 				balance: state.balance,
 				error: state.error,
 				message: state.message,
+				web3: state.web3,
+				provider: state.provider,
+				symbol: state.symbol,
+				providerOptions: state.providerOptions,
+				web3Modal: state.web3Modal,
+				contract: state.contract,
 				clearError,
 				connectWallet,
 				disconnectWallet,
 				clearMessage,
 				monitorAccountChanged,
 				monitorDisconnect,
+				loadContract,
 			}}
 		>
 			{props.children}

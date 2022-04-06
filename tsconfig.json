@@ -23,7 +23,8 @@
 			"componentData/*": ["./componentData/*"],
 			"hooks/*": ["./hooks/*"],
 			"dto/*": ["./dto/*"],
-			"context/*": ["./context/*"]
+			"context/*": ["./context/*"],
+			"artifacts/*": ["./artifacts/*"]
 		}
 	},
 	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
