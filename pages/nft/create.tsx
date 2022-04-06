@@ -44,6 +44,9 @@ const CreateNFT = () => {
 	};
 
 	const handleSubmit = async () => {
+		if (web3 === null) {
+			return toast.error("Connect Wallet");
+		}
 		if (name === '' || fileUrl === '' || description === '' || price === '') {
 			return toast.error('All fields are required');
 		}

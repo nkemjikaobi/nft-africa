@@ -23,7 +23,7 @@ const Catalogue = () => {
 	) : (
 		<div
 			className='grid p-5 tablet:p-5 desktop:grid-cols-[600px_minmax(900px,_1fr)_100px] gap-4 tablet:flex tablet:items-center tablet:flex-col laptop:grid'
-			onClick={() => router.push('/catalogue/2')}
+			onClick={() => router.push('/nft/2')}
 		>
 			<div className='row-span-3 relative h-full laptop:mx-auto  hover:scale-105 cursor-pointer hover:z-20 transition duration-700 ease-in-out'>
 				<Image
@@ -41,7 +41,7 @@ const Catalogue = () => {
 					<div
 						className='relative  hover:scale-110 cursor-pointer hover:z-20 transition duration-700 ease-in-out'
 						key={data.id}
-						onClick={() => router.push('/catalogue/4')}
+						onClick={() => router.push('/nft/4')}
 					>
 						<Image
 							src={data.imageUrl}

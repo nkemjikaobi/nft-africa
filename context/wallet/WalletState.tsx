@@ -19,6 +19,7 @@ import Web3Modal from 'web3modal';
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import NFTJson from 'artifacts/nft.json';
 import axios from 'axios';
+import convertToEther from 'helpers/convertToEther';
 
 const WalletState = (props: any) => {
 	const initialState = {
@@ -74,7 +75,7 @@ const WalletState = (props: any) => {
 							payload: err.message,
 						});
 					} else {
-						balance = web3.utils.fromWei(result, 'ether');
+						balance = convertToEther(web3, result);
 					}
 				});
 				dispatch({

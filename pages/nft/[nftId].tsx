@@ -9,6 +9,7 @@ import Link from 'next/link';
 import React, { useContext, useEffect, useState } from 'react';
 import { FaEthereum } from 'react-icons/fa';
 import WalletContext from 'context/wallet/WalletContext';
+import convertToEther from 'helpers/convertToEther';
 
 const ProductDetailPage = ({ nftId }: any) => {
 	const time = new Date();
@@ -102,7 +103,7 @@ const ProductDetailPage = ({ nftId }: any) => {
 									<p className='flex items-center mt-1'>
 										<FaEthereum />{' '}
 										<span className='text-sm tablet:text-2xl font-bold mx-2'>
-											{web3.utils.fromWei(singleNft.price, 'ether')} ETH
+											{convertToEther(web3, singleNft.price)} ETH
 										</span>{' '}
 										<span className='text-gray-400 text-sm'>≈ $ 318.60</span>
 									</p>

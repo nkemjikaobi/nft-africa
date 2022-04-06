@@ -8,6 +8,7 @@ import { FaGreaterThan } from 'react-icons/fa';
 import { useRouter } from 'next/router';
 import NFTCardSkeleton from 'skeletons/NFTCardSkeleton';
 import WalletContext from 'context/wallet/WalletContext';
+import convertToEther from 'helpers/convertToEther';
 
 interface INFTCard {
 	data: any;
@@ -62,14 +63,14 @@ const NFTCard = ({ data, title }: INFTCard) => {
 									<p className='flex items-center'>
 										Price <HiCurrencyDollar className='ml-2' />
 									</p>
-									<p>{web3.utils.fromWei(nft.price, 'ether')} ETH</p>
+									<p>{convertToEther(web3, nft.price)} ETH</p>
 								</div>
 							) : (
 								<div className='p-3 flex justify-between items-center'>
 									<p className='flex items-center'>
 										Current Bid <FaGavel className='ml-2' />
 									</p>
-									<p>{web3.utils.fromWei(nft.price, 'ether')} ETH</p>
+									<p>{convertToEther(web3, nft.price)} ETH</p>
 								</div>
 							)}
 
