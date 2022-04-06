@@ -31,10 +31,15 @@ const BasePageLayout = ({
 		provider,
 		web3,
 		loadContract,
+		connectGuest,
+		guestWeb3,
 	} = walletContext;
 
 	const reconnectWallet = async () => {
 		await connectWallet();
+	};
+	const connectAsGuest = async () => {
+		await connectGuest();
 	};
 
 	//Reconnect wallet on page refresh
@@ -43,6 +48,8 @@ const BasePageLayout = ({
 
 		if (mounted && localStorage?.getItem('isWalletConnected') === 'true') {
 			reconnectWallet();
+		} else {
+			connectAsGuest();
 		}
 		return () => {
 			mounted = false;
@@ -92,7 +99,7 @@ const BasePageLayout = ({
 		//eslint-disable-next-line
 	}, [provider]);
 
-	//load contract
+	//load contract for connected users
 	useEffect(() => {
 		let mounted = true;
 
@@ -104,6 +111,19 @@ const BasePageLayout = ({
 		};
 		//eslint-disable-next-line
 	}, [web3]);
+
+	//load contract for guests
+	useEffect(() => {
+		let mounted = true;
+
+		if (mounted && guestWeb3 !== null) {
+			loadContract(guestWeb3);
+		}
+		return () => {
+			mounted = false;
+		};
+		//eslint-disable-next-line
+	}, [guestWeb3]);
 	return (
 		<section>
 			{showNavigation && (

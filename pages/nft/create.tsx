@@ -21,7 +21,7 @@ const CreateNFT = () => {
 	const [imageLoading, setImageLoading] = useState<boolean>(false);
 	const walletContext = useContext(WalletContext);
 
-	const { web3, address, contract, createNft } = walletContext;
+	const { web3, address, contract, createNft, isConnected } = walletContext;
 
 	const router = useRouter();
 
@@ -44,8 +44,8 @@ const CreateNFT = () => {
 	};
 
 	const handleSubmit = async () => {
-		if (web3 === null) {
-			return toast.error("Connect Wallet");
+		if (!isConnected) {
+			return toast.error('Connect Wallet');
 		}
 		if (name === '' || fileUrl === '' || description === '' || price === '') {
 			return toast.error('All fields are required');
@@ -96,7 +96,12 @@ const CreateNFT = () => {
 							<BsImageFill className='text-6xl cursor-pointer' />
 						)}
 					</label>
-					{/* <AiOutlineClose className='absolute z-20 top-10 right-0 text-white'/> */}
+					{fileUrl !== undefined && (
+						<AiOutlineClose
+							className='absolute z-20 top-5 right-5 text-white text-xl cursor-pointer'
+							onClick={() => setFileUrl(undefined)}
+						/>
+					)}
 				</div>
 				<div className='mb-8'>
 					<input

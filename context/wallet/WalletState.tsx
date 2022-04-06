@@ -13,6 +13,7 @@ import {
 	FETCH_ALL_NFTS,
 	FETCH_SINGLE_NFT,
 	CREATE_NFT,
+	CONNECT_GUEST,
 } from '../types';
 import Web3 from 'web3';
 import Web3Modal from 'web3modal';
@@ -25,6 +26,7 @@ const WalletState = (props: any) => {
 	const initialState = {
 		address: null,
 		isConnected: false,
+		isGuest: true,
 		balance: '',
 		error: null,
 		message: null,
@@ -36,6 +38,8 @@ const WalletState = (props: any) => {
 		contract: null,
 		allNfts: null,
 		singleNft: null,
+		guestWeb3: null,
+		guestProvider: null,
 	};
 
 	const [state, dispatch] = useReducer(WalletReducer, initialState);
@@ -91,6 +95,29 @@ const WalletState = (props: any) => {
 				});
 				localStorage.setItem('isWalletConnected', 'true');
 			}
+		} catch (error: any) {
+			dispatch({
+				type: ERROR,
+				payload: error.message,
+			});
+		}
+	};
+
+	//Connect Guest
+	const connectGuest = async () => {
+
+		try {
+			const provider = window.ethereum;
+
+			const web3 = new Web3(provider);
+
+			dispatch({
+				type: CONNECT_GUEST,
+				payload: {
+					web3,
+					provider,
+				},
+			});
 		} catch (error: any) {
 			dispatch({
 				type: ERROR,
@@ -229,6 +256,7 @@ const WalletState = (props: any) => {
 			type: DISCONNECT_WALLET,
 		});
 		localStorage.removeItem('isWalletConnected');
+		connectGuest();
 	};
 
 	//Monitor disconnect
@@ -269,6 +297,9 @@ const WalletState = (props: any) => {
 				contract: state.contract,
 				allNfts: state.allNfts,
 				singleNft: state.singleNft,
+				guestWeb3: state.guestWeb3,
+				guestProvider: state.guestProvider,
+				isGuest: state.isGuest,
 				clearError,
 				connectWallet,
 				disconnectWallet,
@@ -279,6 +310,7 @@ const WalletState = (props: any) => {
 				fetchAllNfts,
 				fetchSingleNft,
 				createNft,
+				connectGuest,
 			}}
 		>
 			{props.children}

@@ -7,7 +7,7 @@ import { History } from 'componentData/DetailPage/History';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useContext, useEffect, useState } from 'react';
-import { FaEthereum } from 'react-icons/fa';
+import { FaEthereum, FaSpinner } from 'react-icons/fa';
 import WalletContext from 'context/wallet/WalletContext';
 import convertToEther from 'helpers/convertToEther';
 
@@ -20,7 +20,8 @@ const ProductDetailPage = ({ nftId }: any) => {
 	});
 	const walletContext = useContext(WalletContext);
 
-	const { fetchSingleNft, contract, singleNft, web3 } = walletContext;
+	const { fetchSingleNft, contract, singleNft, web3, isGuest, guestWeb3 } =
+		walletContext;
 
 	useEffect(() => {
 		let mounted = true;
@@ -63,6 +64,7 @@ const ProductDetailPage = ({ nftId }: any) => {
 										className='font-bold text-sm hover:underline hover:text-blue-950'
 									>
 										{singleNft.owner}
+										{/* <FaSpinner className='animate-spin h-16 w-16 mr-3 text-9xl' /> */}
 									</a>
 								</Link>
 							</div>
@@ -103,7 +105,11 @@ const ProductDetailPage = ({ nftId }: any) => {
 									<p className='flex items-center mt-1'>
 										<FaEthereum />{' '}
 										<span className='text-sm tablet:text-2xl font-bold mx-2'>
-											{convertToEther(web3, singleNft.price)} ETH
+											{convertToEther(
+												isGuest ? guestWeb3 : web3,
+												singleNft.price
+											)}
+											ETH
 										</span>{' '}
 										<span className='text-gray-400 text-sm'>≈ $ 318.60</span>
 									</p>

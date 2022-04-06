@@ -18,7 +18,7 @@ const NFTCard = ({ data, title }: INFTCard) => {
 	const router = useRouter();
 	const walletContext = useContext(WalletContext);
 
-	const { web3 } = walletContext;
+	const { web3, isGuest, guestWeb3 } = walletContext;
 	console.log({ data });
 
 	return data === null ? (
@@ -63,14 +63,18 @@ const NFTCard = ({ data, title }: INFTCard) => {
 									<p className='flex items-center'>
 										Price <HiCurrencyDollar className='ml-2' />
 									</p>
-									<p>{convertToEther(web3, nft.price)} ETH</p>
+									<p>
+										{convertToEther(isGuest ? guestWeb3 : web3, nft.price)} ETH
+									</p>
 								</div>
 							) : (
 								<div className='p-3 flex justify-between items-center'>
 									<p className='flex items-center'>
 										Current Bid <FaGavel className='ml-2' />
 									</p>
-									<p>{convertToEther(web3, nft.price)} ETH</p>
+									<p>
+										{convertToEther(isGuest ? guestWeb3 : web3, nft.price)} ETH
+									</p>
 								</div>
 							)}
 
