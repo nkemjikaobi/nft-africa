@@ -105,7 +105,6 @@ const WalletState = (props: any) => {
 
 	//Connect Guest
 	const connectGuest = async () => {
-
 		try {
 			const provider = window.ethereum;
 

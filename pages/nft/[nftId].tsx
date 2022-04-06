@@ -121,14 +121,14 @@ const ProductDetailPage = ({ nftId }: any) => {
 									</p>
 								</div>
 							</div>
-							<button className='bg-black -ml-20 tablet:ml-0 flex items-center justify-center p-5 w-full tablet:w-full smallLaptop:w-1/3 border border-black rounded-md text-white my-5 mb-8 hover:bg-white hover:text-black '>
+							<button className='bg-black -ml-20 tablet:ml-0 flex items-center justify-center p-5 w-full tablet:w-2/3 smallLaptop:w-1/3 border border-black rounded-md text-white my-5 mb-8 hover:bg-white hover:text-black '>
 								Buy Now
 							</button>
 							<div className='mt-4 -ml-20 tablet:ml-0'>
 								<h4 className='font-extrabold '>History</h4>
 								<p className='text-black mb-4'>------------</p>
 							</div>
-							<div className='-ml-20 tablet:ml-0 '>
+							<div className='-ml-20 tablet:ml-0 tablet:w-4/5 laptop:w-full '>
 								<NFTHistory history={History} />
 							</div>
 						</div>

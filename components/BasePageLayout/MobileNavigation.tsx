@@ -68,7 +68,7 @@ const MobileNavigation = () => {
 					{isConnected && (
 						<li className='border border-black rounded-md py-3 px-8 flex justify-center items-center'>
 							<div>
-								<span>{balance} ETH</span>
+								<span>{Number(balance).toFixed(4)} ETH</span>
 							</div>
 						</li>
 					)}
