@@ -1,15 +1,10 @@
 import Image from 'next/image';
 import React from 'react';
 
-const MagnifiedNFT = () => {
+const MagnifiedNFT = ({ url }: any) => {
 	return (
 		<div>
-			<Image
-				alt='nft image'
-				height={800}
-				width={800}
-				src='/images/hero/1.png'
-			/>
+			<Image alt='nft image' height={700} width={800} src={url} />
 		</div>
 	);
 };

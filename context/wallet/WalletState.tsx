@@ -11,6 +11,8 @@ import {
 	MONITOR_DISCONNECT,
 	LOAD_CONTRACT,
 	FETCH_ALL_NFTS,
+	FETCH_SINGLE_NFT,
+	CREATE_NFT,
 } from '../types';
 import Web3 from 'web3';
 import Web3Modal from 'web3modal';
@@ -32,6 +34,7 @@ const WalletState = (props: any) => {
 		web3Modal: null,
 		contract: null,
 		allNfts: null,
+		singleNft: null,
 	};
 
 	const [state, dispatch] = useReducer(WalletReducer, initialState);
@@ -115,10 +118,67 @@ const WalletState = (props: any) => {
 					return item;
 				})
 			);
-			console.log({ data });
 			dispatch({
 				type: FETCH_ALL_NFTS,
 				payload: data,
+			});
+		} catch (error: any) {
+			dispatch({
+				type: ERROR,
+				payload: error.message,
+			});
+		}
+	};
+
+	//Fetch Single Nft
+	const fetchSingleNft = async (contract: any, id: number) => {
+		try {
+			const all_nfts = await contract.methods.fetchMarketItems().call();
+			const data = await Promise.all(
+				all_nfts.map(async (dat: any) => {
+					const nft = await contract.methods.tokenURI(dat.tokenId).call();
+					const nftData: any = await axios.get(nft);
+					let item: any = {};
+					item.tokenId = dat.tokenId;
+					item.fileUrl = nftData.data.fileUrl;
+					item.name = nftData.data.name;
+					item.description = nftData.data.description;
+					item.owner = dat.owner;
+					item.price = dat.price;
+					item.seller = dat.seller;
+					item.sold = dat.sold;
+					return item;
+				})
+			);
+			const singleNft = data.filter((nft: any) => nft.tokenId === id);
+			dispatch({
+				type: FETCH_SINGLE_NFT,
+				payload: singleNft[0],
+			});
+		} catch (error: any) {
+			dispatch({
+				type: ERROR,
+				payload: error.message,
+			});
+		}
+	};
+
+	//Create NFT
+	const createNft = async (
+		contract: any,
+		finalUrl: any,
+		auctionPrice: any,
+		listingPrice: any,
+		address: any
+	) => {
+		try {
+			await contract.methods.createToken(finalUrl, auctionPrice).send({
+				from: address,
+				value: listingPrice,
+			});
+
+			dispatch({
+				type: CREATE_NFT,
 			});
 		} catch (error: any) {
 			dispatch({
@@ -207,6 +267,7 @@ const WalletState = (props: any) => {
 				web3Modal: state.web3Modal,
 				contract: state.contract,
 				allNfts: state.allNfts,
+				singleNft: state.singleNft,
 				clearError,
 				connectWallet,
 				disconnectWallet,
@@ -215,6 +276,8 @@ const WalletState = (props: any) => {
 				monitorDisconnect,
 				loadContract,
 				fetchAllNfts,
+				fetchSingleNft,
+				createNft,
 			}}
 		>
 			{props.children}

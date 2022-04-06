@@ -18,6 +18,7 @@ const NFTCard = ({ data, title }: INFTCard) => {
 	const walletContext = useContext(WalletContext);
 
 	const { web3 } = walletContext;
+	console.log({ data });
 
 	return data === null ? (
 		<NFTCardSkeleton />
@@ -44,9 +45,7 @@ const NFTCard = ({ data, title }: INFTCard) => {
 						<div
 							className='mb-4 bg-gray-200 hover:drop-shadow-lg'
 							key={nft.tokenId}
-							onClick={() =>
-								router.push(`${nft.name.toLowerCase()}/${nft.tokenId}`)
-							}
+							onClick={() => router.push(`nft/${nft.tokenId}`)}
 						>
 							<Image
 								src={nft.fileUrl}
@@ -63,7 +62,7 @@ const NFTCard = ({ data, title }: INFTCard) => {
 									<p className='flex items-center'>
 										Price <HiCurrencyDollar className='ml-2' />
 									</p>
-									<p>${nft.price}</p>
+									<p>{web3.utils.fromWei(nft.price, 'ether')} ETH</p>
 								</div>
 							) : (
 								<div className='p-3 flex justify-between items-center'>

@@ -1,13 +1,14 @@
 import BasePageLayout from 'components/BasePageLayout/BasePageLayout';
 import React, { useContext, useState } from 'react';
 import { BsArrowRight } from 'react-icons/bs';
-import { create } from 'ipfs-http-client';
+import * as ipfsClient from 'ipfs-http-client';
 import toast, { Toaster } from 'react-hot-toast';
 import WalletContext from 'context/wallet/WalletContext';
 import { BsImageFill } from 'react-icons/bs';
 import { FaSpinner } from 'react-icons/fa';
 import { AiOutlineClose } from 'react-icons/ai';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 const CreateNFT = () => {
 	const [name, setName] = useState<string>('');
@@ -20,8 +21,11 @@ const CreateNFT = () => {
 	const [imageLoading, setImageLoading] = useState<boolean>(false);
 	const walletContext = useContext(WalletContext);
 
-	const { web3, address, contract } = walletContext;
+	const { web3, address, contract, createNft } = walletContext;
 
+	const router = useRouter();
+
+	const create: any = ipfsClient.create;
 	const client = create(`${process.env.NEXT_PUBLIC_IPFS_URL}`);
 
 	const handleImage = async (e: any) => {
@@ -29,13 +33,13 @@ const CreateNFT = () => {
 		const file = e.target.files[0];
 		try {
 			const res = await client.add(file, {
-				progress: prog => console.log(`received: ${prog}`),
+				progress: (prog: any) => console.log(`received: ${prog}`),
 			});
 			const url = `${process.env.NEXT_PUBLIC_IPFS_BASE_URL}/${res.path}`;
 			setFileUrl(url);
 			setImageLoading(false);
-		} catch (error) {
-			console.log(error);
+		} catch (error: any) {
+			toast.error(error.message);
 		}
 	};
 
@@ -48,21 +52,22 @@ const CreateNFT = () => {
 		const res = await client.add(data);
 		const url = `${process.env.NEXT_PUBLIC_IPFS_BASE_URL}/${res.path}`;
 		setFinalUrl(url);
-		setLoading(false);
 
-		//Get listing price
-		const listingPrice = await contract.methods
-			.getListingPrice()
-			.call({ from: `${address}` });
+		try {
+			//Get listing price
+			const listingPrice = await contract.methods
+				.getListingPrice()
+				.call({ from: `${address}` });
 
-		const auctionPrice = await web3.utils.toWei(price, 'ether');
-
-		const resp = await contract.methods
-			.createToken(finalUrl, auctionPrice)
-			.send({
-				from: address,
-				value: listingPrice,
-			});
+			const auctionPrice = await web3.utils.toWei(price, 'ether');
+			console.log({ auctionPrice, listingPrice });
+			await createNft(contract, finalUrl, auctionPrice, listingPrice, address);
+			toast.success('NFT Minted and Created');
+			setLoading(false);
+			router.push('/explore');
+		} catch (error: any) {
+			toast.error(error.message);
+		}
 	};
 	return (
 		<BasePageLayout>
