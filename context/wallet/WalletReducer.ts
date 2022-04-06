@@ -45,7 +45,7 @@ const contactReducer = (state: any, action: any) => {
 		case CREATE_NFT:
 			return {
 				...state,
-				message: "'NFT Minted and Created",
+				message: "NFT Minted and Created",
 			};
 		case FETCH_ALL_NFTS:
 			return {
