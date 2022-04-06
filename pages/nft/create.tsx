@@ -76,11 +76,11 @@ const CreateNFT = () => {
 		<BasePageLayout>
 			<div className='tablet:container tablet:w-600 text-center mb-32'>
 				<Toaster position='top-right' />
-				<h1 className='uppercase text-base tablet:text-5xl font-extrabold mb-8 mt-64'>
+				<h1 className='uppercase text-2xl tablet:text-5xl font-extrabold mb-8 mt-64'>
 					Create NFT
 				</h1>
 
-				<div className='mb-8 relative border ml-28 border-black border-dotted flex items-center justify-center w-96 h-64 rounded-lg'>
+				<div className='mb-8 relative border ml-16 tablet:ml-28 border-black border-dotted flex items-center justify-center w-64 h-64 tablet:w-96 tablet:h-64 rounded-lg'>
 					<label className='w-full h-full flex items-center justify-center cursor-pointer'>
 						<input
 							className='bg-gray-200 hidden p-5 border border-gray-300 rounded-md w-2/3 focus:border-black focus:outline-black'
