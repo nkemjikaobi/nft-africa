@@ -1,38 +1,25 @@
 import Image from 'next/image';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { FaEthereum, FaGavel } from 'react-icons/fa';
 import { HiCurrencyDollar } from 'react-icons/hi';
 import { AiTwotoneCloseCircle } from 'react-icons/ai';
-import INFT from 'dto/NFT/INFT';
 import Link from 'next/link';
 import { FaGreaterThan } from 'react-icons/fa';
 import { useRouter } from 'next/router';
 import NFTCardSkeleton from 'skeletons/NFTCardSkeleton';
 import WalletContext from 'context/wallet/WalletContext';
-import axios from 'axios';
 
 interface INFTCard {
-	data: Array<INFT>;
+	data: any;
 	title: string;
 }
 const NFTCard = ({ data, title }: INFTCard) => {
 	const router = useRouter();
 	const walletContext = useContext(WalletContext);
 
-	const { fetchAllNfts, contract, allNfts, web3 } = walletContext;
+	const { web3 } = walletContext;
 
-	useEffect(() => {
-		let mounted = true;
-		if (mounted && contract !== null) {
-			fetchAllNfts(contract);
-		}
-
-		return () => {
-			mounted = false;
-		};
-		//eslint-disable-next-line
-	}, [contract]);
-	return allNfts === null ? (
+	return data === null ? (
 		<NFTCardSkeleton />
 	) : (
 		<div className='mt-10 tablet:p-10 smallLaptop:p-20' id='boom'>
@@ -52,8 +39,8 @@ const NFTCard = ({ data, title }: INFTCard) => {
 				)}
 			</div>
 			<div className='mx-6 tablet:mx-6 mb-10 grid grid-cols-1 tablet:w-3/3 tablet:grid-cols-3 smallLaptop:grid-cols-4 gap-6 tablet:mb-8 cursor-pointer'>
-				{allNfts &&
-					allNfts.map((nft: any) => (
+				{data &&
+					data.map((nft: any) => (
 						<div
 							className='mb-4 bg-gray-200 hover:drop-shadow-lg'
 							key={nft.tokenId}
