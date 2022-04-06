@@ -6,6 +6,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import WalletContext from 'context/wallet/WalletContext';
 import { BsImageFill } from 'react-icons/bs';
 import { FaSpinner } from 'react-icons/fa';
+import { AiOutlineClose } from 'react-icons/ai';
 import Image from 'next/image';
 
 const CreateNFT = () => {
@@ -19,7 +20,7 @@ const CreateNFT = () => {
 	const [imageLoading, setImageLoading] = useState<boolean>(false);
 	const walletContext = useContext(WalletContext);
 
-	const { web3, address } = walletContext;
+	const { web3, address, contract } = walletContext;
 
 	const client = create(`${process.env.NEXT_PUBLIC_IPFS_URL}`);
 
@@ -47,13 +48,21 @@ const CreateNFT = () => {
 		const res = await client.add(data);
 		const url = `${process.env.NEXT_PUBLIC_IPFS_BASE_URL}/${res.path}`;
 		setFinalUrl(url);
-		toast.success('NFT Image Uploaded');
 		setLoading(false);
 
 		//Get listing price
-		// const listingPrice = await contract.methods
-		// 	.getListingPrice()
-		// 	.call({ from: `${address}` });
+		const listingPrice = await contract.methods
+			.getListingPrice()
+			.call({ from: `${address}` });
+
+		const auctionPrice = await web3.utils.toWei(price, 'ether');
+
+		const resp = await contract.methods
+			.createToken(finalUrl, auctionPrice)
+			.send({
+				from: address,
+				value: listingPrice,
+			});
 	};
 	return (
 		<BasePageLayout>
@@ -63,7 +72,7 @@ const CreateNFT = () => {
 					Create NFT
 				</h1>
 
-				<div className='mb-8 border ml-28 border-black border-dotted flex items-center justify-center w-96 h-64 rounded-lg'>
+				<div className='mb-8 relative border ml-28 border-black border-dotted flex items-center justify-center w-96 h-64 rounded-lg'>
 					<label className='w-full h-full flex items-center justify-center cursor-pointer'>
 						<input
 							className='bg-gray-200 hidden p-5 border border-gray-300 rounded-md w-2/3 focus:border-black focus:outline-black'
@@ -79,6 +88,7 @@ const CreateNFT = () => {
 							<BsImageFill className='text-6xl cursor-pointer' />
 						)}
 					</label>
+					{/* <AiOutlineClose className='absolute z-20 top-10 right-0 text-white'/> */}
 				</div>
 				<div className='mb-8'>
 					<input
@@ -102,7 +112,7 @@ const CreateNFT = () => {
 					<input
 						className='bg-gray-200 p-5 border border-gray-300 rounded-md w-2/3 focus:border-black focus:outline-black'
 						type='number'
-						placeholder='Price (MATIC)'
+						placeholder='Price (ETH)'
 						value={price}
 						onChange={e => setPrice(e.target.value)}
 					/>

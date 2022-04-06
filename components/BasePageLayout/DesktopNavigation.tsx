@@ -57,7 +57,7 @@ const DesktopNavigation = () => {
 				{isConnected && (
 					<li className='border border-black rounded-md py-3 px-8 hover:bg-black hover:text-white'>
 						<div>
-							<span className='cursor-pointer'>{balance} MATIC</span>
+							<span className='cursor-pointer'>{balance} ETH</span>
 						</div>
 					</li>
 				)}

@@ -7,6 +7,7 @@ import {
 	MONITOR_ACCOUNT_CHANGED,
 	MONITOR_DISCONNECT,
 	LOAD_CONTRACT,
+	FETCH_ALL_NFTS
 } from '../types';
 
 const contactReducer = (state: any, action: any) => {
@@ -27,6 +28,11 @@ const contactReducer = (state: any, action: any) => {
 			return {
 				...state,
 				contract: action.payload,
+			};
+		case FETCH_ALL_NFTS:
+			return {
+				...state,
+				allNfts: action.payload,
 			};
 		case DISCONNECT_WALLET:
 			return {

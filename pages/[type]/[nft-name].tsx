@@ -6,7 +6,7 @@ import useClickOutside from 'hooks/useClickOutside';
 import { History } from 'componentData/DetailPage/History';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FaEthereum } from 'react-icons/fa';
 import NFTDetailSkeleton from 'skeletons/NFTDetailSkeleton';
 
@@ -29,6 +29,7 @@ const ProductDetailPage = () => {
 			mounted = false;
 		};
 	}, []);
+
 	return (
 		<BasePageLayout>
 			{loading ? (
