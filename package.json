@@ -1,38 +1,42 @@
 {
-  "name": "nft_africa",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev -p 3040",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "@types/lodash": "^4.14.180",
-    "@walletconnect/web3-provider": "^1.7.7",
-    "axios": "^0.26.1",
-    "ethers": "^5.6.2",
-    "ipfs-http-client": "^56.0.1",
-    "lodash": "^4.17.21",
-    "next": "12.1.0",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
-    "react-hot-toast": "^2.2.0",
-    "react-icons": "^4.3.1",
-    "react-loading-skeleton": "^3.0.3",
-    "react-timer-hook": "^3.0.5",
-    "web3": "^1.7.1",
-    "web3modal": "^1.9.5"
-  },
-  "devDependencies": {
-    "@types/node": "17.0.21",
-    "@types/react": "17.0.41",
-    "autoprefixer": "^10.4.4",
-    "eslint": "8.11.0",
-    "eslint-config-next": "12.1.0",
-    "postcss": "^8.4.12",
-    "tailwindcss": "^3.0.23",
-    "typescript": "4.6.2"
-  }
+	"name": "nft_africa",
+	"version": "0.1.0",
+	"private": true,
+	"engines": {
+		"node": "16.14.2",
+		"npm": "8.2.0"
+	},
+	"scripts": {
+		"dev": "next dev -p 3040",
+		"build": "next build",
+		"start": "next start",
+		"lint": "next lint"
+	},
+	"dependencies": {
+		"@types/lodash": "^4.14.180",
+		"@walletconnect/web3-provider": "^1.7.7",
+		"axios": "^0.26.1",
+		"ethers": "^5.6.2",
+		"ipfs-http-client": "^56.0.1",
+		"lodash": "^4.17.21",
+		"next": "12.1.0",
+		"react": "17.0.2",
+		"react-dom": "17.0.2",
+		"react-hot-toast": "^2.2.0",
+		"react-icons": "^4.3.1",
+		"react-loading-skeleton": "^3.0.3",
+		"react-timer-hook": "^3.0.5",
+		"web3": "^1.7.1",
+		"web3modal": "^1.9.5"
+	},
+	"devDependencies": {
+		"@types/node": "17.0.21",
+		"@types/react": "17.0.41",
+		"autoprefixer": "^10.4.4",
+		"eslint": "8.11.0",
+		"eslint-config-next": "12.1.0",
+		"postcss": "^8.4.12",
+		"tailwindcss": "^3.0.23",
+		"typescript": "4.6.2"
+	}
 }
