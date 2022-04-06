@@ -63,11 +63,8 @@ const CreateNFT = () => {
 				.call({ from: `${address}` });
 
 			const auctionPrice = await web3.utils.toWei(price, 'ether');
-			console.log({ auctionPrice, listingPrice });
-			await createNft(contract, finalUrl, auctionPrice, listingPrice, address);
-			toast.success('NFT Minted and Created');
+			await createNft(contract, url, auctionPrice, listingPrice, address, router);
 			setLoading(false);
-			router.push('/explore');
 		} catch (error: any) {
 			toast.error(error.message);
 		}

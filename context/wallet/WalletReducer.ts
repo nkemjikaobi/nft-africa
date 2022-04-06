@@ -10,6 +10,7 @@ import {
 	FETCH_ALL_NFTS,
 	FETCH_SINGLE_NFT,
 	CONNECT_GUEST,
+	CREATE_NFT,
 } from '../types';
 
 const contactReducer = (state: any, action: any) => {
@@ -40,6 +41,11 @@ const contactReducer = (state: any, action: any) => {
 			return {
 				...state,
 				contract: action.payload,
+			};
+		case CREATE_NFT:
+			return {
+				...state,
+				message: "'NFT Minted and Created",
 			};
 		case FETCH_ALL_NFTS:
 			return {

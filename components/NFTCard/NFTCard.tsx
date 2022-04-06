@@ -19,7 +19,6 @@ const NFTCard = ({ data, title }: INFTCard) => {
 	const walletContext = useContext(WalletContext);
 
 	const { web3, isGuest, guestWeb3 } = walletContext;
-	console.log({ data });
 
 	return data === null ? (
 		<NFTCardSkeleton />

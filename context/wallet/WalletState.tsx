@@ -196,7 +196,8 @@ const WalletState = (props: any) => {
 		finalUrl: any,
 		auctionPrice: any,
 		listingPrice: any,
-		address: any
+		address: any,
+		router: any
 	) => {
 		try {
 			await contract.methods.createToken(finalUrl, auctionPrice).send({
@@ -207,6 +208,9 @@ const WalletState = (props: any) => {
 			dispatch({
 				type: CREATE_NFT,
 			});
+			setTimeout(() => {
+				router.push('/explore');
+			}, 2000);
 		} catch (error: any) {
 			dispatch({
 				type: ERROR,
