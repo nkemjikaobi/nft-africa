@@ -16,12 +16,13 @@ import {
 const contactReducer = (state: any, action: any) => {
 	switch (action.type) {
 		case CONNECT_WALLET:
+			const count = localStorage.getItem('count');
 			return {
 				...state,
 				address: action.payload.accounts[0],
 				isConnected: true,
 				balance: action.payload.balance,
-				message: 'Wallet connected',
+				message: count !== '1' ? 'Wallet connected' : null,
 				web3: action.payload.web3,
 				web3Modal: action.payload.web3Modal,
 				providerOptions: action.payload.providerOptions,
@@ -45,7 +46,7 @@ const contactReducer = (state: any, action: any) => {
 		case CREATE_NFT:
 			return {
 				...state,
-				message: "NFT Minted and Created",
+				message: 'NFT Minted and Created',
 			};
 		case FETCH_ALL_NFTS:
 			return {

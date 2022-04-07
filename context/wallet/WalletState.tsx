@@ -96,6 +96,7 @@ const WalletState = (props: any) => {
 					},
 				});
 				localStorage.setItem('isWalletConnected', 'true');
+				localStorage.setItem('count', '1');
 			}
 		} catch (error) {
 			dispatch({
@@ -261,6 +262,7 @@ const WalletState = (props: any) => {
 			type: DISCONNECT_WALLET,
 		});
 		localStorage.removeItem('isWalletConnected');
+		localStorage.removeItem('count');
 		connectGuest();
 	};
 
@@ -273,6 +275,7 @@ const WalletState = (props: any) => {
 				payload: reason,
 			});
 			localStorage.removeItem('isWalletConnected');
+			localStorage.removeItem('count');
 		});
 	};
 	//Monitor account changed
@@ -283,6 +286,7 @@ const WalletState = (props: any) => {
 				type: MONITOR_ACCOUNT_CHANGED,
 			});
 			localStorage.removeItem('isWalletConnected');
+			localStorage.removeItem('count');
 		});
 	};
 
