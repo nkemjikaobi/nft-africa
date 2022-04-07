@@ -1,7 +1,10 @@
 import React from 'react';
 import { useTimer } from 'react-timer-hook';
 
-const CountdownTimer = ({ expiryTimestamp }: any) => {
+interface ICountdownTimer {
+	expiryTimestamp: Date;
+}
+const CountdownTimer = ({ expiryTimestamp }: ICountdownTimer) => {
 	const { seconds, minutes, hours, days, isRunning } = useTimer({
 		expiryTimestamp,
 		onExpire: () => console.warn('onExpire called'),

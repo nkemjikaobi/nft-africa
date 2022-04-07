@@ -4,6 +4,7 @@ import { ListingPageData } from 'componentData/ListingPage/ListingPage';
 import React from 'react';
 import WalletContext from 'context/wallet/WalletContext';
 import { useContext, useEffect } from 'react';
+import { GetServerSideProps } from 'next';
 
 interface IListingPage {
 	type: string;
@@ -32,12 +33,15 @@ const ListingPage = ({ type }: IListingPage) => {
 		</BasePageLayout>
 	);
 };
-export async function getServerSideProps({ query: { type } }: any) {
+
+export const getServerSideProps: GetServerSideProps = async ({
+	query: { type },
+}) => {
 	return {
 		props: {
 			type,
 		},
 	};
-}
+};
 
 export default ListingPage;

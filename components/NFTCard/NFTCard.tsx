@@ -9,9 +9,10 @@ import { useRouter } from 'next/router';
 import NFTCardSkeleton from 'skeletons/NFTCardSkeleton';
 import WalletContext from 'context/wallet/WalletContext';
 import convertToEther from 'helpers/convertToEther';
+import INFT from 'dto/NFT/INFT';
 
 interface INFTCard {
-	data: any;
+	data: Array<INFT>;
 	title: string;
 }
 const NFTCard = ({ data, title }: INFTCard) => {
@@ -41,7 +42,7 @@ const NFTCard = ({ data, title }: INFTCard) => {
 			</div>
 			<div className='mx-6 tablet:mx-6 mb-10 grid grid-cols-1 tablet:w-3/3 tablet:grid-cols-3 smallLaptop:grid-cols-4 gap-6 tablet:mb-8 cursor-pointer'>
 				{data &&
-					data.map((nft: any) => (
+					data.map((nft: INFT) => (
 						<div
 							className='mb-4 bg-gray-200 hover:drop-shadow-lg'
 							key={nft.tokenId}

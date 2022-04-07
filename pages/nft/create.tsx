@@ -13,10 +13,9 @@ import { useRouter } from 'next/router';
 const CreateNFT = () => {
 	const [name, setName] = useState<string>('');
 	const [description, setDescription] = useState<string>('');
-	const [price, setPrice] = useState<any>(0);
-	const [fileUrl, setFileUrl] = useState<any>();
-	const [image, setImage] = useState<any>();
-	const [finalUrl, setFinalUrl] = useState<any>();
+	const [price, setPrice] = useState<string>('');
+	const [fileUrl, setFileUrl] = useState<string>('');
+	const [finalUrl, setFinalUrl] = useState<string>('');
 	const [loading, setLoading] = useState<boolean>(false);
 	const [imageLoading, setImageLoading] = useState<boolean>(false);
 	const walletContext = useContext(WalletContext);
@@ -38,8 +37,8 @@ const CreateNFT = () => {
 			const url = `${process.env.NEXT_PUBLIC_IPFS_BASE_URL}/${res.path}`;
 			setFileUrl(url);
 			setImageLoading(false);
-		} catch (error: any) {
-			toast.error(error.message);
+		} catch (error) {
+			toast.error((error as Error).message);
 		}
 	};
 
@@ -63,10 +62,17 @@ const CreateNFT = () => {
 				.call({ from: `${address}` });
 
 			const auctionPrice = await web3.utils.toWei(price, 'ether');
-			await createNft(contract, url, auctionPrice, listingPrice, address, router);
+			await createNft(
+				contract,
+				url,
+				auctionPrice,
+				listingPrice,
+				address,
+				router
+			);
 			setLoading(false);
-		} catch (error: any) {
-			toast.error(error.message);
+		} catch (error) {
+			toast.error((error as Error).message);
 		}
 	};
 	return (
@@ -82,10 +88,9 @@ const CreateNFT = () => {
 						<input
 							className='bg-gray-200 hidden p-5 border border-gray-300 rounded-md w-2/3 focus:border-black focus:outline-black'
 							type='file'
-							value={image}
 							onChange={e => handleImage(e)}
 						/>
-						{fileUrl !== undefined ? (
+						{fileUrl !== '' ? (
 							<Image src={fileUrl} height={258} width={390} alt='nft preview' />
 						) : imageLoading ? (
 							<FaSpinner className='animate-spin h-16 w-16 mr-3 text-9xl' />
@@ -93,10 +98,10 @@ const CreateNFT = () => {
 							<BsImageFill className='text-6xl cursor-pointer' />
 						)}
 					</label>
-					{fileUrl !== undefined && (
+					{fileUrl !== '' && (
 						<AiOutlineClose
 							className='absolute z-20 top-5 right-5 text-white text-xl cursor-pointer'
-							onClick={() => setFileUrl(undefined)}
+							onClick={() => setFileUrl('')}
 						/>
 					)}
 				</div>
@@ -121,7 +126,7 @@ const CreateNFT = () => {
 				<div className='mb-8'>
 					<input
 						className='bg-gray-200 p-5 border border-gray-300 rounded-md w-2/3 focus:border-black focus:outline-black'
-						type='number'
+						type='text'
 						placeholder='Price (ETH)'
 						value={price}
 						onChange={e => setPrice(e.target.value)}

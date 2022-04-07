@@ -1,11 +1,12 @@
 interface INFT {
-    id: number;
-    imageUrl: string;
-    author: string;
+    tokenId: string;
+    fileUrl: string;
+    description: string;
     name: string;
-    price: number;
-    currentBid: number;
-    isAcquired: boolean;
+    owner: string;
+    price: string;
+    seller: string;
+    sold: boolean;
 }
 
 export default INFT;

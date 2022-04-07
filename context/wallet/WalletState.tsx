@@ -21,6 +21,8 @@ import WalletConnectProvider from '@walletconnect/web3-provider';
 import NFTJson from 'artifacts/nft.json';
 import axios from 'axios';
 import convertToEther from 'helpers/convertToEther';
+import { NextRouter } from 'next/router';
+import INFT from 'dto/NFT/INFT';
 
 const WalletState = (props: any) => {
 	const initialState = {
@@ -95,10 +97,10 @@ const WalletState = (props: any) => {
 				});
 				localStorage.setItem('isWalletConnected', 'true');
 			}
-		} catch (error: any) {
+		} catch (error) {
 			dispatch({
 				type: ERROR,
-				payload: error.message,
+				payload: (error as Error).message,
 			});
 		}
 	};
@@ -117,10 +119,10 @@ const WalletState = (props: any) => {
 					provider,
 				},
 			});
-		} catch (error: any) {
+		} catch (error) {
 			dispatch({
 				type: ERROR,
-				payload: error.message,
+				payload: (error as Error).message,
 			});
 		}
 	};
@@ -149,16 +151,16 @@ const WalletState = (props: any) => {
 				type: FETCH_ALL_NFTS,
 				payload: data,
 			});
-		} catch (error: any) {
+		} catch (error) {
 			dispatch({
 				type: ERROR,
-				payload: error.message,
+				payload: (error as Error).message,
 			});
 		}
 	};
 
 	//Fetch Single Nft
-	const fetchSingleNft = async (contract: any, id: number) => {
+	const fetchSingleNft = async (contract: any, id: string) => {
 		try {
 			const all_nfts = await contract.methods.fetchMarketItems().call();
 			const data = await Promise.all(
@@ -177,15 +179,15 @@ const WalletState = (props: any) => {
 					return item;
 				})
 			);
-			const singleNft = data.filter((nft: any) => nft.tokenId === id);
+			const singleNft = data.filter((nft: INFT) => nft.tokenId === id);
 			dispatch({
 				type: FETCH_SINGLE_NFT,
 				payload: singleNft[0],
 			});
-		} catch (error: any) {
+		} catch (error) {
 			dispatch({
 				type: ERROR,
-				payload: error.message,
+				payload: (error as Error).message,
 			});
 		}
 	};
@@ -193,11 +195,11 @@ const WalletState = (props: any) => {
 	//Create NFT
 	const createNft = async (
 		contract: any,
-		finalUrl: any,
-		auctionPrice: any,
-		listingPrice: any,
-		address: any,
-		router: any
+		finalUrl: string,
+		auctionPrice: string,
+		listingPrice: string,
+		address: string,
+		router: NextRouter
 	) => {
 		try {
 			await contract.methods.createToken(finalUrl, auctionPrice).send({
@@ -211,10 +213,10 @@ const WalletState = (props: any) => {
 			setTimeout(() => {
 				router.push('/explore');
 			}, 2000);
-		} catch (error: any) {
+		} catch (error) {
 			dispatch({
 				type: ERROR,
-				payload: error.message,
+				payload: (error as Error).message,
 			});
 		}
 	};
@@ -230,10 +232,10 @@ const WalletState = (props: any) => {
 				type: LOAD_CONTRACT,
 				payload: contract,
 			});
-		} catch (error: any) {
+		} catch (error) {
 			dispatch({
 				type: ERROR,
-				payload: error.message,
+				payload: (error as Error).message,
 			});
 		}
 	};

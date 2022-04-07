@@ -2,7 +2,7 @@ import { useRef, useEffect } from 'react';
 
 //use clickoutside hook
 const useClickOutside = (handler: Function) => {
-	const domNode = useRef<any>();
+	const domNode: any = useRef();
 
 	useEffect(() => {
 		const maybeHandler = (event: any) => {

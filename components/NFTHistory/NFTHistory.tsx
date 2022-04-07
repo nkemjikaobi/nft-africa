@@ -1,13 +1,14 @@
+import IHistory from 'dto/NFT/IHistory';
 import React from 'react';
 import { SiBinance } from 'react-icons/si';
 
 interface INFTHistory {
-	history: any;
+	history: Array<IHistory>;
 }
 const NFTHistory = ({ history }: INFTHistory) => {
 	return (
 		<div>
-			{history.map((data: any) => (
+			{history.map((data: IHistory) => (
 				<div
 					key={data.id}
 					className='bg-gray-200 mb-4 p-3 flex justify-between items-center'
@@ -19,10 +20,10 @@ const NFTHistory = ({ history }: INFTHistory) => {
 					{data.isPurchased && (
 						<div className=''>
 							<h4 className='font-bold flex items-center'>
-								<SiBinance className='mr-2 text-orange-300'/>
-								{data.amount.bnb}
+								<SiBinance className='mr-2 text-orange-300' />
+								{data?.amount?.bnb}
 							</h4>
-							<p className='text-gray-400 text-sm'>≈ $ {data.amount.usd}</p>
+							<p className='text-gray-400 text-sm'>≈ $ {data?.amount?.usd}</p>
 						</div>
 					)}
 				</div>

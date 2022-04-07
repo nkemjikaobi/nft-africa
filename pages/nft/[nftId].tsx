@@ -10,8 +10,13 @@ import React, { useContext, useEffect, useState } from 'react';
 import { FaEthereum, FaSpinner } from 'react-icons/fa';
 import WalletContext from 'context/wallet/WalletContext';
 import convertToEther from 'helpers/convertToEther';
+import { GetServerSideProps } from 'next';
+import NFTDetailSkeleton from 'skeletons/NFTDetailSkeleton';
 
-const ProductDetailPage = ({ nftId }: any) => {
+interface IProductDetailPage {
+	nftId: string;
+}
+const ProductDetailPage = ({ nftId }: IProductDetailPage) => {
 	const time = new Date();
 	time.setSeconds(time.getSeconds() + 600); // 10 minutes timer
 	const [showMagnified, setShowMagnified] = useState<boolean>(false);
@@ -37,7 +42,9 @@ const ProductDetailPage = ({ nftId }: any) => {
 
 	return (
 		<BasePageLayout>
-			{singleNft && (
+			{singleNft === null ? (
+				<NFTDetailSkeleton />
+			) : (
 				<>
 					<div
 						className={`mt-64 flex flex-col tablet:flex-row items-center tablet:items-start smallLaptop:items-center justify-between mx-40 tablet:mx-10 smallLaptop:mx-40 ${
@@ -149,10 +156,12 @@ const ProductDetailPage = ({ nftId }: any) => {
 
 export default ProductDetailPage;
 
-export async function getServerSideProps({ query: { nftId } }: any) {
+export const getServerSideProps: GetServerSideProps = async ({
+	query: { nftId },
+}) => {
 	return {
 		props: {
 			nftId: nftId,
 		},
 	};
-}
+};
