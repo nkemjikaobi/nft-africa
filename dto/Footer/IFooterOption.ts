@@ -2,7 +2,7 @@ import { IconType } from "react-icons";
 
 interface IFooterOption {
 	id: number;
-	icon?: IconType;
+	icon?: any;
 	name: string;
     route: string;
     hasIcons?: boolean;
