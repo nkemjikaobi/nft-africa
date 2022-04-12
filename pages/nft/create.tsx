@@ -14,6 +14,7 @@ const CreateNFT = () => {
 	const [name, setName] = useState<string>('');
 	const [description, setDescription] = useState<string>('');
 	const [price, setPrice] = useState<string>('');
+	const [network, setNetwork] = useState<string>('rinkeby');
 	const [fileUrl, setFileUrl] = useState<string>('');
 	const [finalUrl, setFinalUrl] = useState<string>('');
 	const [loading, setLoading] = useState<boolean>(false);
@@ -46,11 +47,17 @@ const CreateNFT = () => {
 		if (!isConnected) {
 			return toast.error('Connect Wallet');
 		}
-		if (name === '' || fileUrl === '' || description === '' || price === '') {
+		if (
+			name === '' ||
+			fileUrl === '' ||
+			description === '' ||
+			price === '' ||
+			network === ''
+		) {
 			return toast.error('All fields are required');
 		}
 		setLoading(true);
-		const data = JSON.stringify({ name, description, fileUrl });
+		const data = JSON.stringify({ name, description, fileUrl, network });
 		const res = await client.add(data);
 		const url = `${process.env.NEXT_PUBLIC_IPFS_BASE_URL}/${res.path}`;
 		setFinalUrl(url);
@@ -131,6 +138,19 @@ const CreateNFT = () => {
 						value={price}
 						onChange={e => setPrice(e.target.value)}
 					/>
+				</div>
+				<div className='mb-8'>
+					<select
+						name=''
+						id=''
+						className='bg-gray-200 p-5  border border-gray-300 rounded-md w-2/3 focus:outline-none'
+						onChange={e => setNetwork(e.target.value)}
+						value={network}
+					>
+						<option value='ethereum'> Ethereum</option>
+						<option value='rinkeby'>Rinkeby</option>
+						<option value='mumbai'>Mumbai</option>
+					</select>
 				</div>
 
 				<div className='flex justify-center'>
