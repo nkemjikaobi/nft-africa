@@ -109,8 +109,10 @@ const WalletState = (props: any) => {
 	//Connect Guest
 	const connectGuest = async () => {
 		try {
-			const provider = window.ethereum;
-
+			//Use Infura Node to instantiate a provider
+			const provider = new Web3.providers.HttpProvider(
+				`${process.env.NEXT_PUBLIC_INFURA_APP_URL}`
+			);
 			const web3 = new Web3(provider);
 
 			dispatch({
@@ -229,6 +231,7 @@ const WalletState = (props: any) => {
 				NFTJson,
 				`${process.env.NEXT_PUBLIC_CONTRACT_ADDRESS}`
 			);
+
 			dispatch({
 				type: LOAD_CONTRACT,
 				payload: contract,
