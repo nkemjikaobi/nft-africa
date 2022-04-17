@@ -7,7 +7,7 @@ interface INFTHistory {
 }
 const NFTHistory = ({ history }: INFTHistory) => {
 	return (
-		<div>
+		<div className='w-[115%] tablet:w-full'>
 			{history.map((data: IHistory) => (
 				<div
 					key={data.id}

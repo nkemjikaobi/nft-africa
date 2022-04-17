@@ -51,7 +51,7 @@ const ProductDetailPage = ({ nftId }: IProductDetailPage) => {
 							showMagnified && 'blur-lg'
 						}`}
 					>
-						<div className='flex flex-col -mt-16 tablet:mt-0 tablet:mr-16'>
+						<div className='flex flex-col -mt-16 tablet:mt-0 tablet:mr-0 laptop:mr-16'>
 							<div className='mb-8 tablet:hidden'>
 								<h4 className='font-extrabold text-2xl'>{singleNft.name}</h4>
 							</div>
@@ -81,7 +81,7 @@ const ProductDetailPage = ({ nftId }: IProductDetailPage) => {
 							</div>
 						</div>
 
-						<div className='tablet:w-3/4 tablet:mt-2 smallLaptop:mt-0'>
+						<div className='ml-8 tablet:w-3/4 tablet:mt-2 smallLaptop:mt-0'>
 							<div className='hidden tablet:block'>
 								<h4 className='font-extrabold text-2xl'>{singleNft.name}</h4>
 							</div>
@@ -106,8 +106,8 @@ const ProductDetailPage = ({ nftId }: IProductDetailPage) => {
 							<p className='text-sm mb-8 -ml-20 tablet:ml-0'>
 								{singleNft.description}
 							</p>
-							<div className='flex justify-between items-center -ml-20 tablet:ml-0'>
-								<div>
+							<div className='flex justify-between items-center flex-row tablet:flex-col laptop:flex-row -ml-20 tablet:ml-0'>
+								<div className='tablet:-ml-[25%] laptop:ml-0'>
 									<h4 className='font-bold'>Price</h4>
 									<p className='flex items-center mt-1'>
 										<FaEthereum />{' '}
@@ -121,7 +121,7 @@ const ProductDetailPage = ({ nftId }: IProductDetailPage) => {
 										<span className='text-gray-400 text-sm'>≈ $ 318.60</span>
 									</p>
 								</div>
-								<div>
+								<div className='mt-0 tablet:mt-8 tablet:-ml-[50%] laptop:ml-0 laptop:mt-0'>
 									<h4 className='font-bold'>Ends In</h4>
 									<p className='mt-1'>
 										<CountdownTimer expiryTimestamp={time} />
@@ -135,7 +135,7 @@ const ProductDetailPage = ({ nftId }: IProductDetailPage) => {
 								<h4 className='font-extrabold '>History</h4>
 								<p className='text-black mb-4'>------------</p>
 							</div>
-							<div className='-ml-20 tablet:ml-0 tablet:w-4/5 laptop:w-full '>
+							<div className='-ml-20  tablet:ml-0 tablet:w-full'>
 								<NFTHistory history={History} />
 							</div>
 						</div>
