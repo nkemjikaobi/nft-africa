@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import DesktopFooter from 'components/BasePageLayout/DesktopFooter';
 import DesktopNavigation from 'components/BasePageLayout/DesktopNavigation';
 import MobileFooter from 'components/BasePageLayout/MobileFooter';
@@ -6,6 +6,10 @@ import MobileNavigation from 'components/BasePageLayout/MobileNavigation';
 import { useContext, useEffect } from 'react';
 import WalletContext from 'context/wallet/WalletContext';
 import toast, { Toaster } from 'react-hot-toast';
+import ConnectArdorWallet from 'modals/ConnectArdorWallet';
+import ChooseNetwork from 'modals/ChooseNetwork';
+import { useRouter } from 'next/router';
+import { ARDOR } from 'constants/index';
 
 interface IBasePageLayout {
 	children: any;
@@ -19,6 +23,7 @@ const BasePageLayout = ({
 	showFooter,
 }: IBasePageLayout) => {
 	const walletContext = useContext(WalletContext);
+	const router = useRouter();
 
 	const {
 		connectWallet,
@@ -33,6 +38,9 @@ const BasePageLayout = ({
 		loadContract,
 		connectGuest,
 		guestWeb3,
+		disconnectWallet,
+		isConnected,
+		web3Modal,
 	} = walletContext;
 
 	const reconnectWallet = async () => {
@@ -124,33 +132,79 @@ const BasePageLayout = ({
 		};
 		//eslint-disable-next-line
 	}, [guestWeb3]);
+
+	const handleClick = async (identifier: number, route: string) => {
+		if (isConnected && identifier === 3) {
+			return await disconnectWallet(web3Modal);
+		}
+		if (identifier === 3) {
+			setChooseNetwork(true);
+		}
+		return router.push(route);
+	};
+
+	const handleConnect = async () => {
+		setChooseNetwork(false);
+		if (network === ARDOR) {
+			return setConnectArdor(true);
+		} else {
+			return await connectWallet();
+		}
+	};
+
+	const [connectArdor, setConnectArdor] = useState<boolean>(false);
+	const [chooseNetwork, setChooseNetwork] = useState<boolean>(false);
+	const [network, setNetwork] = useState<string>('');
+
 	return (
-		<section>
-			{showNavigation && (
-				<>
-					<Toaster position='top-right' />
-					<div className='hidden tablet:block tablet:fixed tablet:w-full tablet:top-0 tablet:z-40'>
-						<DesktopNavigation />
-					</div>
-					<div className='block fixed w-full top-0 z-40 laptop:hidden'>
-						<MobileNavigation />
-					</div>
-				</>
+		<div>
+			<section
+				className={`${connectArdor && 'blur-lg'} ${chooseNetwork && 'blur-lg'}`}
+			>
+				{showNavigation && (
+					<>
+						<Toaster position='top-right' />
+						<div className='hidden tablet:block tablet:fixed tablet:w-full tablet:top-0 tablet:z-40'>
+							<DesktopNavigation
+								setConnectArdor={setConnectArdor}
+								network={network}
+								handleClick={handleClick}
+							/>
+						</div>
+						<div className='block fixed w-full top-0 z-40 laptop:hidden'>
+							<MobileNavigation />
+						</div>
+					</>
+				)}
+				<main className='container min-h-[70vh]'>{children}</main>
+				{showFooter && (
+					<>
+						<div className='hidden tablet:block tablet:w-full'>
+							{/* <div className='hidden tablet:blocktablet:w-full'> */}
+							<DesktopFooter />
+						</div>
+						<div className='block w-full tablet:hidden'>
+							{/* <div className='block w-full tablet:hidden'> */}
+							<MobileFooter />
+						</div>
+					</>
+				)}
+			</section>
+			{connectArdor && (
+				<div className='fixed left-[25%] laptop:left-[30%] top-[30%] w-[50%] laptop:w-[40%]'>
+					<ConnectArdorWallet setConnectArdor={setConnectArdor} />
+				</div>
 			)}
-			<main className='container min-h-[70vh]'>{children}</main>
-			{showFooter && (
-				<>
-					<div className='hidden tablet:block tablet:w-full'>
-						{/* <div className='hidden tablet:blocktablet:w-full'> */}
-						<DesktopFooter />
-					</div>
-					<div className='block w-full tablet:hidden'>
-						{/* <div className='block w-full tablet:hidden'> */}
-						<MobileFooter />
-					</div>
-				</>
+			{chooseNetwork && (
+				<div className='fixed left-[10%] laptop:left-[30%] top-[30%] w-[80%] laptop:w-[40%]'>
+					<ChooseNetwork
+						setChooseNetwork={setChooseNetwork}
+						setNetwork={setNetwork}
+						handleConnect={handleConnect}
+					/>
+				</div>
 			)}
-		</section>
+		</div>
 	);
 };
 
