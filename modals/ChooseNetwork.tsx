@@ -24,11 +24,10 @@ const ChooseNetwork = ({
 						name=''
 						id=''
 						onChange={e => setNetwork(e.target.value)}
+						defaultValue={`${ETHEREUM}`}
 					>
 						<option value={`${ARDOR}`}>Ardor</option>
-						<option selected value={`${ETHEREUM}`}>
-							Ethereum
-						</option>
+						<option value={`${ETHEREUM}`}>Ethereum</option>
 					</select>
 				</div>
 				<button

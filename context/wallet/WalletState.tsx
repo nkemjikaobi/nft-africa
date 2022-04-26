@@ -14,6 +14,10 @@ import {
 	FETCH_SINGLE_NFT,
 	CREATE_NFT,
 	CONNECT_GUEST,
+	GENERATE_AUTH,
+	WATCH_TOKEN,
+	VERIFY_TOKEN,
+	DISCONNECT_ARDOR_WALLET,
 } from '../types';
 import Web3 from 'web3';
 import Web3Modal from 'web3modal';
@@ -23,6 +27,7 @@ import axios from 'axios';
 import convertToEther from 'helpers/convertToEther';
 import { NextRouter } from 'next/router';
 import INFT from 'dto/NFT/INFT';
+import { ARDOR, ETHEREUM } from 'constants/index';
 
 const WalletState = (props: any) => {
 	const initialState = {
@@ -42,11 +47,18 @@ const WalletState = (props: any) => {
 		singleNft: null,
 		guestWeb3: null,
 		guestProvider: null,
+		network: ETHEREUM,
+		//ARDOR
+		qrCodeUrl: '',
+		qrCodeId: '',
+		hasGeneratedQrCodeUrl: false,
+		ardorToken: '',
+		ardorUserData: null,
 	};
 
 	const [state, dispatch] = useReducer(WalletReducer, initialState);
 
-	//Connect Wallet
+	//Connect Wallet on Ethereum Network
 	const connectWallet = async () => {
 		const providerOptions = {
 			walletconnect: {
@@ -97,6 +109,7 @@ const WalletState = (props: any) => {
 				});
 				localStorage.setItem('isWalletConnected', 'true');
 				localStorage.setItem('count', '1');
+				localStorage.setItem('network', ETHEREUM);
 			}
 		} catch (error) {
 			dispatch({
@@ -130,7 +143,7 @@ const WalletState = (props: any) => {
 		}
 	};
 
-	//Fetch All Nft's
+	//Fetch All Nft's on Ethereum Network
 	const fetchAllNfts = async (contract: any) => {
 		try {
 			const all_nfts = await contract.methods.fetchMarketItems().call();
@@ -162,7 +175,7 @@ const WalletState = (props: any) => {
 		}
 	};
 
-	//Fetch Single Nft
+	//Fetch Single Nft on Ethereum Network
 	const fetchSingleNft = async (contract: any, id: string) => {
 		try {
 			const all_nfts = await contract.methods.fetchMarketItems().call();
@@ -195,7 +208,7 @@ const WalletState = (props: any) => {
 		}
 	};
 
-	//Create NFT
+	//Create NFT on Ethereum Network
 	const createNft = async (
 		contract: any,
 		finalUrl: string,
@@ -259,13 +272,22 @@ const WalletState = (props: any) => {
 	};
 
 	//Disconnect wallet
-	const disconnectWallet = async (modal: any) => {
-		modal.clearCachedProvider();
-		dispatch({
-			type: DISCONNECT_WALLET,
-		});
+	const disconnectWallet = async (modal: any, network: string) => {
+		if (network === ETHEREUM) {
+			modal.clearCachedProvider();
+			dispatch({
+				type: DISCONNECT_WALLET,
+			});
+		} else {
+			dispatch({
+				type: DISCONNECT_ARDOR_WALLET,
+			});
+		}
 		localStorage.removeItem('isWalletConnected');
 		localStorage.removeItem('count');
+		localStorage.removeItem('network');
+		localStorage.removeItem('qrCodeId');
+		localStorage.removeItem('ardorToken');
 		connectGuest();
 	};
 
@@ -293,6 +315,68 @@ const WalletState = (props: any) => {
 		});
 	};
 
+	//ARDOR
+	const generateAuth = async () => {
+		try {
+			const res = await axios.post(
+				`${process.env.NEXT_PUBLIC_ARDOR_BASE_URL}/api/auth/generate-auth`
+			);
+			const url = res.data.data.url;
+			const splitUrl = url.split('/');
+			const id = splitUrl[splitUrl.length - 2];
+
+			dispatch({
+				type: GENERATE_AUTH,
+				payload: { url, id },
+			});
+		} catch (error) {}
+	};
+
+	const watchToken = async (qrCodeId: string) => {
+		try {
+			const res = await axios.get(
+				`${process.env.NEXT_PUBLIC_ARDOR_BASE_URL}/api/auth/auth-status/${qrCodeId}`
+			);
+			if (res.data.data.result === 'ok') {
+				const token = res.data.data.token;
+				dispatch({
+					type: WATCH_TOKEN,
+					payload: { token },
+				});
+			} else {
+				setTimeout(() => {
+					watchToken(qrCodeId);
+				}, 3000);
+			}
+		} catch (error) {}
+	};
+
+	const verifyToken = async (qrCodeId: string, ardorToken: string) => {
+		try {
+			const res = await axios.post(
+				`${process.env.NEXT_PUBLIC_ARDOR_BASE_URL}/api/auth/verify-token`,
+				{ uuid: qrCodeId, token: ardorToken }
+			);
+			if (res.data.data.valid) {
+				const result = res.data.data
+				dispatch({
+					type: VERIFY_TOKEN,
+					payload: { result, qrCodeId, ardorToken },
+				});
+				localStorage.setItem('isWalletConnected', 'true');
+				localStorage.setItem('count', '1');
+				localStorage.setItem('network', ARDOR);
+				localStorage.setItem('qrCodeId', qrCodeId);
+				localStorage.setItem('ardorToken', ardorToken);
+			}
+		} catch (error) {
+			dispatch({
+				type: ERROR,
+				payload: 'Token is invalid',
+			});
+		}
+	};
+
 	return (
 		<WalletContext.Provider
 			value={{
@@ -312,6 +396,12 @@ const WalletState = (props: any) => {
 				guestWeb3: state.guestWeb3,
 				guestProvider: state.guestProvider,
 				isGuest: state.isGuest,
+				qrCodeUrl: state.qrCodeUrl,
+				qrCodeId: state.qrCodeId,
+				hasGeneratedQrCodeUrl: state.hasGeneratedQrCodeUrl,
+				ardorToken: state.ardorToken,
+				ardorUserData: state.ardorUserData,
+				network: state.network,
 				clearError,
 				connectWallet,
 				disconnectWallet,
@@ -323,6 +413,9 @@ const WalletState = (props: any) => {
 				fetchSingleNft,
 				createNft,
 				connectGuest,
+				generateAuth,
+				watchToken,
+				verifyToken,
 			}}
 		>
 			{props.children}

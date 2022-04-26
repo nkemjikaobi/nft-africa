@@ -1,3 +1,4 @@
+import { ARDOR, ETHEREUM } from 'constants/index';
 import {
 	CONNECT_WALLET,
 	ERROR,
@@ -11,6 +12,10 @@ import {
 	FETCH_SINGLE_NFT,
 	CONNECT_GUEST,
 	CREATE_NFT,
+	GENERATE_AUTH,
+	WATCH_TOKEN,
+	VERIFY_TOKEN,
+	DISCONNECT_ARDOR_WALLET,
 } from '../types';
 
 const contactReducer = (state: any, action: any) => {
@@ -30,6 +35,7 @@ const contactReducer = (state: any, action: any) => {
 				isGuest: false,
 				guestWeb3: null,
 				guestProvider: null,
+				network: ETHEREUM,
 			};
 		case CONNECT_GUEST:
 			return {
@@ -71,6 +77,20 @@ const contactReducer = (state: any, action: any) => {
 				provider: null,
 				isGuest: true,
 			};
+		case DISCONNECT_ARDOR_WALLET:
+			return {
+				...state,
+				address: null,
+				isConnected: false,
+				balance: '',
+				message: 'Wallet Disconnected',
+				isGuest: true,
+				qrCodeUrl: '',
+				qrCodeId: '',
+				hasGeneratedQrCodeUrl: false,
+				ardorToken: '',
+				ardorUserData: null,
+			};
 		case MONITOR_DISCONNECT:
 			return {
 				...state,
@@ -101,6 +121,32 @@ const contactReducer = (state: any, action: any) => {
 			return {
 				...state,
 				message: null,
+			};
+		//ARDOR
+		case GENERATE_AUTH:
+			return {
+				...state,
+				qrCodeUrl: action.payload.url,
+				qrCodeId: action.payload.id,
+				hasGeneratedQrCodeUrl: true,
+			};
+		case WATCH_TOKEN:
+			return {
+				...state,
+				ardorToken: action.payload.token,
+				hasGeneratedQrCodeUrl: false,
+			};
+		case VERIFY_TOKEN:
+			const count1 = localStorage.getItem('count');
+			return {
+				...state,
+				ardorUserData: action.payload.result,
+				message: count1 !== '1' ? 'Wallet connected' : null,
+				isConnected: true,
+				address: action.payload.result.accountRS,
+				network: ARDOR,
+				qrCodeId: action.payload.qrCodeId,
+				ardorToken: action.payload.ardorToken,
 			};
 		default:
 			return state;

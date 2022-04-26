@@ -5,29 +5,19 @@ import { DesktopNav } from 'componentData/Navigation/DesktopNav';
 import Link from 'next/link';
 import useClickOutside from 'hooks/useClickOutside';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
 import WalletContext from 'context/wallet/WalletContext';
+import { ETHEREUM } from 'constants/index';
 
-const MobileNavigation = () => {
+const MobileNavigation = ({ handleClick}: any) => {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 	const node = useClickOutside(() => {
 		setIsOpen(false);
 	});
 
-	const router = useRouter();
 	const walletContext = useContext(WalletContext);
-	const { connectWallet, isConnected, balance, disconnectWallet, web3Modal } =
+	const { network, ardorUserData, isConnected, balance, web3Modal } =
 		walletContext;
 
-	const handleClick = async (identifier: number, route: string) => {
-		if (isConnected && identifier === 3) {
-			return await disconnectWallet(web3Modal);
-		}
-		if (identifier === 3) {
-			return await connectWallet();
-		}
-		return router.push(route);
-	};
 	return (
 		<div className='bg-white'>
 			<div className='flex justify-between items-center  py-5 px-10 drop-shadow-md'>
@@ -68,7 +58,18 @@ const MobileNavigation = () => {
 					{isConnected && (
 						<li className='border border-black rounded-md py-3 px-8 flex justify-center items-center'>
 							<div>
-								<span>{Number(balance).toFixed(4)} ETH</span>
+								<span>
+									{network === ETHEREUM ? (
+										<>{Number(balance).toFixed(4)} ETH</>
+									) : (
+										<>
+											{Number(
+												ardorUserData !== null && ardorUserData.balance
+											).toFixed(4)}{' '}
+											ARD
+										</>
+									)}
+								</span>
 							</div>
 						</li>
 					)}

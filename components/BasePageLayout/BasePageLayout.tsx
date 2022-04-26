@@ -9,7 +9,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import ConnectArdorWallet from 'modals/ConnectArdorWallet';
 import ChooseNetwork from 'modals/ChooseNetwork';
 import { useRouter } from 'next/router';
-import { ARDOR } from 'constants/index';
+import { ARDOR, ETHEREUM } from 'constants/index';
 
 interface IBasePageLayout {
 	children: any;
@@ -41,6 +41,8 @@ const BasePageLayout = ({
 		disconnectWallet,
 		isConnected,
 		web3Modal,
+		network,
+		verifyToken,
 	} = walletContext;
 
 	const reconnectWallet = async () => {
@@ -55,7 +57,15 @@ const BasePageLayout = ({
 		let mounted = true;
 
 		if (mounted && localStorage?.getItem('isWalletConnected') === 'true') {
-			reconnectWallet();
+			if (localStorage?.getItem('network') === ETHEREUM) {
+				//reconnect to ethereum wallet
+				reconnectWallet();
+			} else {
+				//reconect to ardor wallet
+				const qrCodeId = localStorage?.getItem('qrCodeId');
+				const ardorToken = localStorage?.getItem('ardorToken');
+				verifyToken(qrCodeId, ardorToken);
+			}
 		} else {
 			connectAsGuest();
 		}
@@ -135,7 +145,7 @@ const BasePageLayout = ({
 
 	const handleClick = async (identifier: number, route: string) => {
 		if (isConnected && identifier === 3) {
-			return await disconnectWallet(web3Modal);
+			return await disconnectWallet(web3Modal, network);
 		}
 		if (identifier === 3) {
 			setChooseNetwork(true);
@@ -145,8 +155,9 @@ const BasePageLayout = ({
 
 	const handleConnect = async () => {
 		setChooseNetwork(false);
-		if (network === ARDOR) {
-			return setConnectArdor(true);
+		if (networkk === ARDOR) {
+			setConnectArdor(true);
+			setNetwork(`${ETHEREUM}`);
 		} else {
 			return await connectWallet();
 		}
@@ -154,7 +165,7 @@ const BasePageLayout = ({
 
 	const [connectArdor, setConnectArdor] = useState<boolean>(false);
 	const [chooseNetwork, setChooseNetwork] = useState<boolean>(false);
-	const [network, setNetwork] = useState<string>('');
+	const [networkk, setNetwork] = useState<string>(`${ETHEREUM}`);
 
 	return (
 		<div>
@@ -165,14 +176,10 @@ const BasePageLayout = ({
 					<>
 						<Toaster position='top-right' />
 						<div className='hidden tablet:block tablet:fixed tablet:w-full tablet:top-0 tablet:z-40'>
-							<DesktopNavigation
-								setConnectArdor={setConnectArdor}
-								network={network}
-								handleClick={handleClick}
-							/>
+							<DesktopNavigation handleClick={handleClick} />
 						</div>
 						<div className='block fixed w-full top-0 z-40 laptop:hidden'>
-							<MobileNavigation />
+							<MobileNavigation handleClick={handleClick} />
 						</div>
 					</>
 				)}
@@ -191,7 +198,7 @@ const BasePageLayout = ({
 				)}
 			</section>
 			{connectArdor && (
-				<div className='fixed left-[25%] laptop:left-[30%] top-[30%] w-[50%] laptop:w-[40%]'>
+				<div className='fixed left-[15%] tablet:left-[25%] laptop:left-[30%] top-[30%] w-[70%] tablet:w-[60%] laptop:w-[40%]'>
 					<ConnectArdorWallet setConnectArdor={setConnectArdor} />
 				</div>
 			)}

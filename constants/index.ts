@@ -1,2 +1,2 @@
 export const ARDOR = 'ardor';
-export const ETHEREUM = 'etherum';
+export const ETHEREUM = 'ethereum';
