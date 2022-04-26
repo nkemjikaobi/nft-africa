@@ -2,24 +2,12 @@ import { DesktopNav } from 'componentData/Navigation/DesktopNav';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useContext } from 'react';
-import { useRouter } from 'next/router';
 import WalletContext from 'context/wallet/WalletContext';
+import { ETHEREUM } from 'constants/index';
 
-const DesktopNavigation = () => {
-	const router = useRouter();
+const DesktopNavigation = ({ handleClick }: any) => {
 	const walletContext = useContext(WalletContext);
-	const { connectWallet, isConnected, balance, disconnectWallet, web3Modal } =
-		walletContext;
-
-	const handleClick = async (identifier: number, route: string) => {
-		if (isConnected && identifier === 3) {
-			return await disconnectWallet(web3Modal);
-		}
-		if (identifier === 3) {
-			return await connectWallet();
-		}
-		return router.push(route);
-	};
+	const { isConnected, balance, network, ardorUserData } = walletContext;
 
 	return (
 		<div className='flex justify-between items-center bg-white py-5 px-10 tablet:px-20 laptop:px-40 drop-shadow-md'>
@@ -57,8 +45,17 @@ const DesktopNavigation = () => {
 				{isConnected && (
 					<li className='border border-black rounded-md py-3 px-8 hover:bg-black hover:text-white'>
 						<div>
-							<span className='cursor-pointer'>
-								{Number(balance).toFixed(4)} ETH
+							<span>
+								{network === ETHEREUM ? (
+									<>{Number(balance).toFixed(4)} ETH</>
+								) : (
+									<>
+										{Number(
+											ardorUserData !== null && ardorUserData.balance
+										).toFixed(4)}{' '}
+										ARD
+									</>
+								)}
 							</span>
 						</div>
 					</li>
