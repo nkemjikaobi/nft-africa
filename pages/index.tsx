@@ -40,9 +40,9 @@ const Home: NextPage = () => {
 		<BasePageLayout>
 			<div className='mt-40'>
 				<Catalogue />
-				<NFTCard title='trending' data={allNfts} />
-				<NFTCard title='auctions' data={allNfts} />
-				<NFTCard title='explore' data={allNfts} />
+				<NFTCard title='trending' allNfts={allNfts} ardorNfts={ardorNfts} />
+				<NFTCard title='auctions' allNfts={allNfts} ardorNfts={ardorNfts} />
+				<NFTCard title='explore' allNfts={allNfts} ardorNfts={ardorNfts} />
 			</div>
 		</BasePageLayout>
 	);
