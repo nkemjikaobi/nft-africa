@@ -16,6 +16,7 @@ import {
 	WATCH_TOKEN,
 	VERIFY_TOKEN,
 	DISCONNECT_ARDOR_WALLET,
+	FETCH_ARDOR_NFTS,
 } from '../types';
 
 const contactReducer = (state: any, action: any) => {
@@ -147,6 +148,11 @@ const contactReducer = (state: any, action: any) => {
 				network: ARDOR,
 				qrCodeId: action.payload.qrCodeId,
 				ardorToken: action.payload.ardorToken,
+			};
+		case FETCH_ARDOR_NFTS:
+			return {
+				...state,
+				ardorNfts: action.payload
 			};
 		default:
 			return state;
