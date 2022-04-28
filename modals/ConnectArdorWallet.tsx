@@ -46,7 +46,7 @@ const ConnectArdorWallet = ({ setConnectArdor }: any) => {
 	return (
 		<div className='text-white relative bg-black rounded-lg p-10'>
 			<Toaster position='top-right' />
-			<div className='absolute right-5 top-10 cursor-pointer'>
+			<div className='absolute left-0 tablet:right-5 top-0 tablet:top-10 cursor-pointer'>
 				<AiOutlineClose onClick={() => setConnectArdor(false)} />
 			</div>
 			<div className='flex flex-col justify-center items-center'>
@@ -59,19 +59,38 @@ const ConnectArdorWallet = ({ setConnectArdor }: any) => {
 						height={65}
 						width={300}
 					/>
-					<p className='text-sm text-center tablet:text-base'>
-						Please scan the barcode below
-					</p>
+					<div className='hidden tablet:block tablet:mb-8'>
+						<p className='text-sm text-center tablet:text-base'>
+							Please scan the barcode below
+						</p>
+					</div>
+					<div className='block break-normal tablet:hidden'>
+						<p className='text-sm text-center tablet:text-base'>
+							Please click the link below
+						</p>
+					</div>
 				</div>
+
 				{qrCodeUrl !== '' ? (
-					<div className='mb-8'>
-						<QRCode value={`${qrCodeUrl}`} />
-					</div>
+					<>
+						<div className='hidden tablet:block tablet:mb-8'>
+							<QRCode value={`${qrCodeUrl}`} />
+						</div>
+						<div className='block mb-8 break-normal p-5 text-sm ml-4 tablet:hidden'>
+							<Link href={qrCodeUrl}>{qrCodeUrl}</Link>
+						</div>
+					</>
 				) : (
-					<div className='mb-4'>
-						<FaSpinner className='animate-spin h-5 w-5 mr-3' />
-						Generating Qrcode...
-					</div>
+					<>
+						<div className='hidden tablet:block tablet:mb-4'>
+							<FaSpinner className='animate-spin h-5 w-5 mr-3' />
+							Generating Qrcode...
+						</div>
+						<div className='mb-4 block tablet:hidden'>
+							<FaSpinner className='animate-spin h-5 w-5 mr-3' />
+							Generating Qrlink...
+						</div>
+					</>
 				)}
 
 				<Link href='https://www.nxter.org/how-to-install-and-set-up-the-sigbro-app-on-android/'>

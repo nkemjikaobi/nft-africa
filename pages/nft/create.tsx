@@ -9,6 +9,7 @@ import { FaSpinner } from 'react-icons/fa';
 import { AiOutlineClose } from 'react-icons/ai';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { ARDOR, ETHEREUM } from 'constants/index';
 
 const CreateNFT = () => {
 	const [name, setName] = useState<string>('');
@@ -21,7 +22,15 @@ const CreateNFT = () => {
 	const [imageLoading, setImageLoading] = useState<boolean>(false);
 	const walletContext = useContext(WalletContext);
 
-	const { web3, address, contract, createNft, isConnected } = walletContext;
+	const {
+		web3,
+		address,
+		contract,
+		mintArdorNft,
+		createNft,
+		isConnected,
+		ardorMintedData,
+	} = walletContext;
 
 	const router = useRouter();
 
@@ -38,6 +47,28 @@ const CreateNFT = () => {
 			const url = `${process.env.NEXT_PUBLIC_IPFS_BASE_URL}/${res.path}`;
 			setFileUrl(url);
 			setImageLoading(false);
+		} catch (error) {
+			toast.error((error as Error).message);
+		}
+	};
+
+	const handleEthereumMint = async (url: string) => {
+		try {
+			//Get listing price
+			const listingPrice = await contract.methods
+				.getListingPrice()
+				.call({ from: `${address}` });
+
+			const auctionPrice = await web3.utils.toWei(price, 'ether');
+			await createNft(
+				contract,
+				url,
+				auctionPrice,
+				listingPrice,
+				address,
+				router
+			);
+			setLoading(false);
 		} catch (error) {
 			toast.error((error as Error).message);
 		}
@@ -61,25 +92,11 @@ const CreateNFT = () => {
 		const res = await client.add(data);
 		const url = `${process.env.NEXT_PUBLIC_IPFS_BASE_URL}/${res.path}`;
 		setFinalUrl(url);
-
-		try {
-			//Get listing price
-			const listingPrice = await contract.methods
-				.getListingPrice()
-				.call({ from: `${address}` });
-
-			const auctionPrice = await web3.utils.toWei(price, 'ether');
-			await createNft(
-				contract,
-				url,
-				auctionPrice,
-				listingPrice,
-				address,
-				router
-			);
+		if (network === ETHEREUM) {
+			await handleEthereumMint(url);
+		} else {
+			await mintArdorNft(res.path, name, 1, address);
 			setLoading(false);
-		} catch (error) {
-			toast.error((error as Error).message);
 		}
 	};
 	return (
@@ -134,7 +151,9 @@ const CreateNFT = () => {
 					<input
 						className='bg-gray-200 p-5 border border-gray-300 rounded-md w-2/3 focus:border-black focus:outline-black'
 						type='text'
-						placeholder='Price (ETH)'
+						placeholder={`${
+							network === ETHEREUM ? 'Price (ETH)' : 'Price (ARD)'
+						}`}
 						value={price}
 						onChange={e => setPrice(e.target.value)}
 					/>
@@ -145,11 +164,10 @@ const CreateNFT = () => {
 						id=''
 						className='bg-gray-200 p-5  border border-gray-300 rounded-md w-2/3 focus:outline-none'
 						onChange={e => setNetwork(e.target.value)}
-						value={network}
+						defaultValue={ETHEREUM ? ETHEREUM : ARDOR}
 					>
-						<option value='ethereum'> Ethereum</option>
-						<option value='rinkeby'>Rinkeby</option>
-						<option value='mumbai'>Mumbai</option>
+						<option value={`${ETHEREUM}`}> Ethereum</option>
+						<option value={`${ARDOR}`}>Ardor</option>
 					</select>
 				</div>
 

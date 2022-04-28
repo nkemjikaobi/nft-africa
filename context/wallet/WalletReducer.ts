@@ -17,6 +17,7 @@ import {
 	VERIFY_TOKEN,
 	DISCONNECT_ARDOR_WALLET,
 	FETCH_ARDOR_NFTS,
+	MINT_ARDOR_NFT,
 } from '../types';
 
 const contactReducer = (state: any, action: any) => {
@@ -152,7 +153,13 @@ const contactReducer = (state: any, action: any) => {
 		case FETCH_ARDOR_NFTS:
 			return {
 				...state,
-				ardorNfts: action.payload
+				ardorNfts: action.payload,
+			};
+		case MINT_ARDOR_NFT:
+			return {
+				...state,
+				ardorMintedData: action.payload,
+				message: 'Asset Issued'
 			};
 		default:
 			return state;

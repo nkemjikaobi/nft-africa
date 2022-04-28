@@ -19,6 +19,7 @@ import {
 	VERIFY_TOKEN,
 	DISCONNECT_ARDOR_WALLET,
 	FETCH_ARDOR_NFTS,
+	MINT_ARDOR_NFT,
 } from '../types';
 import Web3 from 'web3';
 import Web3Modal from 'web3modal';
@@ -56,6 +57,7 @@ const WalletState = (props: any) => {
 		ardorToken: '',
 		ardorUserData: null,
 		ardorNfts: null,
+		ardorMintedData: null,
 	};
 
 	const [state, dispatch] = useReducer(WalletReducer, initialState);
@@ -389,6 +391,23 @@ const WalletState = (props: any) => {
 			});
 		} catch (error) {}
 	};
+	const mintArdorNft = async (
+		cid: string,
+		name: string,
+		quantity: number,
+		account: string
+	) => {
+		try {
+			const res = await axios.post(
+				`${process.env.NEXT_PUBLIC_ARDOR_BASE_URL}/api/nftart/mint`,
+				{ cid, name, quantity, account }
+			);
+			dispatch({
+				type: MINT_ARDOR_NFT,
+				payload: res.data.data,
+			});
+		} catch (error) {}
+	};
 
 	return (
 		<WalletContext.Provider
@@ -416,6 +435,7 @@ const WalletState = (props: any) => {
 				ardorUserData: state.ardorUserData,
 				network: state.network,
 				ardorNfts: state.ardorNfts,
+				ardorMintedData: state.ardorMintedData,
 				clearError,
 				connectWallet,
 				disconnectWallet,
@@ -431,6 +451,7 @@ const WalletState = (props: any) => {
 				watchToken,
 				verifyToken,
 				fetchArdorNfts,
+				mintArdorNft,
 			}}
 		>
 			{props.children}
