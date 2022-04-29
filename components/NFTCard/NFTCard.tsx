@@ -16,7 +16,7 @@ import capitalizeFirstLetter from 'helpers/capitalizeFirstLetter';
 interface INFTCard {
 	allNfts: Array<INFT>;
 	title: string;
-	ardorNfts: Array<any>;
+	ardorNfts?: Array<any>;
 }
 const NFTCard = ({ allNfts, title, ardorNfts }: INFTCard) => {
 	const router = useRouter();
