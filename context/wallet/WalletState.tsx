@@ -402,6 +402,7 @@ const WalletState = (props: any) => {
 				`${process.env.NEXT_PUBLIC_ARDOR_BASE_URL}/api/nftart/mint`,
 				{ cid, name, quantity, account }
 			);
+			console.log(res);
 			dispatch({
 				type: MINT_ARDOR_NFT,
 				payload: res.data.data,

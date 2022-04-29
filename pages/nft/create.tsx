@@ -1,5 +1,5 @@
 import BasePageLayout from 'components/BasePageLayout/BasePageLayout';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { BsArrowRight } from 'react-icons/bs';
 import * as ipfsClient from 'ipfs-http-client';
 import toast, { Toaster } from 'react-hot-toast';
@@ -10,16 +10,19 @@ import { AiOutlineClose } from 'react-icons/ai';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { ARDOR, ETHEREUM } from 'constants/index';
+import ConnectArdorWallet from 'modals/ConnectArdorWallet';
+import MintArdorNft from 'modals/MintArdorNft';
 
 const CreateNFT = () => {
 	const [name, setName] = useState<string>('');
 	const [description, setDescription] = useState<string>('');
 	const [price, setPrice] = useState<string>('');
-	const [network, setNetwork] = useState<string>('rinkeby');
+	const [networkk, setNetworkk] = useState<string>('');
 	const [fileUrl, setFileUrl] = useState<string>('');
 	const [finalUrl, setFinalUrl] = useState<string>('');
 	const [loading, setLoading] = useState<boolean>(false);
 	const [imageLoading, setImageLoading] = useState<boolean>(false);
+	const [finished, setFinished] = useState<boolean>(false);
 	const walletContext = useContext(WalletContext);
 
 	const {
@@ -29,6 +32,7 @@ const CreateNFT = () => {
 		mintArdorNft,
 		createNft,
 		isConnected,
+		network,
 		ardorMintedData,
 	} = walletContext;
 
@@ -83,25 +87,36 @@ const CreateNFT = () => {
 			fileUrl === '' ||
 			description === '' ||
 			price === '' ||
-			network === ''
+			networkk === ''
 		) {
 			return toast.error('All fields are required');
 		}
 		setLoading(true);
-		const data = JSON.stringify({ name, description, fileUrl, network });
+		const data = JSON.stringify({ name, description, fileUrl, networkk });
 		const res = await client.add(data);
 		const url = `${process.env.NEXT_PUBLIC_IPFS_BASE_URL}/${res.path}`;
 		setFinalUrl(url);
-		if (network === ETHEREUM) {
+		if (networkk === ETHEREUM) {
 			await handleEthereumMint(url);
 		} else {
 			await mintArdorNft(res.path, name, 1, address);
+			setFinished(true);
 			setLoading(false);
 		}
 	};
+
+	useEffect(() => {
+		if (finished) {
+		}
+		//eslint-disable-next-line
+	}, [finished]);
 	return (
 		<BasePageLayout>
-			<div className='tablet:container tablet:w-600 text-center mb-32'>
+			<div
+				className={`tablet:container tablet:w-600 text-center mb-32 ${
+					finished && 'blur-lg'
+				}`}
+			>
 				<Toaster position='top-right' />
 				<h1 className='uppercase text-2xl tablet:text-5xl font-extrabold mb-8 mt-64'>
 					Create NFT
@@ -163,7 +178,7 @@ const CreateNFT = () => {
 						name=''
 						id=''
 						className='bg-gray-200 p-5  border border-gray-300 rounded-md w-2/3 focus:outline-none'
-						onChange={e => setNetwork(e.target.value)}
+						onChange={e => setNetworkk(e.target.value)}
 						defaultValue={ETHEREUM ? ETHEREUM : ARDOR}
 					>
 						<option value={`${ETHEREUM}`}> Ethereum</option>
@@ -191,6 +206,11 @@ const CreateNFT = () => {
 					)}
 				</div>
 			</div>
+			{finished && (
+				<div className='fixed left-[15%] tablet:left-[25%] laptop:left-[30%] top-[30%] w-[70%] tablet:w-[60%] laptop:w-[40%]'>
+					<MintArdorNft setFinished={setFinished} />
+				</div>
+			)}
 		</BasePageLayout>
 	);
 };
