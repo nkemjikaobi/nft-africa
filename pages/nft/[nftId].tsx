@@ -7,7 +7,7 @@ import { History } from 'componentData/DetailPage/History';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useContext, useEffect, useState } from 'react';
-import { FaEthereum, FaSpinner } from 'react-icons/fa';
+import { FaEthereum } from 'react-icons/fa';
 import WalletContext from 'context/wallet/WalletContext';
 import convertToEther from 'helpers/convertToEther';
 import { GetServerSideProps } from 'next';

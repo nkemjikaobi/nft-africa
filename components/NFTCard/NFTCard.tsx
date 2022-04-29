@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FaEthereum, FaGavel } from 'react-icons/fa';
 import { HiCurrencyDollar } from 'react-icons/hi';
 import { AiTwotoneCloseCircle } from 'react-icons/ai';
@@ -10,16 +10,43 @@ import NFTCardSkeleton from 'skeletons/NFTCardSkeleton';
 import WalletContext from 'context/wallet/WalletContext';
 import convertToEther from 'helpers/convertToEther';
 import INFT from 'dto/NFT/INFT';
+import { ARDOR, ETHEREUM } from 'constants/index';
+import capitalizeFirstLetter from 'helpers/capitalizeFirstLetter';
 
 interface INFTCard {
-	data: Array<INFT>;
+	allNfts: Array<INFT>;
 	title: string;
+	ardorNfts?: Array<any>;
 }
-const NFTCard = ({ data, title }: INFTCard) => {
+const NFTCard = ({ allNfts, title, ardorNfts }: INFTCard) => {
 	const router = useRouter();
 	const walletContext = useContext(WalletContext);
 
 	const { web3, isGuest, guestWeb3 } = walletContext;
+
+	const [active, setActive] = useState<string>('');
+	const [data, setData] = useState<any>(null);
+
+	const handleClick = (network: string) => {
+		setActive(network);
+		// if (network === ETHEREUM) {
+		// 	allNfts && setData(allNfts);
+		// } else {
+		// 	ardorNfts && setData(ardorNfts);
+		// }
+	};
+
+	useEffect(() => {
+		let mounted = true;
+		if (mounted && allNfts) {
+			setActive(ETHEREUM);
+			setData(allNfts);
+		}
+		return () => {
+			mounted = false;
+		};
+		//eslint-disable-next-line
+	}, [allNfts]);
 
 	return data === null ? (
 		<NFTCardSkeleton />
@@ -29,6 +56,24 @@ const NFTCard = ({ data, title }: INFTCard) => {
 				<h2 className='ml-2 tablet:ml-1 p-3 mb-4 tablet:mb-8 font-bold text-3xl tablet:text-4xl capitalize'>
 					{title}
 				</h2>
+				<div className='hidden tablet:flex items-center justify-between w-1/5'>
+					<h4
+						className={`text-xl font-bold cursor-pointer ${
+							active === ETHEREUM && 'border-b-4 border-b-blue-950'
+						}`}
+						onClick={() => handleClick(ETHEREUM)}
+					>
+						{capitalizeFirstLetter(ETHEREUM)}
+					</h4>
+					<h4
+						className={`text-xl font-bold cursor-pointer ${
+							active === ARDOR && 'border-b-4 border-b-blue-950'
+						}`}
+						onClick={() => handleClick(ARDOR)}
+					>
+						{capitalizeFirstLetter(ARDOR)}
+					</h4>
+				</div>
 				{router.pathname === '/' && (
 					<Link href={`/${title.toLowerCase()}`}>
 						<a

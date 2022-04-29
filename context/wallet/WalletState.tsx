@@ -18,6 +18,8 @@ import {
 	WATCH_TOKEN,
 	VERIFY_TOKEN,
 	DISCONNECT_ARDOR_WALLET,
+	FETCH_ARDOR_NFTS,
+	MINT_ARDOR_NFT,
 } from '../types';
 import Web3 from 'web3';
 import Web3Modal from 'web3modal';
@@ -54,6 +56,8 @@ const WalletState = (props: any) => {
 		hasGeneratedQrCodeUrl: false,
 		ardorToken: '',
 		ardorUserData: null,
+		ardorNfts: null,
+		ardorMintedData: null,
 	};
 
 	const [state, dispatch] = useReducer(WalletReducer, initialState);
@@ -358,7 +362,7 @@ const WalletState = (props: any) => {
 				{ uuid: qrCodeId, token: ardorToken }
 			);
 			if (res.data.data.valid) {
-				const result = res.data.data
+				const result = res.data.data;
 				dispatch({
 					type: VERIFY_TOKEN,
 					payload: { result, qrCodeId, ardorToken },
@@ -375,6 +379,35 @@ const WalletState = (props: any) => {
 				payload: 'Token is invalid',
 			});
 		}
+	};
+	const fetchArdorNfts = async () => {
+		try {
+			const res = await axios.get(
+				`${process.env.NEXT_PUBLIC_ARDOR_BASE_URL}/api/nftart/all/assets`
+			);
+			dispatch({
+				type: FETCH_ARDOR_NFTS,
+				payload: res.data.data,
+			});
+		} catch (error) {}
+	};
+	const mintArdorNft = async (
+		cid: string,
+		name: string,
+		quantity: number,
+		account: string
+	) => {
+		try {
+			const res = await axios.post(
+				`${process.env.NEXT_PUBLIC_ARDOR_BASE_URL}/api/nftart/mint`,
+				{ cid, name, quantity, account }
+			);
+			console.log(res);
+			dispatch({
+				type: MINT_ARDOR_NFT,
+				payload: res.data.data,
+			});
+		} catch (error) {}
 	};
 
 	return (
@@ -402,6 +435,8 @@ const WalletState = (props: any) => {
 				ardorToken: state.ardorToken,
 				ardorUserData: state.ardorUserData,
 				network: state.network,
+				ardorNfts: state.ardorNfts,
+				ardorMintedData: state.ardorMintedData,
 				clearError,
 				connectWallet,
 				disconnectWallet,
@@ -416,6 +451,8 @@ const WalletState = (props: any) => {
 				generateAuth,
 				watchToken,
 				verifyToken,
+				fetchArdorNfts,
+				mintArdorNft,
 			}}
 		>
 			{props.children}
