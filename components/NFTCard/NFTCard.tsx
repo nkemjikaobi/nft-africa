@@ -60,7 +60,7 @@ const NFTCard = ({ allNfts, title, ardorNfts }: INFTCard) => {
 				</h2>
 				<div className='hidden tablet:flex items-center justify-between w-1/5'>
 					<h4
-						className={`text-xl font-bold cursor-pointer ${
+						className={`laptop:text-xl font-bold cursor-pointer ${
 							active === ETHEREUM && 'border-b-4 border-b-blue-950'
 						}`}
 						onClick={() => handleClick(ETHEREUM)}
@@ -68,7 +68,7 @@ const NFTCard = ({ allNfts, title, ardorNfts }: INFTCard) => {
 						{capitalizeFirstLetter(ETHEREUM)}
 					</h4>
 					<h4
-						className={`text-xl font-bold cursor-pointer ${
+						className={`laptop:text-xl font-bold cursor-pointer ${
 							active === ARDOR && 'border-b-4 border-b-blue-950'
 						}`}
 						onClick={() => handleClick(ARDOR)}
