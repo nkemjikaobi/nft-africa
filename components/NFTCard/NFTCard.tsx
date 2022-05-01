@@ -12,6 +12,8 @@ import convertToEther from 'helpers/convertToEther';
 import INFT from 'dto/NFT/INFT';
 import { ARDOR, ETHEREUM } from 'constants/index';
 import capitalizeFirstLetter from 'helpers/capitalizeFirstLetter';
+import EthereumNFT from 'components/EthereurmNFT/EthereumNFT';
+import ArdorNFT from 'components/ArdorNFT/ArdorNFT';
 
 interface INFTCard {
 	allNfts: Array<INFT>;
@@ -29,11 +31,11 @@ const NFTCard = ({ allNfts, title, ardorNfts }: INFTCard) => {
 
 	const handleClick = (network: string) => {
 		setActive(network);
-		// if (network === ETHEREUM) {
-		// 	allNfts && setData(allNfts);
-		// } else {
-		// 	ardorNfts && setData(ardorNfts);
-		// }
+		if (network === ETHEREUM) {
+			allNfts && setData(allNfts);
+		} else {
+			ardorNfts && setData(ardorNfts);
+		}
 	};
 
 	useEffect(() => {
@@ -87,63 +89,13 @@ const NFTCard = ({ allNfts, title, ardorNfts }: INFTCard) => {
 			</div>
 			<div className='mx-6 tablet:mx-6 mb-10 grid grid-cols-1 tablet:w-3/3 tablet:grid-cols-3 smallLaptop:grid-cols-4 gap-6 tablet:mb-8 cursor-pointer'>
 				{data &&
-					data.map((nft: INFT) => (
-						<div
-							className='mb-4 bg-gray-200 hover:drop-shadow-lg'
-							key={nft.tokenId}
-							onClick={() => router.push(`nft/${nft.tokenId}`)}
-						>
-							<Image
-								src={nft.fileUrl}
-								width={500}
-								height={500}
-								alt='nft image'
-							/>
-							<div className='p-3 flex justify-between items-center'>
-								<p>{nft.name}</p>
-								<FaEthereum />
-							</div>
-							{nft.sold ? (
-								<div className='p-3 flex justify-between items-center'>
-									<p className='flex items-center'>
-										Price <HiCurrencyDollar className='ml-2' />
-									</p>
-									<p>
-										{convertToEther(isGuest ? guestWeb3 : web3, nft.price)} ETH
-									</p>
-								</div>
-							) : (
-								<div className='p-3 flex justify-between items-center'>
-									<p className='flex items-center'>
-										Current Bid <FaGavel className='ml-2' />
-									</p>
-									<p>
-										{convertToEther(isGuest ? guestWeb3 : web3, nft.price)} ETH
-									</p>
-								</div>
-							)}
-
-							<div className='p-3 flex justify-between items-center'>
-								<p className='tablet:text-xs smallLaptop:text-base'>Creator</p>
-								<p className='tablet:text-xs smallLaptop:text-base'>
-									{nft.owner.substring(0, 6)}
-								</p>
-							</div>
-							<div className='p-3 flex items-center '>
-								{nft.sold ? (
-									<p className='flex items-center'>
-										Acquired
-										<AiTwotoneCloseCircle className='ml-2 text-xs text-red-400' />{' '}
-									</p>
-								) : (
-									<p className='flex items-center'>
-										Auction in Progress
-										<AiTwotoneCloseCircle className='ml-2 text-xs text-green-400' />
-									</p>
-								)}
-							</div>
-						</div>
-					))}
+					data.map((nft: any) =>
+						active === ETHEREUM ? (
+							<EthereumNFT data={nft} key={nft.tokenId} />
+						) : (
+							<ArdorNFT data={nft} key={nft.asset} />
+						)
+					)}
 			</div>
 		</div>
 	);
