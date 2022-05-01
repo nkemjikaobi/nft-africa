@@ -2,10 +2,32 @@ import BasePageLayout from 'components/BasePageLayout/BasePageLayout';
 import Tabs from 'components/Tabs/Tabs';
 import shortenWalletAddress from 'helpers/shortenWalletAddress';
 import Image from 'next/image';
-import React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { FaEthereum } from 'react-icons/fa';
+import WalletContext from 'context/wallet/WalletContext';
+import NFTCard from 'components/NFTCard/NFTCard';
 
 const ProfilePage = () => {
+	const [active, setActive] = useState<number>(1);
+
+	const walletContext = useContext(WalletContext);
+
+	const { fetchAllNfts, contract, allNfts, fetchArdorNfts, ardorNfts } =
+		walletContext;
+
+	//Fetch NFT's on the ethereum network
+	useEffect(() => {
+		let mounted = true;
+		if (mounted && contract !== null) {
+			fetchAllNfts(contract);
+		}
+
+		return () => {
+			mounted = false;
+		};
+		//eslint-disable-next-line
+	}, [contract]);
+
 	return (
 		<div className='mt-[130px]'>
 			<div>
@@ -44,7 +66,11 @@ const ProfilePage = () => {
 					</div>
 				</div>
 				<div className='mt-[10%] ml-[35%]'>
-					<Tabs />
+					<Tabs active={active} setActive={setActive} />
+					{/* <hr className='border-gray-600'/> */}
+				</div>
+				<div>
+					<NFTCard title='Your Assets' allNfts={allNfts} />
 				</div>
 			</BasePageLayout>
 		</div>

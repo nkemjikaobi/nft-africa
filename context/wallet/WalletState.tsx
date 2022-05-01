@@ -20,6 +20,8 @@ import {
 	DISCONNECT_ARDOR_WALLET,
 	FETCH_ARDOR_NFTS,
 	MINT_ARDOR_NFT,
+	FETCH_SINGLE_ARDOR_NFT,
+	RESET_NFT_ITEM,
 } from '../types';
 import Web3 from 'web3';
 import Web3Modal from 'web3modal';
@@ -58,6 +60,7 @@ const WalletState = (props: any) => {
 		ardorUserData: null,
 		ardorNfts: null,
 		ardorMintedData: null,
+		singleArdorNft: null,
 	};
 
 	const [state, dispatch] = useReducer(WalletReducer, initialState);
@@ -410,6 +413,20 @@ const WalletState = (props: any) => {
 		} catch (error) {}
 	};
 
+	const fetchSingleArdorNft = async (asset: string) => {
+		await fetchArdorNfts();
+		dispatch({
+			type: FETCH_SINGLE_ARDOR_NFT,
+			payload: asset,
+		});
+	};
+
+	const resetNFTItem = async () => {
+		dispatch({
+			type: RESET_NFT_ITEM,
+		});
+	};
+
 	return (
 		<WalletContext.Provider
 			value={{
@@ -437,6 +454,7 @@ const WalletState = (props: any) => {
 				network: state.network,
 				ardorNfts: state.ardorNfts,
 				ardorMintedData: state.ardorMintedData,
+				singleArdorNft: state.singleArdorNft,
 				clearError,
 				connectWallet,
 				disconnectWallet,
@@ -453,6 +471,8 @@ const WalletState = (props: any) => {
 				verifyToken,
 				fetchArdorNfts,
 				mintArdorNft,
+				fetchSingleArdorNft,
+				resetNFTItem
 			}}
 		>
 			{props.children}

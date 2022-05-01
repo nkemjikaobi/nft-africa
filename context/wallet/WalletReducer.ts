@@ -18,6 +18,8 @@ import {
 	DISCONNECT_ARDOR_WALLET,
 	FETCH_ARDOR_NFTS,
 	MINT_ARDOR_NFT,
+	FETCH_SINGLE_ARDOR_NFT,
+	RESET_NFT_ITEM,
 } from '../types';
 
 const contactReducer = (state: any, action: any) => {
@@ -155,11 +157,25 @@ const contactReducer = (state: any, action: any) => {
 				...state,
 				ardorNfts: action.payload,
 			};
+		case FETCH_SINGLE_ARDOR_NFT:
+			const nft = state.ardorNfts.filter(
+				(nft: any) => nft.asset === action.payload
+			);
+			return {
+				...state,
+				singleArdorNft: nft[0],
+			};
 		case MINT_ARDOR_NFT:
 			return {
 				...state,
 				ardorMintedData: action.payload,
-				message: 'Asset Issued'
+				message: 'Asset Issued',
+			};
+		case RESET_NFT_ITEM:
+			return {
+				...state,
+				singleArdorNft: null,
+				singleNft: null,
 			};
 		default:
 			return state;
