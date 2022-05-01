@@ -4,21 +4,17 @@ import Image from 'next/image';
 import { FaEthereum } from 'react-icons/fa';
 import { HiCurrencyDollar } from 'react-icons/hi';
 import { AiTwotoneCloseCircle } from 'react-icons/ai';
+import formatArdorImageUrl from 'helpers/formatArdorImageUrl';
 
 const ArdorNFT = ({ data }: any) => {
 	const router = useRouter();
 
 	const [imageCID, setImageCID] = useState<string>('');
 
-	const formatDescription = (description: string) => {
-		const split = description.split('||');
-		const lastItem = split[split.length - 1];
-		setImageCID(`${process.env.NEXT_PUBLIC_IPFS_BASE_URL}/${lastItem}`);
-	};
-
 	useEffect(() => {
 		if (data) {
-			formatDescription(data.description);
+			const cid = formatArdorImageUrl(data.description);
+			setImageCID(cid);
 		}
 	}, [data]);
 
@@ -47,7 +43,7 @@ const ArdorNFT = ({ data }: any) => {
 					<div className='p-3 flex justify-between items-center'>
 						<p className='tablet:text-xs smallLaptop:text-base'>Creator</p>
 						<p className='tablet:text-xs smallLaptop:text-base'>
-							{data.accountRS.substring(0, 12)}
+							{data.accountRS && data.accountRS.substring(0, 12)}
 						</p>
 					</div>
 					<div className='p-3 flex items-center '>
