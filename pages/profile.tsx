@@ -29,7 +29,7 @@ const ProfilePage = () => {
 	}, [contract]);
 
 	return (
-		<div className='mt-[130px]'>
+		<div className='mt-[110px] tablet:mt-[130px]'>
 			<div>
 				<div className='w-full'>
 					<Image
@@ -42,7 +42,7 @@ const ProfilePage = () => {
 				</div>
 			</div>
 			<BasePageLayout>
-				<div className='rounded-full border w-24 h-24 border-black absolute left-[45%] top-[350px]'>
+				<div className='rounded-full border w-24 h-24 border-black absolute left-[39%] tablet:left-[44%] smallLaptop:left-[45%] top-[160px] tablet:top-[230px] smallLaptop:top-[350px]'>
 					<Image
 						src={'/images/noimage.webp'}
 						className='rounded-full'
@@ -65,11 +65,11 @@ const ProfilePage = () => {
 						</div>
 					</div>
 				</div>
-				<div className='mt-[10%] ml-[35%]'>
+				<div className='mt-[10%] ml-[35%] laptop:mt-[12%]'>
 					<Tabs active={active} setActive={setActive} />
-					{/* <hr className='border-gray-600'/> */}
+				{/* <hr className='border-gray-600'/> */}
 				</div>
-				<div>
+				<div className='mt-[10%] laptop:mt-[3%]'>
 					<NFTCard title='Your Assets' allNfts={allNfts} />
 				</div>
 			</BasePageLayout>
