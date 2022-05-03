@@ -49,12 +49,6 @@ const ArdorNFT = ({ data }: any) => {
 						<p>{data.name}</p>
 						<FaEthereum />
 					</div>
-					<div className='p-3 flex justify-between items-center'>
-						<p className='flex items-center'>
-							Price <HiCurrencyDollar className='ml-2' />
-						</p>
-						<p>0.0001 ETH</p>
-					</div>
 
 					<div className='p-3 flex justify-between items-center'>
 						<p className='tablet:text-xs smallLaptop:text-base'>Creator</p>
