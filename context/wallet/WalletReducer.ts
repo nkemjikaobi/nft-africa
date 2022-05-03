@@ -20,6 +20,8 @@ import {
 	MINT_ARDOR_NFT,
 	FETCH_SINGLE_ARDOR_NFT,
 	RESET_NFT_ITEM,
+	FETCH_ARDOR_BIDS,
+	PLACE_ARDOR_BID,
 } from '../types';
 
 const contactReducer = (state: any, action: any) => {
@@ -176,6 +178,17 @@ const contactReducer = (state: any, action: any) => {
 				...state,
 				singleArdorNft: null,
 				singleNft: null,
+			};
+		case FETCH_ARDOR_BIDS:
+			return {
+				...state,
+				bids: action.payload,
+			};
+		case PLACE_ARDOR_BID:
+			return {
+				...state,
+				message: action.payload.msg,
+				ardorPlaceOrderData: action.payload,
 			};
 		default:
 			return state;

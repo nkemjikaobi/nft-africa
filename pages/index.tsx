@@ -16,7 +16,6 @@ const Home: NextPage = () => {
 		let mounted = true;
 		if (mounted && contract !== null) {
 			fetchAllNfts(contract);
-			//gh
 		}
 
 		return () => {

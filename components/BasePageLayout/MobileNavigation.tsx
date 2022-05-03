@@ -7,8 +7,9 @@ import useClickOutside from 'hooks/useClickOutside';
 import Image from 'next/image';
 import WalletContext from 'context/wallet/WalletContext';
 import { ETHEREUM } from 'constants/index';
+import removeArdorZeroes from 'helpers/removeArdorZeroes';
 
-const MobileNavigation = ({ handleClick}: any) => {
+const MobileNavigation = ({ handleClick }: any) => {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 	const node = useClickOutside(() => {
 		setIsOpen(false);
@@ -64,7 +65,8 @@ const MobileNavigation = ({ handleClick}: any) => {
 									) : (
 										<>
 											{Number(
-												ardorUserData !== null && ardorUserData.balance
+												ardorUserData !== null &&
+													removeArdorZeroes(ardorUserData.balance)
 											).toFixed(4)}{' '}
 											ARD
 										</>

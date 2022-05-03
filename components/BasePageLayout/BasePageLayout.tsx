@@ -65,6 +65,7 @@ const BasePageLayout = ({
 				const qrCodeId = localStorage?.getItem('qrCodeId');
 				const ardorToken = localStorage?.getItem('ardorToken');
 				verifyToken(qrCodeId, ardorToken);
+				connectAsGuest();
 			}
 		} else {
 			connectAsGuest();

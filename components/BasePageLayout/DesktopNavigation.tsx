@@ -4,6 +4,7 @@ import Link from 'next/link';
 import React, { useContext } from 'react';
 import WalletContext from 'context/wallet/WalletContext';
 import { ETHEREUM } from 'constants/index';
+import removeArdorZeroes from 'helpers/removeArdorZeroes';
 
 const DesktopNavigation = ({ handleClick }: any) => {
 	const walletContext = useContext(WalletContext);
@@ -52,7 +53,7 @@ const DesktopNavigation = ({ handleClick }: any) => {
 									<>
 										{Number(
 											ardorUserData !== null &&
-												ardorUserData.balance / 100000000
+												removeArdorZeroes(ardorUserData.balance)
 										).toFixed(4)}{' '}
 										ARD
 									</>

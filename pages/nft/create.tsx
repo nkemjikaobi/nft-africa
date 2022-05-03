@@ -11,7 +11,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { ARDOR, ETHEREUM } from 'constants/index';
 import ConnectArdorWallet from 'modals/ConnectArdorWallet';
-import MintArdorNft from 'modals/MintArdorNft';
+import SignArdorTransaction from 'components/SignArdorTransaction/SignArdorTransaction';
 
 const CreateNFT = () => {
 	const [name, setName] = useState<string>('');
@@ -208,7 +208,7 @@ const CreateNFT = () => {
 			</div>
 			{finished && (
 				<div className='fixed left-[15%] tablet:left-[25%] laptop:left-[30%] top-[30%] w-[70%] tablet:w-[60%] laptop:w-[40%]'>
-					<MintArdorNft setFinished={setFinished} />
+					<SignArdorTransaction onClose={setFinished} data={ardorMintedData} />
 				</div>
 			)}
 		</BasePageLayout>

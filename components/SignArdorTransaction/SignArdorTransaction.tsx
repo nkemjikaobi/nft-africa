@@ -4,54 +4,42 @@ import toast, { Toaster } from 'react-hot-toast';
 import Image from 'next/image';
 import QRCode from 'react-qr-code';
 import Link from 'next/link';
-import axios from 'axios';
 import WalletContext from 'context/wallet/WalletContext';
 import { FaSpinner } from 'react-icons/fa';
+import Router from 'next/router';
 
-const MintArdorNft = ({ setFinished }: any) => {
-    const walletContext = useContext(WalletContext);
-    const [uuid, setUuid] = useState("");
-    const [url, setUrl] = useState("");
-	const {
-		generateAuth,
-		qrCodeUrl,
-		watchToken,
-		ardorToken,
-		qrCodeId,
-		hasGeneratedQrCodeUrl,
-		verifyToken,
-		ardorMintedData,
-	} = walletContext;
-
-	//const { uuid, url } = ardorMintedData && ardorMintedData;
+const SignArdorTransaction = ({ close, data }: any) => {
+	const walletContext = useContext(WalletContext);
+	const [uuid, setUuid] = useState('');
+	const [url, setUrl] = useState('');
+	const { watchToken, ardorToken, verifyToken } = walletContext;
 
 	//Verify the token
 	useEffect(() => {
 		if (ardorToken !== '') {
 			verifyToken(uuid, ardorToken);
-			setFinished(false);
+			close(false);
 		}
 		//eslint-disable-next-line
 	}, [ardorToken, uuid]);
 
 	//Watch for when the user activates the token on device
 	useEffect(() => {
-        if (ardorMintedData !== null) {
-            setUuid(ardorMintedData.uuid)
-            setUrl(ardorMintedData.url)
-			watchToken(ardorMintedData.uuid);
+		if (data !== null) {
+			setUuid(data.uuid);
+			setUrl(data.url);
+			watchToken(data.uuid);
 		}
 		//eslint-disable-next-line
-	}, [ardorMintedData]);
+	}, [data]);
 
 	return (
 		<div className='text-white relative bg-black rounded-lg p-10'>
 			<Toaster position='top-right' />
 			<div className='absolute left-0 tablet:right-5 top-0 tablet:top-10 cursor-pointer'>
-				<AiOutlineClose onClick={() => setFinished(false)} />
+				<AiOutlineClose onClick={() => Router.reload()} />
 			</div>
 			<div className='flex flex-col justify-center items-center'>
-				{/* <h4 className='mb-4 text-2xl font-bold'>Login with SIGBRO</h4> */}
 				<div className='mb-4 mt-4 text-xl'>
 					Sign the transaction
 					<div className='hidden tablet:block tablet:mb-8'>
@@ -98,4 +86,4 @@ const MintArdorNft = ({ setFinished }: any) => {
 	);
 };
 
-export default MintArdorNft;
+export default SignArdorTransaction;

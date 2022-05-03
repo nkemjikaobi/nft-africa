@@ -19,6 +19,8 @@ export const GENERATE_AUTH = 'GENERATE_AUTH';
 export const WATCH_TOKEN = 'WATCH_TOKEN';
 export const VERIFY_TOKEN = 'VERIFY_TOKEN';
 export const DISCONNECT_ARDOR_WALLET = 'DISCONNECT_ARDOR_WALLET';
+export const FETCH_ARDOR_BIDS = 'FETCH_ARDOR_BIDS';
+export const PLACE_ARDOR_BID = 'PLACE_ARDOR_BID';
 
 //Reset NFT Detail Page
 export const RESET_NFT_ITEM = 'RESET_NFT_ITEM';

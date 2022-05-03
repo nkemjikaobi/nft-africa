@@ -22,6 +22,8 @@ import {
 	MINT_ARDOR_NFT,
 	FETCH_SINGLE_ARDOR_NFT,
 	RESET_NFT_ITEM,
+	FETCH_ARDOR_BIDS,
+	PLACE_ARDOR_BID,
 } from '../types';
 import Web3 from 'web3';
 import Web3Modal from 'web3modal';
@@ -61,6 +63,8 @@ const WalletState = (props: any) => {
 		ardorNfts: null,
 		ardorMintedData: null,
 		singleArdorNft: null,
+		bids: [],
+		ardorPlaceOrderData: null,
 	};
 
 	const [state, dispatch] = useReducer(WalletReducer, initialState);
@@ -383,6 +387,7 @@ const WalletState = (props: any) => {
 			});
 		}
 	};
+
 	const fetchArdorNfts = async () => {
 		try {
 			const res = await axios.get(
@@ -394,6 +399,7 @@ const WalletState = (props: any) => {
 			});
 		} catch (error) {}
 	};
+
 	const mintArdorNft = async (
 		cid: string,
 		name: string,
@@ -427,6 +433,38 @@ const WalletState = (props: any) => {
 		});
 	};
 
+	const fetchBids = async (asset: string) => {
+		try {
+			const res = await axios.get(
+				`${process.env.NEXT_PUBLIC_ARDOR_BASE_URL}/api/nftart/bid-order?asset=${asset}
+`
+			);
+			dispatch({
+				type: FETCH_ARDOR_BIDS,
+				payload: res.data.data.bidOrders,
+			});
+		} catch (error) {}
+	};
+
+	const placeArdorBid = async (
+		asset: string,
+		quantityQNT: number,
+		priceNQTPerShare: number,
+		account: string
+	) => {
+		try {
+			const res = await axios.post(
+				`${process.env.NEXT_PUBLIC_ARDOR_BASE_URL}/api/nftart/placebid`,
+				{ asset, quantityQNT, priceNQTPerShare, account }
+			);
+			console.log(res);
+			dispatch({
+				type: PLACE_ARDOR_BID,
+				payload: res.data.data,
+			});
+		} catch (error) {}
+	};
+
 	return (
 		<WalletContext.Provider
 			value={{
@@ -455,6 +493,8 @@ const WalletState = (props: any) => {
 				ardorNfts: state.ardorNfts,
 				ardorMintedData: state.ardorMintedData,
 				singleArdorNft: state.singleArdorNft,
+				bids: state.bids,
+				ardorPlaceOrderData: state.ardorPlaceOrderData,
 				clearError,
 				connectWallet,
 				disconnectWallet,
@@ -472,7 +512,9 @@ const WalletState = (props: any) => {
 				fetchArdorNfts,
 				mintArdorNft,
 				fetchSingleArdorNft,
-				resetNFTItem
+				resetNFTItem,
+				fetchBids,
+				placeArdorBid,
 			}}
 		>
 			{props.children}
