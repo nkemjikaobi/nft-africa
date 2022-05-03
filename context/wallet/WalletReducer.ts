@@ -150,7 +150,7 @@ const contactReducer = (state: any, action: any) => {
 				address: action.payload.result.accountRS,
 				network: ARDOR,
 				qrCodeId: action.payload.qrCodeId,
-				ardorToken: action.payload.ardorToken,
+				//ardorToken: action.payload.ardorToken,
 			};
 		case FETCH_ARDOR_NFTS:
 			return {

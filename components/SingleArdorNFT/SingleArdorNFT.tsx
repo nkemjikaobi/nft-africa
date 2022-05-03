@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { FaEthereum } from 'react-icons/fa';
 import { History } from 'componentData/DetailPage/History';
 import formatArdorImageUrl from 'helpers/formatArdorImageUrl';
+import axios from 'axios';
 
 const SingleArdorNFT = ({
 	singleNft,
@@ -13,13 +14,25 @@ const SingleArdorNFT = ({
 	setShowMagnified,
 	time,
 }: any) => {
-
 	const [imageCID, setImageCID] = useState<string>('');
+	const [description, setDescription] = useState<string>('');
+
+	const fetchImage: any = async (cid: any) => {
+		try {
+			const url: any = await axios.get(cid);
+			const finalUrl = url.data.fileUrl;
+			const description = url.data.description;
+			setDescription(description);
+			setImageCID(finalUrl);
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
 	useEffect(() => {
 		if (singleNft && singleNft.asset) {
 			const cid = formatArdorImageUrl(singleNft.description);
-			setImageCID(cid);
+			fetchImage(cid);
 		}
 	}, [singleNft]);
 
@@ -89,19 +102,9 @@ const SingleArdorNFT = ({
 							</div>
 						</div>
 						<p className='text-sm mb-8 -ml-20 tablet:ml-0'>
-							{singleNft.description}
+							{description && description}
 						</p>
 						<div className='flex justify-between items-center flex-row tablet:flex-col laptop:flex-row -ml-20 tablet:ml-0'>
-							<div className='tablet:-ml-[25%] laptop:ml-0'>
-								<h4 className='font-bold'>Price</h4>
-								<p className='flex items-center mt-1'>
-									<FaEthereum />{' '}
-									<span className='text-sm tablet:text-2xl font-bold mx-2'>
-										0.0001 ETH
-									</span>{' '}
-									<span className='text-gray-400 text-sm'>≈ $ 318.60</span>
-								</p>
-							</div>
 							<div className='mt-0 tablet:mt-8 tablet:-ml-[50%] laptop:ml-0 laptop:mt-0'>
 								<h4 className='font-bold'>Ends In</h4>
 								<p className='mt-1'>

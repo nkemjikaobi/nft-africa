@@ -51,7 +51,8 @@ const DesktopNavigation = ({ handleClick }: any) => {
 								) : (
 									<>
 										{Number(
-											ardorUserData !== null && ardorUserData.balance
+											ardorUserData !== null &&
+												ardorUserData.balance / 100000000
 										).toFixed(4)}{' '}
 										ARD
 									</>

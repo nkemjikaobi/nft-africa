@@ -5,16 +5,27 @@ import { FaEthereum } from 'react-icons/fa';
 import { HiCurrencyDollar } from 'react-icons/hi';
 import { AiTwotoneCloseCircle } from 'react-icons/ai';
 import formatArdorImageUrl from 'helpers/formatArdorImageUrl';
+import axios from 'axios';
 
 const ArdorNFT = ({ data }: any) => {
 	const router = useRouter();
 
-	const [imageCID, setImageCID] = useState<string>('');
+	const [imageCID, setImageCID] = useState<any>('');
+
+	const fetchImage: any = async (cid: any) => {
+		try {
+			const url: any = await axios.get(cid);
+			const finalUrl = url.data.fileUrl;
+			setImageCID(finalUrl);
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
 	useEffect(() => {
 		if (data) {
-			const cid = formatArdorImageUrl(data.description);
-			setImageCID(cid);
+			const cid: any = formatArdorImageUrl(data.description);
+			fetchImage(cid);
 		}
 	}, [data]);
 
@@ -27,7 +38,12 @@ const ArdorNFT = ({ data }: any) => {
 					onClick={() => router.push(`nft/${data.asset}`)}
 				>
 					{imageCID !== '' && (
-						<Image src={imageCID} width={500} height={500} alt='nft image' />
+						<Image
+							src={imageCID}
+							width={500}
+							height={500}
+							alt='nft image'
+						/>
 					)}
 					<div className='p-3 flex justify-between items-center'>
 						<p>{data.name}</p>

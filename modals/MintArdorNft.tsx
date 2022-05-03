@@ -42,7 +42,7 @@ const MintArdorNft = ({ setFinished }: any) => {
 			watchToken(ardorMintedData.uuid);
 		}
 		//eslint-disable-next-line
-	}, [ardorMintedData, uuid]);
+	}, [ardorMintedData]);
 
 	return (
 		<div className='text-white relative bg-black rounded-lg p-10'>
