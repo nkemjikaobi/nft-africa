@@ -4,7 +4,7 @@ import React from 'react';
 const Bids = ({ bids }: any) => {
 	return (
 		<div className='w-[115%] tablet:w-full'>
-			{bids.length !== 0 ? (
+			{bids && bids.length !== 0 ? (
 				bids.map((data: any) => (
 					<div
 						key={data.id}

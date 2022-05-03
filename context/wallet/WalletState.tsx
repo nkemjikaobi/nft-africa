@@ -457,7 +457,6 @@ const WalletState = (props: any) => {
 				`${process.env.NEXT_PUBLIC_ARDOR_BASE_URL}/api/nftart/placebid`,
 				{ asset, quantityQNT, priceNQTPerShare, account }
 			);
-			console.log(res);
 			dispatch({
 				type: PLACE_ARDOR_BID,
 				payload: res.data.data,

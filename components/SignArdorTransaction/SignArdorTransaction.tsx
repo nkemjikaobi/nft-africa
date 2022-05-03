@@ -8,7 +8,7 @@ import WalletContext from 'context/wallet/WalletContext';
 import { FaSpinner } from 'react-icons/fa';
 import Router from 'next/router';
 
-const SignArdorTransaction = ({ close, data }: any) => {
+const SignArdorTransaction = ({ close, data, callBack }: any) => {
 	const walletContext = useContext(WalletContext);
 	const [uuid, setUuid] = useState('');
 	const [url, setUrl] = useState('');
@@ -37,7 +37,7 @@ const SignArdorTransaction = ({ close, data }: any) => {
 		<div className='text-white relative bg-black rounded-lg p-10'>
 			<Toaster position='top-right' />
 			<div className='absolute left-0 tablet:right-5 top-0 tablet:top-10 cursor-pointer'>
-				<AiOutlineClose onClick={() => Router.reload()} />
+				<AiOutlineClose onClick={() => callBack()} />
 			</div>
 			<div className='flex flex-col justify-center items-center'>
 				<div className='mb-4 mt-4 text-xl'>

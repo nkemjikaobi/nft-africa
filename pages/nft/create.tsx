@@ -105,6 +105,10 @@ const CreateNFT = () => {
 		}
 	};
 
+	const callBack = () => {
+		router.push('/');
+	};
+
 	useEffect(() => {
 		if (finished) {
 		}
@@ -208,7 +212,11 @@ const CreateNFT = () => {
 			</div>
 			{finished && (
 				<div className='fixed left-[15%] tablet:left-[25%] laptop:left-[30%] top-[30%] w-[70%] tablet:w-[60%] laptop:w-[40%]'>
-					<SignArdorTransaction onClose={setFinished} data={ardorMintedData} />
+					<SignArdorTransaction
+						onClose={setFinished}
+						data={ardorMintedData}
+						callBack={callBack}
+					/>
 				</div>
 			)}
 		</BasePageLayout>

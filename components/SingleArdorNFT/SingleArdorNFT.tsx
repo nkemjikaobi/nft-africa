@@ -22,7 +22,7 @@ const SingleArdorNFT = ({
 	const [imageCID, setImageCID] = useState<string>('');
 	const [description, setDescription] = useState<string>('');
 	const [showBidForm, setShowBidForm] = useState<boolean>(false);
-	const [timeToSign, setTimeToSign] = useState<boolean>(false);
+	const [timeToSign, setTimeToSign] = useState<boolean>(true);
 	const [price, setPrice] = useState<number>(0);
 
 	const walletContext = useContext(WalletContext);
@@ -64,6 +64,11 @@ const SingleArdorNFT = ({
 		await placeArdorBid(singleNft.asset, 1, addArdorZeroes(price), address);
 		setShowBidForm(false);
 		setTimeToSign(true);
+	};
+
+	const callBack = () => {
+		fetchBids();
+		setTimeToSign(false);
 	};
 
 	return (
@@ -136,14 +141,6 @@ const SingleArdorNFT = ({
 							<p className='text-sm mb-8 -ml-20 tablet:ml-0'>
 								{description && description}
 							</p>
-							<div className='flex justify-between items-center flex-row tablet:flex-col laptop:flex-row -ml-20 tablet:ml-0'>
-								<div className='mt-0 tablet:mt-8 tablet:-ml-[50%] laptop:ml-0 laptop:mt-0'>
-									<h4 className='font-bold'>Ends In</h4>
-									<p className='mt-1'>
-										<CountdownTimer expiryTimestamp={time} />
-									</p>
-								</div>
-							</div>
 							<button
 								onClick={() => handleClick()}
 								className='bg-black -ml-20 tablet:ml-0 flex items-center justify-center p-5 w-full tablet:w-2/3 smallLaptop:w-1/3 border border-black rounded-md text-white my-5 mb-8 hover:bg-white hover:text-black '
@@ -180,8 +177,9 @@ const SingleArdorNFT = ({
 					{timeToSign && (
 						<div className='fixed left-[15%] tablet:left-[25%] laptop:left-[30%] top-[30%] w-[70%] tablet:w-[60%] laptop:w-[40%]'>
 							<SignArdorTransaction
-								close={setShowBidForm}
+								close={setTimeToSign}
 								data={ardorPlaceOrderData}
+								callBack={callBack}
 							/>
 						</div>
 					)}
