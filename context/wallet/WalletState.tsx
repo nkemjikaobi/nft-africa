@@ -24,6 +24,7 @@ import {
 	RESET_NFT_ITEM,
 	FETCH_ARDOR_BIDS,
 	PLACE_ARDOR_BID,
+	FETCH_PERSONAL_ASSETS,
 } from '../types';
 import Web3 from 'web3';
 import Web3Modal from 'web3modal';
@@ -65,6 +66,7 @@ const WalletState = (props: any) => {
 		singleArdorNft: null,
 		bids: [],
 		ardorPlaceOrderData: null,
+		personalAssets: null,
 	};
 
 	const [state, dispatch] = useReducer(WalletReducer, initialState);
@@ -464,6 +466,19 @@ const WalletState = (props: any) => {
 		} catch (error) {}
 	};
 
+	const fetchPersonalAssets = async (address: string) => {
+		try {
+			const res = await axios.get(
+				`${process.env.NEXT_PUBLIC_ARDOR_BASE_URL}/api/nftart/account-assets/${address}
+`
+			);
+			dispatch({
+				type: FETCH_PERSONAL_ASSETS,
+				payload: res.data.data,
+			});
+		} catch (error) {}
+	};
+
 	return (
 		<WalletContext.Provider
 			value={{
@@ -494,6 +509,7 @@ const WalletState = (props: any) => {
 				singleArdorNft: state.singleArdorNft,
 				bids: state.bids,
 				ardorPlaceOrderData: state.ardorPlaceOrderData,
+				personalAssets: state.personalAssets,
 				clearError,
 				connectWallet,
 				disconnectWallet,
@@ -514,6 +530,7 @@ const WalletState = (props: any) => {
 				resetNFTItem,
 				fetchBids,
 				placeArdorBid,
+				fetchPersonalAssets,
 			}}
 		>
 			{props.children}

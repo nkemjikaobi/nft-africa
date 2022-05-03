@@ -28,29 +28,42 @@ const NFTCard = ({ allNfts, title, ardorNfts }: INFTCard) => {
 
 	const [active, setActive] = useState<string>('');
 	const [data, setData] = useState<any>(null);
+	const [loading, setLoading] = useState<boolean>(false);
 
 	const handleClick = (network: string) => {
 		setActive(network);
+		setLoading(true);
 		if (network === ETHEREUM) {
-			allNfts && setData(allNfts);
+			setData(allNfts);
 		} else {
-			ardorNfts && setData(ardorNfts);
+			console.log('nere');
+			console.log(ardorNfts);
+			setData(ardorNfts);
 		}
+		setLoading(false);
 	};
 
 	useEffect(() => {
 		let mounted = true;
 		if (mounted && allNfts) {
+			setLoading(true);
 			setActive(ETHEREUM);
 			setData(allNfts);
+			setLoading(false);
+		}
+		if (mounted && ardorNfts) {
+			setLoading(true);
+			setActive(ARDOR);
+			setData(ardorNfts);
+			setLoading(false);
 		}
 		return () => {
 			mounted = false;
 		};
 		//eslint-disable-next-line
-	}, [allNfts]);
+	}, [allNfts, ardorNfts]);
 
-	return data === null ? (
+	return loading ? (
 		<NFTCardSkeleton />
 	) : (
 		<div className='mt-10 tablet:p-10 smallLaptop:p-20' id='boom'>
@@ -88,14 +101,18 @@ const NFTCard = ({ allNfts, title, ardorNfts }: INFTCard) => {
 				)}
 			</div>
 			<div className='mx-6 tablet:mx-6 mb-10 grid grid-cols-1 tablet:w-3/3 tablet:grid-cols-3 smallLaptop:grid-cols-4 gap-6 tablet:mb-8 cursor-pointer'>
-				{data &&
+				{data === null ? (
+					<div>Nothing here...</div>
+				) : (
+					data &&
 					data.map((nft: any) =>
 						active === ETHEREUM ? (
 							<EthereumNFT data={nft} key={nft.tokenId} />
 						) : (
 							<ArdorNFT data={nft} key={nft.asset} />
 						)
-					)}
+					)
+				)}
 			</div>
 		</div>
 	);

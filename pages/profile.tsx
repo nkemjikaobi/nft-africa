@@ -12,8 +12,14 @@ const ProfilePage = () => {
 
 	const walletContext = useContext(WalletContext);
 
-	const { fetchAllNfts, contract, allNfts, fetchArdorNfts, ardorNfts } =
-		walletContext;
+	const {
+		fetchAllNfts,
+		contract,
+		allNfts,
+		fetchPersonalAssets,
+		personalAssets,
+		address,
+	} = walletContext;
 
 	//Fetch NFT's on the ethereum network
 	useEffect(() => {
@@ -27,6 +33,19 @@ const ProfilePage = () => {
 		};
 		//eslint-disable-next-line
 	}, [contract]);
+
+	//Fetch personal assets
+	useEffect(() => {
+		let mounted = true;
+		if (mounted && address) {
+			fetchPersonalAssets(address);
+		}
+
+		return () => {
+			mounted = false;
+		};
+		//eslint-disable-next-line
+	}, [address]);
 
 	return (
 		<div className='mt-[110px] tablet:mt-[130px]'>
@@ -67,10 +86,14 @@ const ProfilePage = () => {
 				</div>
 				<div className='mt-[10%] ml-[35%] laptop:mt-[12%]'>
 					<Tabs active={active} setActive={setActive} />
-				{/* <hr className='border-gray-600'/> */}
+					{/* <hr className='border-gray-600'/> */}
 				</div>
 				<div className='mt-[10%] laptop:mt-[3%]'>
-					<NFTCard title='Your Assets' allNfts={allNfts} />
+					<NFTCard
+						title='Your Assets'
+						allNfts={allNfts}
+						ardorNfts={personalAssets}
+					/>
 				</div>
 			</BasePageLayout>
 		</div>

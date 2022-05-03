@@ -22,6 +22,7 @@ import {
 	RESET_NFT_ITEM,
 	FETCH_ARDOR_BIDS,
 	PLACE_ARDOR_BID,
+	FETCH_PERSONAL_ASSETS,
 } from '../types';
 
 const contactReducer = (state: any, action: any) => {
@@ -189,6 +190,11 @@ const contactReducer = (state: any, action: any) => {
 				...state,
 				message: action.payload.msg,
 				ardorPlaceOrderData: action.payload,
+			};
+		case FETCH_PERSONAL_ASSETS:
+			return {
+				...state,
+				personalAssets: action.payload,
 			};
 		default:
 			return state;

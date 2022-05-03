@@ -36,6 +36,7 @@ const Home: NextPage = () => {
 		};
 		//eslint-disable-next-line
 	}, []);
+
 	return (
 		<BasePageLayout>
 			<div className='mt-40'>
