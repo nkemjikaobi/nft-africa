@@ -1,13 +1,17 @@
+import IBidOrder from 'dto/NFT/IBidOrder';
 import removeArdorZeroes from 'helpers/removeArdorZeroes';
 import React from 'react';
 
-const Bids = ({ bids }: any) => {
+interface IBid {
+	bids: Array<IBidOrder>;
+}
+const Bids = ({ bids }: IBid) => {
 	return (
 		<div className='w-[115%] tablet:w-full'>
 			{bids && bids.length !== 0 ? (
-				bids.map((data: any) => (
+				bids.map((data: IBidOrder) => (
 					<div
-						key={data.id}
+						key={data.asset}
 						className='bg-gray-200 mb-4 p-3 flex justify-between items-center'
 					>
 						<div>
@@ -15,7 +19,7 @@ const Bids = ({ bids }: any) => {
 						</div>
 						<div className=''>
 							<h4 className='font-bold flex items-center'>
-								{removeArdorZeroes(data.priceNQTPerShare)} ARD
+								{removeArdorZeroes(Number(data.priceNQTPerShare))} ARD
 							</h4>
 						</div>
 					</div>

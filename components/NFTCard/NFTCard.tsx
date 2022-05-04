@@ -1,38 +1,29 @@
-import Image from 'next/image';
-import React, { useContext, useEffect, useState } from 'react';
-import { FaEthereum, FaGavel } from 'react-icons/fa';
-import { HiCurrencyDollar } from 'react-icons/hi';
-import { AiTwotoneCloseCircle } from 'react-icons/ai';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { FaGreaterThan } from 'react-icons/fa';
 import { useRouter } from 'next/router';
 import NFTCardSkeleton from 'skeletons/NFTCardSkeleton';
-import WalletContext from 'context/wallet/WalletContext';
-import convertToEther from 'helpers/convertToEther';
 import INFT from 'dto/NFT/INFT';
 import { ARDOR, ETHEREUM } from 'constants/index';
 import capitalizeFirstLetter from 'helpers/capitalizeFirstLetter';
 import EthereumNFT from 'components/EthereurmNFT/EthereumNFT';
 import ArdorNFT from 'components/ArdorNFT/ArdorNFT';
+import IArdorNFT from 'dto/NFT/IArdorNFT';
 
 interface INFTCard {
-	allNfts: Array<INFT>;
+	allNfts?: Array<INFT>;
 	title: string;
-	ardorNfts?: Array<any>;
+	ardorNfts?: Array<IArdorNFT>;
 }
 const NFTCard = ({ allNfts, title, ardorNfts }: INFTCard) => {
 	const router = useRouter();
-	const walletContext = useContext(WalletContext);
-
-	const { web3, isGuest, guestWeb3 } = walletContext;
 
 	const [active, setActive] = useState<string>('');
 	const [data, setData] = useState<any>(null);
-	const [loading, setLoading] = useState<boolean>(false);
+	const [loading, setLoading] = useState<boolean>(true);
 
 	const handleClick = (network: string) => {
 		setActive(network);
-		setLoading(true);
 		if (network === ETHEREUM) {
 			setData(allNfts);
 		} else {
@@ -46,13 +37,11 @@ const NFTCard = ({ allNfts, title, ardorNfts }: INFTCard) => {
 	useEffect(() => {
 		let mounted = true;
 		if (mounted && allNfts) {
-			setLoading(true);
 			setActive(ETHEREUM);
 			setData(allNfts);
 			setLoading(false);
 		}
 		if (mounted && ardorNfts) {
-			setLoading(true);
 			setActive(ARDOR);
 			setData(ardorNfts);
 			setLoading(false);
@@ -101,7 +90,7 @@ const NFTCard = ({ allNfts, title, ardorNfts }: INFTCard) => {
 				)}
 			</div>
 			<div className='mx-6 tablet:mx-6 mb-10 grid grid-cols-1 tablet:w-3/3 tablet:grid-cols-3 smallLaptop:grid-cols-4 gap-6 tablet:mb-8 cursor-pointer'>
-				{data === null ? (
+				{data === null && !loading ? (
 					<div>Nothing here...</div>
 				) : (
 					data &&

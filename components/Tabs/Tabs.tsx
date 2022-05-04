@@ -2,7 +2,11 @@ import { TabData } from 'componentData/Profile/TabData';
 import capitalizeFirstLetter from 'helpers/capitalizeFirstLetter';
 import React from 'react';
 
-const Tabs = ({ active, setActive }: any) => {
+interface ITabs {
+	active: boolean;
+	setActive: Function;
+}
+const Tabs = ({ active, setActive }: ITabs) => {
 	return (
 		<div className='flex items-center mt-[11rem] laptop:mt-8 -ml-32 tablet:-ml-[12rem] laptop:-ml-[14rem]'>
 			{TabData.map((tab: any) => (

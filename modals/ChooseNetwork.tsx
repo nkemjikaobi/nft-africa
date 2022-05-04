@@ -2,13 +2,17 @@ import React from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 import { ARDOR, ETHEREUM } from 'constants/index';
 import { BsArrowRight } from 'react-icons/bs';
-import Link from 'next/link';
 
+interface IChooseNetwork {
+	setChooseNetwork: Function;
+	setNetwork: Function;
+	handleConnect: Function;
+}
 const ChooseNetwork = ({
 	setChooseNetwork,
 	setNetwork,
 	handleConnect,
-}: any) => {
+}: IChooseNetwork) => {
 	return (
 		<div className='text-white relative bg-black rounded-lg p-10'>
 			<div className='absolute right-5 top-10 cursor-pointer'>

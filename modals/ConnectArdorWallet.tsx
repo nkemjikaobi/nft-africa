@@ -8,7 +8,10 @@ import axios from 'axios';
 import WalletContext from 'context/wallet/WalletContext';
 import { FaSpinner } from 'react-icons/fa';
 
-const ConnectArdorWallet = ({ setConnectArdor }: any) => {
+interface IConnectArdorWallet {
+	setConnectArdor: Function;
+}
+const ConnectArdorWallet = ({ setConnectArdor }: IConnectArdorWallet) => {
 	const walletContext = useContext(WalletContext);
 	const {
 		generateAuth,

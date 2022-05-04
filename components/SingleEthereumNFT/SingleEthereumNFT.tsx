@@ -7,16 +7,23 @@ import Link from 'next/link';
 import React, { useContext } from 'react';
 import { FaEthereum } from 'react-icons/fa';
 import { History } from 'componentData/DetailPage/History';
+import INFT from 'dto/NFT/INFT';
 
+interface ISingleEthereumNFT {
+	singleNft: INFT;
+	showMagnified: boolean;
+	setShowMagnified: Function;
+	time: Date;
+}
 const SingleEthereumNFT = ({
 	singleNft,
 	showMagnified,
-    setShowMagnified,
-    time
-}: any) => {
+	setShowMagnified,
+	time,
+}: ISingleEthereumNFT) => {
 	const walletContext = useContext(WalletContext);
 
-    const { web3, isGuest, guestWeb3 } = walletContext;
+	const { web3, isGuest, guestWeb3 } = walletContext;
 
 	return (
 		<>

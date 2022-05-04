@@ -9,16 +9,21 @@ import axios from 'axios';
 import Bids from 'components/Bids/Bids';
 import WalletContext from 'context/wallet/WalletContext';
 import ShowBidForm from 'modals/ShowBidForm';
-import toast, { Toaster } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
 import SignArdorTransaction from 'components/SignArdorTransaction/SignArdorTransaction';
 import addArdorZeroes from 'helpers/addArdorZeroes';
+import IArdorNFT from 'dto/NFT/IArdorNFT';
 
+interface ISingleArdorNFT {
+	singleNft: IArdorNFT;
+	showMagnified: boolean;
+	setShowMagnified: Function;
+}
 const SingleArdorNFT = ({
 	singleNft,
 	showMagnified,
 	setShowMagnified,
-	time,
-}: any) => {
+}: ISingleArdorNFT) => {
 	const [imageCID, setImageCID] = useState<string>('');
 	const [description, setDescription] = useState<string>('');
 	const [showBidForm, setShowBidForm] = useState<boolean>(false);
@@ -30,9 +35,9 @@ const SingleArdorNFT = ({
 	const { fetchBids, bids, address, placeArdorBid, ardorPlaceOrderData } =
 		walletContext;
 
-	const fetchImage: any = async (cid: any) => {
+	const fetchImage = async (cid: string) => {
 		try {
-			const url: any = await axios.get(cid);
+			const url = await axios.get(cid);
 			const finalUrl = url.data.fileUrl;
 			const description = url.data.description;
 			setDescription(description);
@@ -52,7 +57,7 @@ const SingleArdorNFT = ({
 	}, [singleNft]);
 
 	const handleClick = () => {
-		if (singleNft.accountRs === address) {
+		if (singleNft.accountRS === address) {
 			// sell
 		} else {
 			//place bid
@@ -177,7 +182,7 @@ const SingleArdorNFT = ({
 					{timeToSign && (
 						<div className='fixed left-[15%] tablet:left-[25%] laptop:left-[30%] top-[30%] w-[70%] tablet:w-[60%] laptop:w-[40%]'>
 							<SignArdorTransaction
-								close={setTimeToSign}
+								onClose={setTimeToSign}
 								data={ardorPlaceOrderData}
 								callBack={callBack}
 							/>

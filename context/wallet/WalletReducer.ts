@@ -1,4 +1,5 @@
 import { ARDOR, ETHEREUM } from 'constants/index';
+import IArdorNFT from 'dto/NFT/IArdorNFT';
 import {
 	CONNECT_WALLET,
 	ERROR,
@@ -162,7 +163,7 @@ const contactReducer = (state: any, action: any) => {
 			};
 		case FETCH_SINGLE_ARDOR_NFT:
 			const nft = state.ardorNfts.filter(
-				(nft: any) => nft.asset === action.payload
+				(nft: IArdorNFT) => nft.asset === action.payload
 			);
 			return {
 				...state,

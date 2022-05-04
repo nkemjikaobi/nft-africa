@@ -2,13 +2,20 @@ import React from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 import { BsArrowRight } from 'react-icons/bs';
 
+interface IShowBidForm {
+	setShowBidForm: Function;
+	name: string;
+	price: number;
+	setPrice: Function;
+	handlePlaceBid: Function;
+}
 const ShowBidForm = ({
 	setShowBidForm,
 	name,
 	price,
 	setPrice,
 	handlePlaceBid,
-}: any) => {
+}: IShowBidForm) => {
 	return (
 		<div className='text-white relative bg-black rounded-lg p-10'>
 			<div className='absolute right-5 top-10 cursor-pointer'>

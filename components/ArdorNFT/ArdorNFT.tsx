@@ -2,19 +2,21 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { FaEthereum } from 'react-icons/fa';
-import { HiCurrencyDollar } from 'react-icons/hi';
-import { AiTwotoneCloseCircle } from 'react-icons/ai';
 import formatArdorImageUrl from 'helpers/formatArdorImageUrl';
 import axios from 'axios';
+import IArdorNFT from 'dto/NFT/IArdorNFT';
 
-const ArdorNFT = ({ data }: any) => {
+interface IArdorNFt {
+	data: IArdorNFT;
+}
+const ArdorNFT = ({ data }: IArdorNFt) => {
 	const router = useRouter();
 
-	const [imageCID, setImageCID] = useState<any>('');
+	const [imageCID, setImageCID] = useState<string>('');
 
-	const fetchImage: any = async (cid: any) => {
+	const fetchImage = async (cid: string) => {
 		try {
-			const url: any = await axios.get(cid);
+			const url = await axios.get(cid);
 			const finalUrl = url.data.fileUrl;
 			setImageCID(finalUrl);
 		} catch (error) {
@@ -24,7 +26,7 @@ const ArdorNFT = ({ data }: any) => {
 
 	useEffect(() => {
 		if (data) {
-			const cid: any = formatArdorImageUrl(data.description);
+			const cid = formatArdorImageUrl(data.description);
 			fetchImage(cid);
 		}
 	}, [data]);
@@ -38,12 +40,7 @@ const ArdorNFT = ({ data }: any) => {
 					onClick={() => router.push(`nft/${data.asset}`)}
 				>
 					{imageCID !== '' && (
-						<Image
-							src={imageCID}
-							width={500}
-							height={500}
-							alt='nft image'
-						/>
+						<Image src={imageCID} width={500} height={500} alt='nft image' />
 					)}
 					<div className='p-3 flex justify-between items-center'>
 						<p>{data.name}</p>
@@ -54,12 +51,6 @@ const ArdorNFT = ({ data }: any) => {
 						<p className='tablet:text-xs smallLaptop:text-base'>Creator</p>
 						<p className='tablet:text-xs smallLaptop:text-base'>
 							{data.accountRS && data.accountRS.substring(0, 12)}
-						</p>
-					</div>
-					<div className='p-3 flex items-center '>
-						<p className='flex items-center'>
-							Auction in Progress
-							<AiTwotoneCloseCircle className='ml-2 text-xs text-green-400' />
 						</p>
 					</div>
 				</div>

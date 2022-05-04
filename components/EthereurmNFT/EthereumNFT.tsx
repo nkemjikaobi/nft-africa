@@ -6,8 +6,12 @@ import convertToEther from 'helpers/convertToEther';
 import { HiCurrencyDollar } from 'react-icons/hi';
 import { AiTwotoneCloseCircle } from 'react-icons/ai';
 import WalletContext from 'context/wallet/WalletContext';
+import INFT from 'dto/NFT/INFT';
 
-const EthereumNFT = ({ data }: any) => {
+interface IEthereumNFT {
+	data: INFT;
+}
+const EthereumNFT = ({ data }: IEthereumNFT) => {
 	const router = useRouter();
 
 	const walletContext = useContext(WalletContext);

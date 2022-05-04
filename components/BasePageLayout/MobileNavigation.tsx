@@ -9,7 +9,10 @@ import WalletContext from 'context/wallet/WalletContext';
 import { ETHEREUM } from 'constants/index';
 import removeArdorZeroes from 'helpers/removeArdorZeroes';
 
-const MobileNavigation = ({ handleClick }: any) => {
+interface IMobileNavigation {
+	handleClick: Function;
+}
+const MobileNavigation = ({ handleClick }: IMobileNavigation) => {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 	const node = useClickOutside(() => {
 		setIsOpen(false);

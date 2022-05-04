@@ -1,14 +1,22 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
-import toast, { Toaster } from 'react-hot-toast';
-import Image from 'next/image';
+import { Toaster } from 'react-hot-toast';
 import QRCode from 'react-qr-code';
 import Link from 'next/link';
 import WalletContext from 'context/wallet/WalletContext';
 import { FaSpinner } from 'react-icons/fa';
-import Router from 'next/router';
 
-const SignArdorTransaction = ({ close, data, callBack }: any) => {
+interface ISignArdorTransaction {
+	onClose: Function;
+	data: any;
+	callBack: Function;
+}
+
+const SignArdorTransaction = ({
+	onClose,
+	data,
+	callBack,
+}: ISignArdorTransaction) => {
 	const walletContext = useContext(WalletContext);
 	const [uuid, setUuid] = useState('');
 	const [url, setUrl] = useState('');
@@ -18,7 +26,7 @@ const SignArdorTransaction = ({ close, data, callBack }: any) => {
 	useEffect(() => {
 		if (ardorToken !== '') {
 			verifyToken(uuid, ardorToken);
-			close(false);
+			onClose(false);
 		}
 		//eslint-disable-next-line
 	}, [ardorToken, uuid]);

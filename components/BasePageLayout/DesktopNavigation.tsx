@@ -6,7 +6,10 @@ import WalletContext from 'context/wallet/WalletContext';
 import { ETHEREUM } from 'constants/index';
 import removeArdorZeroes from 'helpers/removeArdorZeroes';
 
-const DesktopNavigation = ({ handleClick }: any) => {
+interface IDesktopNavigation {
+	handleClick: Function;
+}
+const DesktopNavigation = ({ handleClick }: IDesktopNavigation) => {
 	const walletContext = useContext(WalletContext);
 	const { isConnected, balance, network, ardorUserData } = walletContext;
 
