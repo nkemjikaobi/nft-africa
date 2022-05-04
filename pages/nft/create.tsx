@@ -98,6 +98,7 @@ const CreateNFT = () => {
 		setFinalUrl(url);
 		if (networkk === ETHEREUM) {
 			await handleEthereumMint(url);
+			router.push("/");
 		} else {
 			await mintArdorNft(res.path, name, 1, address);
 			setFinished(true);
