@@ -475,7 +475,7 @@ const WalletState = (props: any) => {
 			dispatch({
 				type: FETCH_PERSONAL_ASSETS,
 				payload: res.data.data,
-			});
+		});
 		} catch (error) {}
 	};
 

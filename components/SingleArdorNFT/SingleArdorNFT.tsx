@@ -22,7 +22,7 @@ const SingleArdorNFT = ({
 	const [imageCID, setImageCID] = useState<string>('');
 	const [description, setDescription] = useState<string>('');
 	const [showBidForm, setShowBidForm] = useState<boolean>(false);
-	const [timeToSign, setTimeToSign] = useState<boolean>(true);
+	const [timeToSign, setTimeToSign] = useState<boolean>(false);
 	const [price, setPrice] = useState<number>(0);
 
 	const walletContext = useContext(WalletContext);
