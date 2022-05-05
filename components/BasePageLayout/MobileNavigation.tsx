@@ -8,6 +8,8 @@ import Image from 'next/image';
 import WalletContext from 'context/wallet/WalletContext';
 import { ETHEREUM } from 'constants/index';
 import removeArdorZeroes from 'helpers/removeArdorZeroes';
+import { FaUserAlt } from 'react-icons/fa';
+import { useRouter } from 'next/router';
 
 interface IMobileNavigation {
 	handleClick: Function;
@@ -21,6 +23,8 @@ const MobileNavigation = ({ handleClick }: IMobileNavigation) => {
 	const walletContext = useContext(WalletContext);
 	const { network, ardorUserData, isConnected, balance, web3Modal } =
 		walletContext;
+
+	const router = useRouter();
 
 	return (
 		<div className='bg-white'>
@@ -43,6 +47,11 @@ const MobileNavigation = ({ handleClick }: IMobileNavigation) => {
 			</div>
 			{isOpen && (
 				<ul className='w-3/5 px-10 py-4' ref={node}>
+					{isConnected && (
+						<li className='mb-4' onClick={() => router.push('/profile')}>
+							<span>Profile</span>
+						</li>
+					)}
 					{DesktopNav.map(data => (
 						<li
 							key={data.id}
@@ -59,8 +68,9 @@ const MobileNavigation = ({ handleClick }: IMobileNavigation) => {
 							</div>
 						</li>
 					))}
+
 					{isConnected && (
-						<li className='border border-black rounded-md py-3 px-8 flex justify-center items-center'>
+						<li className='border border-black rounded-md py-3 px-8 flex justify-center items-center whitespace-nowrap'>
 							<div>
 								<span>
 									{network === ETHEREUM ? (

@@ -25,10 +25,10 @@ const NFTCard = ({ allNfts, title, ardorNfts }: INFTCard) => {
 	const handleClick = (network: string) => {
 		setActive(network);
 		if (network === ETHEREUM) {
+			setLoading(true);
 			setData(allNfts);
 		} else {
-			console.log('nere');
-			console.log(ardorNfts);
+			setLoading(true);
 			setData(ardorNfts);
 		}
 		setLoading(false);
@@ -37,11 +37,13 @@ const NFTCard = ({ allNfts, title, ardorNfts }: INFTCard) => {
 	useEffect(() => {
 		let mounted = true;
 		if (mounted && allNfts) {
+			setLoading(true);
 			setActive(ETHEREUM);
 			setData(allNfts);
 			setLoading(false);
 		}
 		if (mounted && ardorNfts) {
+			setLoading(true);
 			setActive(ARDOR);
 			setData(ardorNfts);
 			setLoading(false);
@@ -57,7 +59,7 @@ const NFTCard = ({ allNfts, title, ardorNfts }: INFTCard) => {
 	) : (
 		<div className='mt-10 tablet:p-10 smallLaptop:p-20' id='boom'>
 			<div className='flex items-center justify-between'>
-				<h2 className='ml-2 tablet:ml-1 p-3 mb-4 tablet:mb-8 font-bold text-3xl tablet:text-4xl capitalize'>
+				<h2 className='ml-2 tablet:ml-1 p-3 mb-4 tablet:mb-8 font-bold text-2xl tablet:text-4xl capitalize'>
 					{title}
 				</h2>
 				<div className='hidden tablet:flex items-center justify-between w-1/5'>
@@ -78,15 +80,30 @@ const NFTCard = ({ allNfts, title, ardorNfts }: INFTCard) => {
 						{capitalizeFirstLetter(ARDOR)}
 					</h4>
 				</div>
+				<div className='block tablet:hidden'>
+					<select
+						name=''
+						id=''
+						className='bg-gray-200 px-10 py-2 border border-gray-300 rounded-md w-full focus:outline-none mr-2'
+						onChange={e => handleClick(e.target.value)}
+						value={active}
+					>
+						<option value={`${ETHEREUM}`}>Ethereum</option>
+						<option value={`${ARDOR}`}>Ardor</option>
+					</select>
+				</div>
+
 				{router.pathname === '/' && (
-					<Link href={`/${title.toLowerCase()}`}>
-						<a
-							href={`/${title.toLowerCase()}`}
-							className='text-blue-950 mr-10 flex items-center'
-						>
-							View All <FaGreaterThan className='ml-2' />
-						</a>
-					</Link>
+					<div className='hidden tablet:block'>
+						<Link href={`/${title.toLowerCase()}`}>
+							<a
+								href={`/${title.toLowerCase()}`}
+								className='text-blue-950 mr-10 flex items-center'
+							>
+								View All <FaGreaterThan className='ml-2' />
+							</a>
+						</Link>
+					</div>
 				)}
 			</div>
 			<div className='mx-6 tablet:mx-6 mb-10 grid grid-cols-1 tablet:w-3/3 tablet:grid-cols-3 smallLaptop:grid-cols-4 gap-6 tablet:mb-8 cursor-pointer'>

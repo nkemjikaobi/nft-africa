@@ -3,7 +3,7 @@ import capitalizeFirstLetter from 'helpers/capitalizeFirstLetter';
 import React from 'react';
 
 interface ITabs {
-	active: boolean;
+	active: number;
 	setActive: Function;
 }
 const Tabs = ({ active, setActive }: ITabs) => {

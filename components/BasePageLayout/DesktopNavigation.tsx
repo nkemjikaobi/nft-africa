@@ -5,6 +5,8 @@ import React, { useContext } from 'react';
 import WalletContext from 'context/wallet/WalletContext';
 import { ETHEREUM } from 'constants/index';
 import removeArdorZeroes from 'helpers/removeArdorZeroes';
+import { FaUserAlt } from 'react-icons/fa';
+import { useRouter } from 'next/router';
 
 interface IDesktopNavigation {
 	handleClick: Function;
@@ -12,6 +14,8 @@ interface IDesktopNavigation {
 const DesktopNavigation = ({ handleClick }: IDesktopNavigation) => {
 	const walletContext = useContext(WalletContext);
 	const { isConnected, balance, network, ardorUserData } = walletContext;
+
+	const router = useRouter();
 
 	return (
 		<div className='flex justify-between items-center bg-white py-5 px-10 tablet:px-20 laptop:px-40 drop-shadow-md'>
@@ -47,23 +51,28 @@ const DesktopNavigation = ({ handleClick }: IDesktopNavigation) => {
 					</li>
 				))}
 				{isConnected && (
-					<li className='border border-black rounded-md py-3 px-8 hover:bg-black hover:text-white'>
-						<div>
-							<span>
-								{network === ETHEREUM ? (
-									<>{Number(balance).toFixed(4)} ETH</>
-								) : (
-									<>
-										{Number(
-											ardorUserData !== null &&
-												removeArdorZeroes(ardorUserData.balance)
-										).toFixed(4)}{' '}
-										ARD
-									</>
-								)}
-							</span>
-						</div>
-					</li>
+					<>
+						<li className='border border-black rounded-md py-3 px-8 hover:bg-black hover:text-white'>
+							<div>
+								<span>
+									{network === ETHEREUM ? (
+										<>{Number(balance).toFixed(4)} ETH</>
+									) : (
+										<>
+											{Number(
+												ardorUserData !== null &&
+													removeArdorZeroes(ardorUserData.balance)
+											).toFixed(4)}{' '}
+											ARD
+										</>
+									)}
+								</span>
+							</div>
+						</li>
+						<li onClick={() => router.push('/profile')}>
+							<FaUserAlt className='cursor-pointer text-3xl' />
+						</li>
+					</>
 				)}
 			</ul>
 		</div>

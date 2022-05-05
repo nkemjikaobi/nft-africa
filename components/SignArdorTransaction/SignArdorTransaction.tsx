@@ -5,6 +5,7 @@ import QRCode from 'react-qr-code';
 import Link from 'next/link';
 import WalletContext from 'context/wallet/WalletContext';
 import { FaSpinner } from 'react-icons/fa';
+import axios from 'axios';
 
 interface ISignArdorTransaction {
 	onClose: Function;
@@ -20,7 +21,8 @@ const SignArdorTransaction = ({
 	const walletContext = useContext(WalletContext);
 	const [uuid, setUuid] = useState('');
 	const [url, setUrl] = useState('');
-	const { watchToken, ardorToken, verifyToken } = walletContext;
+	const [ardorToken, setArdorToken] = useState<any>('');
+	const { verifyToken } = walletContext;
 
 	//Verify the token
 	useEffect(() => {
@@ -30,6 +32,23 @@ const SignArdorTransaction = ({
 		}
 		//eslint-disable-next-line
 	}, [ardorToken, uuid]);
+
+	const watchToken = async (qrCodeId: string) => {
+		try {
+			const res = await axios.get(
+				`${process.env.NEXT_PUBLIC_ARDOR_BASE_URL}/api/auth/auth-status/${qrCodeId}`
+			);
+			if (res.data.data.result === 'ok') {
+				const token = res.data.data.token;
+				setArdorToken(token);
+			} else {
+				setTimeout(() => {
+					watchToken(qrCodeId);
+				}, 3000);
+			}
+		} catch (error) {}
+	};
+	
 
 	//Watch for when the user activates the token on device
 	useEffect(() => {

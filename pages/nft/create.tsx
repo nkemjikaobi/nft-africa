@@ -87,18 +87,18 @@ const CreateNFT = () => {
 			fileUrl === '' ||
 			description === '' ||
 			price === '' ||
-			networkk === ''
+			network === ''
 		) {
 			return toast.error('All fields are required');
 		}
 		setLoading(true);
-		const data = JSON.stringify({ name, description, fileUrl, networkk });
+		const data = JSON.stringify({ name, description, fileUrl, network });
 		const res = await client.add(data);
 		const url = `${process.env.NEXT_PUBLIC_IPFS_BASE_URL}/${res.path}`;
 		setFinalUrl(url);
-		if (networkk === ETHEREUM) {
+		if (network === ETHEREUM) {
 			await handleEthereumMint(url);
-			router.push("/");
+			router.push('/');
 		} else {
 			await mintArdorNft(res.path, name, 1, address);
 			setFinished(true);
@@ -179,16 +179,22 @@ const CreateNFT = () => {
 					/>
 				</div>
 				<div className='mb-8'>
-					<select
+					{/* <select
 						name=''
 						id=''
 						className='bg-gray-200 p-5  border border-gray-300 rounded-md w-2/3 focus:outline-none'
 						onChange={e => setNetworkk(e.target.value)}
-						defaultValue={ETHEREUM ? ETHEREUM : ARDOR}
+						defaultValue={network}
 					>
-						<option value={`${ETHEREUM}`}> Ethereum</option>
-						<option value={`${ARDOR}`}>Ardor</option>
-					</select>
+						<option value={`${ETHEREUM}`} disabled> Ethereum</option>
+						<option value={`${ARDOR}`} disabled>Ardor</option>
+					</select> */}
+					<input
+						className='bg-gray-200 p-5 border border-gray-300 rounded-md w-2/3 focus:border-black focus:outline-black'
+						type='text'
+						value={network}
+						disabled
+					/>
 				</div>
 
 				<div className='flex justify-center'>

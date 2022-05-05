@@ -9,10 +9,11 @@ import axios from 'axios';
 import Bids from 'components/Bids/Bids';
 import WalletContext from 'context/wallet/WalletContext';
 import ShowBidForm from 'modals/ShowBidForm';
-import { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
 import SignArdorTransaction from 'components/SignArdorTransaction/SignArdorTransaction';
 import addArdorZeroes from 'helpers/addArdorZeroes';
 import IArdorNFT from 'dto/NFT/IArdorNFT';
+import { ARDOR } from 'constants/index';
 
 interface ISingleArdorNFT {
 	singleNft: IArdorNFT;
@@ -32,7 +33,7 @@ const SingleArdorNFT = ({
 
 	const walletContext = useContext(WalletContext);
 
-	const { fetchBids, bids, address, placeArdorBid, ardorPlaceOrderData } =
+	const { fetchBids, bids, address, placeArdorBid, ardorPlaceOrderData, network } =
 		walletContext;
 
 	const fetchImage = async (cid: string) => {
@@ -57,6 +58,9 @@ const SingleArdorNFT = ({
 	}, [singleNft]);
 
 	const handleClick = () => {
+		if (network !== ARDOR) {
+			return toast.error("Please connect to ardor network")
+		}
 		if (singleNft.accountRS === address) {
 			// sell
 		} else {
