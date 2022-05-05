@@ -65,7 +65,6 @@ const ProductDetailPage = ({ nftId }: IProductDetailPage) => {
 							singleNft={singleArdorNft}
 							showMagnified={showMagnified}
 							setShowMagnified={setShowMagnified}
-							time={time}
 						/>
 					)}
 
