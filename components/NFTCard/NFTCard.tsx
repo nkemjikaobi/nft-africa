@@ -9,6 +9,8 @@ import capitalizeFirstLetter from 'helpers/capitalizeFirstLetter';
 import EthereumNFT from 'components/EthereurmNFT/EthereumNFT';
 import ArdorNFT from 'components/ArdorNFT/ArdorNFT';
 import IArdorNFT from 'dto/NFT/IArdorNFT';
+import { v4 as uuidv4 } from 'uuid';
+
 
 interface INFTCard {
 	auctionedNfts?: Array<INFT>;
@@ -102,9 +104,9 @@ const NFTCard = ({ auctionedNfts, title, ardorNfts }: INFTCard) => {
 					data &&
 					data.map((nft: any) =>
 						active === ETHEREUM ? (
-							<EthereumNFT data={nft} key={nft.tokenId} />
+							<EthereumNFT data={nft} key={uuidv4()} />
 						) : (
-							<ArdorNFT data={nft} key={nft.description} />
+							<ArdorNFT data={nft} key={uuidv4()} />
 						)
 					)
 				)}
