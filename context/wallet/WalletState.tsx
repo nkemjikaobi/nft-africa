@@ -25,6 +25,8 @@ import {
 	FETCH_ARDOR_BIDS,
 	PLACE_ARDOR_BID,
 	FETCH_PERSONAL_ASSETS,
+	FETCH_AUCTIONED_NFTS,
+	PLACE_ETHEREUM_BID,
 } from '../types';
 import Web3 from 'web3';
 import Web3Modal from 'web3modal';
@@ -51,6 +53,7 @@ const WalletState = (props: any) => {
 		web3Modal: null,
 		contract: null,
 		allNfts: null,
+		auctionedNfts: null,
 		singleNft: null,
 		guestWeb3: null,
 		guestProvider: null,
@@ -64,7 +67,7 @@ const WalletState = (props: any) => {
 		ardorNfts: null,
 		ardorMintedData: null,
 		singleArdorNft: null,
-		bids: [],
+		ardorBids: [],
 		ardorPlaceOrderData: null,
 		personalAssets: null,
 	};
@@ -162,7 +165,9 @@ const WalletState = (props: any) => {
 			const all_nfts = await contract.methods.fetchMarketItems().call();
 			const data = await Promise.all(
 				all_nfts.map(async (dat: any) => {
+					//Get the cid
 					const nft = await contract.methods.tokenURI(dat.tokenId).call();
+					//Get the metadata
 					const nftData: any = await axios.get(nft);
 					let item: any = {};
 					item.tokenId = dat.tokenId;
@@ -188,10 +193,52 @@ const WalletState = (props: any) => {
 		}
 	};
 
+	//Fetch Auctioned Nft's on Ethereum Network
+	const fetchAuctionedNfts = async (contract: any) => {
+		try {
+			const auctioned_nfts = await contract.methods.fetchAuctions().call();
+
+			const data = await Promise.all(
+				auctioned_nfts.map(async (dat: any) => {
+					//Get the cid
+					const nft = await contract.methods.tokenURI(dat.tokenId).call();
+					//Get the metadata
+					const nftData: any = await axios.get(nft);
+
+					let item: any = {};
+					item.name = nftData.data.name;
+					item.description = nftData.data.description;
+					item.fileUrl = nftData.data.fileUrl;
+					item.tokenId = dat.tokenId;
+					item.bidAmounts = dat.bidAmounts;
+					item.duration = dat.duration;
+					item.isActive = dat.isActive;
+					item.maxBid = dat.maxBid;
+					item.maxBidUser = dat.maxBidUser;
+					item.nftContractAddress = dat.nftContractAddress;
+					item.price = dat.price;
+					item.seller = dat.seller;
+					item.users = dat.users;
+					return item;
+				})
+			);
+
+			dispatch({
+				type: FETCH_AUCTIONED_NFTS,
+				payload: data,
+			});
+		} catch (error) {
+			dispatch({
+				type: ERROR,
+				payload: (error as Error).message,
+			});
+		}
+	};
+
 	//Fetch Single Nft on Ethereum Network
 	const fetchSingleNft = async (contract: any, id: string) => {
 		try {
-			const all_nfts = await contract.methods.fetchMarketItems().call();
+			const all_nfts = await contract.methods.fetchAuctions().call();
 			const data = await Promise.all(
 				all_nfts.map(async (dat: any) => {
 					const nft = await contract.methods.tokenURI(dat.tokenId).call();
@@ -228,13 +275,16 @@ const WalletState = (props: any) => {
 		auctionPrice: string,
 		listingPrice: string,
 		address: string,
+		duration: number,
 		router: NextRouter
 	) => {
 		try {
-			await contract.methods.createToken(finalUrl, auctionPrice).send({
-				from: address,
-				value: listingPrice,
-			});
+			await contract.methods
+				.createToken(finalUrl, duration, auctionPrice)
+				.send({
+					from: address,
+					value: listingPrice,
+				});
 
 			dispatch({
 				type: CREATE_NFT,
@@ -242,6 +292,32 @@ const WalletState = (props: any) => {
 			setTimeout(() => {
 				router.push('/explore');
 			}, 2000);
+		} catch (error) {
+			dispatch({
+				type: ERROR,
+				payload: (error as Error).message,
+			});
+		}
+	};
+
+	//Place Bid on Ethereum Network
+	const placeEthereumBid = async (
+		contract: any,
+		tokenId: string,
+		address: string,
+		price: number
+	) => {
+		try {
+			await contract.methods.placeBid(tokenId).send({
+				from: address,
+				value: price,
+			});
+
+			await fetchSingleNft(contract, tokenId);
+
+			dispatch({
+				type: PLACE_ETHEREUM_BID,
+			});
 		} catch (error) {
 			dispatch({
 				type: ERROR,
@@ -475,7 +551,7 @@ const WalletState = (props: any) => {
 			dispatch({
 				type: FETCH_PERSONAL_ASSETS,
 				payload: res.data.data,
-		});
+			});
 		} catch (error) {}
 	};
 
@@ -494,6 +570,7 @@ const WalletState = (props: any) => {
 				web3Modal: state.web3Modal,
 				contract: state.contract,
 				allNfts: state.allNfts,
+				auctionedNfts: state.auctionedNfts,
 				singleNft: state.singleNft,
 				guestWeb3: state.guestWeb3,
 				guestProvider: state.guestProvider,
@@ -507,7 +584,7 @@ const WalletState = (props: any) => {
 				ardorNfts: state.ardorNfts,
 				ardorMintedData: state.ardorMintedData,
 				singleArdorNft: state.singleArdorNft,
-				bids: state.bids,
+				ardorBids: state.ardorBids,
 				ardorPlaceOrderData: state.ardorPlaceOrderData,
 				personalAssets: state.personalAssets,
 				clearError,
@@ -531,6 +608,8 @@ const WalletState = (props: any) => {
 				fetchBids,
 				placeArdorBid,
 				fetchPersonalAssets,
+				fetchAuctionedNfts,
+				placeEthereumBid,
 			}}
 		>
 			{props.children}

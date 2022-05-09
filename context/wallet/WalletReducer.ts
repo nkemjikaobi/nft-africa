@@ -24,6 +24,8 @@ import {
 	FETCH_ARDOR_BIDS,
 	PLACE_ARDOR_BID,
 	FETCH_PERSONAL_ASSETS,
+	FETCH_AUCTIONED_NFTS,
+	PLACE_ETHEREUM_BID,
 } from '../types';
 
 const contactReducer = (state: any, action: any) => {
@@ -66,6 +68,16 @@ const contactReducer = (state: any, action: any) => {
 			return {
 				...state,
 				allNfts: action.payload,
+			};
+		case FETCH_AUCTIONED_NFTS:
+			return {
+				...state,
+				auctionedNfts: action.payload,
+			};
+		case PLACE_ETHEREUM_BID:
+			return {
+				...state,
+				message: 'Bid Placed',
 			};
 		case FETCH_SINGLE_NFT:
 			return {
@@ -184,7 +196,7 @@ const contactReducer = (state: any, action: any) => {
 		case FETCH_ARDOR_BIDS:
 			return {
 				...state,
-				bids: action.payload,
+				ardorBids: action.payload,
 			};
 		case PLACE_ARDOR_BID:
 			return {

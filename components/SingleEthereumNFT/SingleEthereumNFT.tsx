@@ -4,10 +4,13 @@ import WalletContext from 'context/wallet/WalletContext';
 import convertToEther from 'helpers/convertToEther';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { FaEthereum } from 'react-icons/fa';
 import { History } from 'componentData/DetailPage/History';
 import INFT from 'dto/NFT/INFT';
+import toast from 'react-hot-toast';
+import ShowBidForm from 'modals/ShowBidForm';
+import { ETHEREUM } from 'constants/index';
 
 interface ISingleEthereumNFT {
 	singleNft: INFT;
@@ -23,15 +26,47 @@ const SingleEthereumNFT = ({
 }: ISingleEthereumNFT) => {
 	const walletContext = useContext(WalletContext);
 
-	const { web3, isGuest, guestWeb3 } = walletContext;
+	const {
+		web3,
+		isGuest,
+		address,
+		network,
+		contract,
+		guestWeb3,
+		placeEthereumBid,
+	} = walletContext;
+
+	const [loading, setLoading] = useState<boolean>(false);
+	const [showBidForm, setShowBidForm] = useState<boolean>(false);
+	const [price, setPrice] = useState<number>(0);
+
+	const handleClick = () => {
+		if (network !== ETHEREUM || address === '') {
+			return toast.error('Please connect to ethereum network');
+		}
+		if (singleNft.seller === address) {
+			// sell
+		} else {
+			//place bid
+			setShowBidForm(true);
+		}
+	};
+
+	const handlePlaceBid = async (id: string) => {
+		setLoading(true);
+		const auctionPrice = await web3.utils.toWei(price, 'ether');
+		await placeEthereumBid(contract, id, address, auctionPrice);
+		setLoading(false);
+		setShowBidForm(false);
+	};
 
 	return (
 		<>
 			{singleNft && (
 				<div
 					className={`mt-64 flex flex-col tablet:flex-row items-center tablet:items-start smallLaptop:items-center justify-between mx-40 tablet:mx-10 smallLaptop:mx-40 ${
-						showMagnified && 'blur-lg'
-					}`}
+						showBidForm && 'blur-lg'
+					} ${showMagnified && 'blur-lg'}`}
 				>
 					<div className='flex flex-col -mt-16 tablet:mt-0 tablet:mr-0 laptop:mr-16'>
 						<div className='mb-8 tablet:hidden'>
@@ -52,7 +87,7 @@ const SingleEthereumNFT = ({
 									href='#'
 									className='font-bold text-sm hover:underline hover:text-blue-950'
 								>
-									{singleNft.owner}
+									{singleNft.seller}
 									{/* <FaSpinner className='animate-spin h-16 w-16 mr-3 text-9xl' /> */}
 								</a>
 							</Link>
@@ -79,7 +114,9 @@ const SingleEthereumNFT = ({
 							<div className='flex items-center'>
 								<div>
 									<p className='text-gray-400 text-sm'>Owner</p>
-									<p className='font-bold'>{singleNft.owner.substring(0, 6)}</p>
+									<p className='font-bold'>
+										{singleNft.seller.substring(0, 6)}
+									</p>
 								</div>
 							</div>
 						</div>
@@ -108,8 +145,11 @@ const SingleEthereumNFT = ({
 								</p>
 							</div>
 						</div>
-						<button className='bg-black -ml-20 tablet:ml-0 flex items-center justify-center p-5 w-full tablet:w-2/3 smallLaptop:w-1/3 border border-black rounded-md text-white my-5 mb-8 hover:bg-white hover:text-black '>
-							Buy Now
+						<button
+							onClick={() => handleClick()}
+							className='bg-black -ml-20 tablet:ml-0 flex items-center justify-center p-5 w-full tablet:w-2/3 smallLaptop:w-1/3 border border-black rounded-md text-white my-5 mb-8 hover:bg-white hover:text-black '
+						>
+							{singleNft.seller === address ? 'Sell' : 'Place Bid'}
 						</button>
 						<div className='mt-4 -ml-20 tablet:ml-0'>
 							<h4 className='font-extrabold '>History</h4>
@@ -119,6 +159,20 @@ const SingleEthereumNFT = ({
 							<NFTHistory history={History} />
 						</div>
 					</div>
+				</div>
+			)}
+			{showBidForm && (
+				<div className='fixed left-[15%] tablet:left-[25%] laptop:left-[30%] top-[30%] w-[70%] tablet:w-[60%] laptop:w-[40%]'>
+					<ShowBidForm
+						handlePlaceBid={handlePlaceBid}
+						setShowBidForm={setShowBidForm}
+						name={singleNft.name}
+						price={price}
+						setPrice={setPrice}
+						loading={loading}
+						network={network}
+						tokenId={singleNft.tokenId}
+					/>
 				</div>
 			)}
 		</>

@@ -12,6 +12,8 @@ import { useRouter } from 'next/router';
 import { ARDOR, ETHEREUM } from 'constants/index';
 import ConnectArdorWallet from 'modals/ConnectArdorWallet';
 import SignArdorTransaction from 'components/SignArdorTransaction/SignArdorTransaction';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const CreateNFT = () => {
 	const [name, setName] = useState<string>('');
@@ -24,6 +26,10 @@ const CreateNFT = () => {
 	const [imageLoading, setImageLoading] = useState<boolean>(false);
 	const [finished, setFinished] = useState<boolean>(false);
 	const walletContext = useContext(WalletContext);
+
+	const [startDate, setStartDate] = useState(new Date());
+	const [endDate, setEndDate] = useState(new Date());
+	const [endDateTime, setEndDateTime] = useState<number>(0);
 
 	const {
 		web3,
@@ -70,6 +76,7 @@ const CreateNFT = () => {
 				auctionPrice,
 				listingPrice,
 				address,
+				Math.floor(endDateTime / 100),
 				router
 			);
 			setLoading(false);
@@ -178,17 +185,43 @@ const CreateNFT = () => {
 						onChange={e => setPrice(e.target.value)}
 					/>
 				</div>
+				{network === ETHEREUM && (
+					<>
+						<div className='mb-8'>
+							<label htmlFor='auction-start'>Auction Starts:</label>
+							<DatePicker
+								selected={startDate}
+								onChange={(date: any) => setStartDate(date)}
+								dateFormat='yyyy-MM-dd'
+								showYearDropdown
+								scrollableMonthYearDropdown
+								id='auction-start'
+								selectsStart
+								disabled
+								minDate={new Date()}
+								className='ml-4 text-black border w-2/3 bg-gray-200 mt-4  md:px-24 p-5 border-gray-300 rounded-md  mb-4 focus:outline-none'
+							/>
+						</div>
+						<div className='mb-8'>
+							<label htmlFor='auction-end'>Aucton Ends:</label>
+							<DatePicker
+								selected={endDate}
+								onChange={(date: any) => {
+									setEndDate(date), setEndDateTime(date.getTime());
+								}}
+								dateFormat='yyyy-MM-dd'
+								showYearDropdown
+								scrollableMonthYearDropdown
+								id='auction-end'
+								selectsEnd
+								minDate={startDate}
+								className='ml-4 text-black border w-2/3 bg-gray-200 mt-4  md:px-24 p-5 border-gray-300 rounded-md  mb-4 focus:outline-none'
+							/>
+						</div>
+					</>
+				)}
+
 				<div className='mb-8'>
-					{/* <select
-						name=''
-						id=''
-						className='bg-gray-200 p-5  border border-gray-300 rounded-md w-2/3 focus:outline-none'
-						onChange={e => setNetworkk(e.target.value)}
-						defaultValue={network}
-					>
-						<option value={`${ETHEREUM}`} disabled> Ethereum</option>
-						<option value={`${ARDOR}`} disabled>Ardor</option>
-					</select> */}
 					<input
 						className='bg-gray-200 p-5 border border-gray-300 rounded-md w-2/3 focus:border-black focus:outline-black'
 						type='text'

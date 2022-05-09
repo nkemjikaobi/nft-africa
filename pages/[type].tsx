@@ -11,13 +11,13 @@ interface IListingPage {
 const ListingPage = ({ type }: IListingPage) => {
 	const walletContext = useContext(WalletContext);
 
-	const { fetchAllNfts, contract, allNfts, fetchArdorNfts, ardorNfts } =
+	const { fetchAuctionedNfts, contract, auctionedNfts, fetchArdorNfts, ardorNfts } =
 		walletContext;
 
 	useEffect(() => {
 		let mounted = true;
 		if (mounted && contract !== null) {
-			fetchAllNfts(contract);
+			fetchAuctionedNfts(contract);
 		}
 
 		return () => {
@@ -42,7 +42,11 @@ const ListingPage = ({ type }: IListingPage) => {
 	return (
 		<BasePageLayout>
 			<div className='mt-40 tablet:mt-64'>
-				<NFTCard title={`${type}`} allNfts={allNfts} ardorNfts={ardorNfts} />
+				<NFTCard
+					title={`${type}`}
+					auctionedNfts={auctionedNfts}
+					ardorNfts={ardorNfts}
+				/>
 			</div>
 		</BasePageLayout>
 	);

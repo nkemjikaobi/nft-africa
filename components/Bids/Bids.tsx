@@ -3,13 +3,13 @@ import removeArdorZeroes from 'helpers/removeArdorZeroes';
 import React from 'react';
 
 interface IBid {
-	bids: Array<IBidOrder>;
+	ardorBids: Array<IBidOrder>;
 }
-const Bids = ({ bids }: IBid) => {
+const Bids = ({ ardorBids }: IBid) => {
 	return (
 		<div className='w-[115%] tablet:w-full'>
-			{bids && bids.length !== 0 ? (
-				bids.map((data: IBidOrder) => (
+			{ardorBids && ardorBids.length !== 0 ? (
+				ardorBids.map((data: IBidOrder) => (
 					<div
 						key={data.asset}
 						className='bg-gray-200 mb-4 p-3 flex justify-between items-center'

@@ -13,9 +13,9 @@ const ProfilePage = () => {
 	const walletContext = useContext(WalletContext);
 
 	const {
-		fetchAllNfts,
+		auctionedNfts,
 		contract,
-		allNfts,
+		fetchAuctionedNfts,
 		fetchPersonalAssets,
 		personalAssets,
 		address,
@@ -25,7 +25,7 @@ const ProfilePage = () => {
 	useEffect(() => {
 		let mounted = true;
 		if (mounted && contract !== null) {
-			fetchAllNfts(contract);
+			fetchAuctionedNfts(contract);
 		}
 
 		return () => {
@@ -91,7 +91,7 @@ const ProfilePage = () => {
 				<div className='mt-[10%] laptop:mt-[3%]'>
 					<NFTCard
 						title='Your Assets'
-						allNfts={allNfts}
+						auctionedNfts={auctionedNfts}
 						ardorNfts={personalAssets}
 					/>
 				</div>

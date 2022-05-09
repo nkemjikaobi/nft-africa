@@ -33,8 +33,14 @@ const SingleArdorNFT = ({
 
 	const walletContext = useContext(WalletContext);
 
-	const { fetchBids, bids, address, placeArdorBid, ardorPlaceOrderData, network } =
-		walletContext;
+	const {
+		fetchBids,
+		ardorBids,
+		address,
+		placeArdorBid,
+		ardorPlaceOrderData,
+		network,
+	} = walletContext;
 
 	const fetchImage = async (cid: string) => {
 		try {
@@ -58,8 +64,8 @@ const SingleArdorNFT = ({
 	}, [singleNft]);
 
 	const handleClick = () => {
-		if (network !== ARDOR) {
-			return toast.error("Please connect to ardor network")
+		if (network !== ARDOR || address === '') {
+			return toast.error('Please connect to ardor network');
 		}
 		if (singleNft.accountRS === address) {
 			// sell
@@ -161,7 +167,7 @@ const SingleArdorNFT = ({
 								<p className='text-black mb-4'>------------</p>
 							</div>
 							<div className='-ml-20  tablet:ml-0 tablet:w-full'>
-								<Bids bids={bids} />
+								<Bids ardorBids={ardorBids} />
 							</div>
 							<div className='mt-4 -ml-20 tablet:ml-0'>
 								<h4 className='font-extrabold '>History</h4>
@@ -180,6 +186,7 @@ const SingleArdorNFT = ({
 								name={singleNft.name}
 								price={price}
 								setPrice={setPrice}
+								network={network}
 							/>
 						</div>
 					)}

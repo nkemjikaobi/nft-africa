@@ -25,49 +25,40 @@ const EthereumNFT = ({ data }: IEthereumNFT) => {
 					key={data.tokenId}
 					onClick={() => router.push(`nft/${data.tokenId}`)}
 				>
-					<Image src={data.fileUrl} width={500} height={500} alt='nft image' />
+					{data.fileUrl && (
+						<Image
+							src={data.fileUrl}
+							width={500}
+							height={500}
+							alt='nft image'
+						/>
+					)}
 					<div className='p-3 flex justify-between items-center'>
 						<p>{data.name}</p>
 						<FaEthereum />
 					</div>
-					{data.sold ? (
-						<div className='p-3 flex justify-between items-center'>
-							<p className='flex items-center'>
-								Price <HiCurrencyDollar className='ml-2' />
-							</p>
-							<p>
-								{convertToEther(isGuest ? guestWeb3 : web3, data.price)} ETH
-							</p>
-						</div>
-					) : (
-						<div className='p-3 flex justify-between items-center'>
-							<p className='flex items-center'>
-								Current Bid <FaGavel className='ml-2' />
-							</p>
-							<p>
-								{convertToEther(isGuest ? guestWeb3 : web3, data.price)} ETH
-							</p>
-						</div>
-					)}
+					<div className='p-3 flex justify-between items-center'>
+						<p className='flex items-center'>
+							Current Bid <FaGavel className='ml-2' />
+						</p>
+						<p>
+							{data.price &&
+								convertToEther(isGuest ? guestWeb3 : web3, data.price)}{' '}
+							ETH
+						</p>
+					</div>
 
 					<div className='p-3 flex justify-between items-center'>
 						<p className='tablet:text-xs smallLaptop:text-base'>Creator</p>
 						<p className='tablet:text-xs smallLaptop:text-base'>
-							{data.owner.substring(0, 6)}
+							{data.seller && data.seller.substring(0, 6)}
 						</p>
 					</div>
 					<div className='p-3 flex items-center '>
-						{data.sold ? (
-							<p className='flex items-center'>
-								Acquired
-								<AiTwotoneCloseCircle className='ml-2 text-xs text-red-400' />{' '}
-							</p>
-						) : (
-							<p className='flex items-center'>
-								Auction in Progress
-								<AiTwotoneCloseCircle className='ml-2 text-xs text-green-400' />
-							</p>
-						)}
+						<p className='flex items-center'>
+							Auction in Progress
+							<AiTwotoneCloseCircle className='ml-2 text-xs text-green-400' />
+						</p>
 					</div>
 				</div>
 			)}

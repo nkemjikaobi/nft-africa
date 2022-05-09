@@ -11,48 +11,37 @@ import ArdorNFT from 'components/ArdorNFT/ArdorNFT';
 import IArdorNFT from 'dto/NFT/IArdorNFT';
 
 interface INFTCard {
-	allNfts?: Array<INFT>;
+	auctionedNfts?: Array<INFT>;
 	title: string;
 	ardorNfts?: Array<IArdorNFT>;
 }
-const NFTCard = ({ allNfts, title, ardorNfts }: INFTCard) => {
+const NFTCard = ({ auctionedNfts, title, ardorNfts }: INFTCard) => {
 	const router = useRouter();
 
-	const [active, setActive] = useState<string>('');
+	const [active, setActive] = useState<string>(ETHEREUM);
 	const [data, setData] = useState<any>(null);
 	const [loading, setLoading] = useState<boolean>(true);
 
 	const handleClick = (network: string) => {
 		setActive(network);
-		if (network === ETHEREUM) {
-			setLoading(true);
-			setData(allNfts);
-		} else {
-			setLoading(true);
-			setData(ardorNfts);
-		}
-		setLoading(false);
 	};
 
 	useEffect(() => {
 		let mounted = true;
-		if (mounted && allNfts) {
+		if ((mounted && active && auctionedNfts) || ardorNfts) {
 			setLoading(true);
-			setActive(ETHEREUM);
-			setData(allNfts);
-			setLoading(false);
-		}
-		if (mounted && ardorNfts) {
-			setLoading(true);
-			setActive(ARDOR);
-			setData(ardorNfts);
+			if (active === ETHEREUM) {
+				setData(auctionedNfts);
+			} else {
+				setData(ardorNfts);
+			}
 			setLoading(false);
 		}
 		return () => {
 			mounted = false;
 		};
 		//eslint-disable-next-line
-	}, [allNfts, ardorNfts]);
+	}, [active, auctionedNfts, ardorNfts]);
 
 	return loading ? (
 		<NFTCardSkeleton />
@@ -115,7 +104,7 @@ const NFTCard = ({ allNfts, title, ardorNfts }: INFTCard) => {
 						active === ETHEREUM ? (
 							<EthereumNFT data={nft} key={nft.tokenId} />
 						) : (
-							<ArdorNFT data={nft} key={nft.asset} />
+							<ArdorNFT data={nft} key={nft.description} />
 						)
 					)
 				)}

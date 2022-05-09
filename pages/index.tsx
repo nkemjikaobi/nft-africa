@@ -8,14 +8,19 @@ import { useContext, useEffect } from 'react';
 const Home: NextPage = () => {
 	const walletContext = useContext(WalletContext);
 
-	const { fetchAllNfts, contract, allNfts, fetchArdorNfts, ardorNfts } =
-		walletContext;
+	const {
+		fetchAuctionedNfts,
+		contract,
+		auctionedNfts,
+		fetchArdorNfts,
+		ardorNfts,
+	} = walletContext;
 
 	//Fetch NFT's on the ethereum network
 	useEffect(() => {
 		let mounted = true;
 		if (mounted && contract !== null) {
-			fetchAllNfts(contract);
+			fetchAuctionedNfts(contract);
 		}
 
 		return () => {
@@ -41,9 +46,21 @@ const Home: NextPage = () => {
 		<BasePageLayout>
 			<div className='mt-40'>
 				<Catalogue />
-				<NFTCard title='trending' allNfts={allNfts} ardorNfts={ardorNfts} />
-				<NFTCard title='auctions' allNfts={allNfts} ardorNfts={ardorNfts} />
-				<NFTCard title='explore' allNfts={allNfts} ardorNfts={ardorNfts} />
+				<NFTCard
+					title='trending'
+					auctionedNfts={auctionedNfts}
+					ardorNfts={ardorNfts}
+				/>
+				<NFTCard
+					title='auctions'
+					auctionedNfts={auctionedNfts}
+					ardorNfts={ardorNfts}
+				/>
+				<NFTCard
+					title='explore'
+					auctionedNfts={auctionedNfts}
+					ardorNfts={ardorNfts}
+				/>
 			</div>
 		</BasePageLayout>
 	);
