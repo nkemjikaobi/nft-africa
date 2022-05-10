@@ -14,16 +14,19 @@ import SignArdorTransaction from 'components/SignArdorTransaction/SignArdorTrans
 import addArdorZeroes from 'helpers/addArdorZeroes';
 import IArdorNFT from 'dto/NFT/IArdorNFT';
 import { ARDOR } from 'constants/index';
+import shortenWalletAddress from 'helpers/shortenWalletAddress';
 
 interface ISingleArdorNFT {
 	singleNft: IArdorNFT;
 	showMagnified: boolean;
 	setShowMagnified: Function;
+	setImageUrl: Function;
 }
 const SingleArdorNFT = ({
 	singleNft,
 	showMagnified,
 	setShowMagnified,
+	setImageUrl,
 }: ISingleArdorNFT) => {
 	const [imageCID, setImageCID] = useState<string>('');
 	const [description, setDescription] = useState<string>('');
@@ -49,6 +52,7 @@ const SingleArdorNFT = ({
 			const description = url.data.description;
 			setDescription(description);
 			setImageCID(finalUrl);
+			setImageUrl(finalUrl);
 		} catch (error) {
 			console.log(error);
 		}
@@ -139,7 +143,7 @@ const SingleArdorNFT = ({
 										<p className='text-gray-400 text-sm'>Creator</p>
 										<p className='font-bold'>
 											{singleNft.accountRS &&
-												singleNft.accountRS.substring(0, 12)}
+												shortenWalletAddress(singleNft.accountRS)}
 										</p>
 									</div>
 								</div>
@@ -148,7 +152,7 @@ const SingleArdorNFT = ({
 										<p className='text-gray-400 text-sm'>Owner</p>
 										<p className='font-bold'>
 											{singleNft.accountRS &&
-												singleNft.accountRS.substring(0, 12)}
+												shortenWalletAddress(singleNft.accountRS)}
 										</p>
 									</div>
 								</div>

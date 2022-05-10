@@ -11,7 +11,6 @@ import ArdorNFT from 'components/ArdorNFT/ArdorNFT';
 import IArdorNFT from 'dto/NFT/IArdorNFT';
 import { v4 as uuidv4 } from 'uuid';
 
-
 interface INFTCard {
 	auctionedNfts?: Array<INFT>;
 	title: string;
@@ -37,7 +36,7 @@ const NFTCard = ({ auctionedNfts, title, ardorNfts }: INFTCard) => {
 			} else {
 				setData(ardorNfts);
 			}
-			setLoading(false);
+		setLoading(false);
 		}
 		return () => {
 			mounted = false;

@@ -11,6 +11,7 @@ import INFT from 'dto/NFT/INFT';
 import toast from 'react-hot-toast';
 import ShowBidForm from 'modals/ShowBidForm';
 import { ETHEREUM } from 'constants/index';
+import shortenWalletAddress from 'helpers/shortenWalletAddress';
 
 interface ISingleEthereumNFT {
 	singleNft: INFT;
@@ -109,7 +110,7 @@ const SingleEthereumNFT = ({
 								<div>
 									<p className='text-gray-400 text-sm'>Creator</p>
 									<p className='font-bold'>
-										{singleNft.seller.substring(0, 6)}
+										{shortenWalletAddress(singleNft.seller)}
 									</p>
 								</div>
 							</div>
@@ -117,7 +118,7 @@ const SingleEthereumNFT = ({
 								<div>
 									<p className='text-gray-400 text-sm'>Owner</p>
 									<p className='font-bold'>
-										{singleNft.seller.substring(0, 6)}
+										{shortenWalletAddress(singleNft.seller)}
 									</p>
 								</div>
 							</div>
@@ -146,6 +147,17 @@ const SingleEthereumNFT = ({
 									<CountdownTimer expiryTimestamp={time} />
 								</p>
 							</div>
+						</div>
+						<div className='mt-4'>
+							Max Bid:
+							<span className='text-green-500 text-xl'>
+								{' '}
+								{convertToEther(
+									isGuest ? guestWeb3 : web3,
+									singleNft.maxBid
+								)}{' '}
+								ETH
+							</span>
 						</div>
 						<button
 							onClick={() => handleClick()}

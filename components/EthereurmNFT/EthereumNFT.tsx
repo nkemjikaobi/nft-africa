@@ -1,12 +1,15 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { FaEthereum, FaGavel } from 'react-icons/fa';
 import convertToEther from 'helpers/convertToEther';
-import { HiCurrencyDollar } from 'react-icons/hi';
+import { FcAlarmClock } from 'react-icons/fc';
 import { AiTwotoneCloseCircle } from 'react-icons/ai';
 import WalletContext from 'context/wallet/WalletContext';
 import INFT from 'dto/NFT/INFT';
+import 'moment-timezone';
+import moment from 'moment';
+import shortenWalletAddress from 'helpers/shortenWalletAddress';
 
 interface IEthereumNFT {
 	data: INFT;
@@ -16,6 +19,20 @@ const EthereumNFT = ({ data }: IEthereumNFT) => {
 
 	const walletContext = useContext(WalletContext);
 	const { web3, isGuest, guestWeb3 } = walletContext;
+	const [timeToEnd, setTimeToEnd] = useState<number>(0);
+	const [hasEnded, setHasEnded] = useState<boolean>(false);
+
+	useEffect(() => {
+		if (data) {
+			const seconds = parseInt(data.duration) * 100;
+			const time: any = moment(seconds).fromNow();
+			setTimeToEnd(time);
+			if (time.includes('ago')) {
+				setHasEnded(true);
+			}
+		}
+		//eslint-disable-next-line
+	}, []);
 
 	return (
 		<>
@@ -51,14 +68,30 @@ const EthereumNFT = ({ data }: IEthereumNFT) => {
 					<div className='p-3 flex justify-between items-center'>
 						<p className='tablet:text-xs smallLaptop:text-base'>Creator</p>
 						<p className='tablet:text-xs smallLaptop:text-base'>
-							{data.seller && data.seller.substring(0, 6)}
+							{data.seller && shortenWalletAddress(data.seller)}
 						</p>
 					</div>
+					{!hasEnded && (
+						<div className='p-3 flex justify-between items-center'>
+							<p className='flex items-center'>
+								Auction ends <FcAlarmClock className='ml-2' />
+							</p>
+							<p>{timeToEnd}</p>
+						</div>
+					)}
+
 					<div className='p-3 flex items-center '>
-						<p className='flex items-center'>
-							Auction in Progress
-							<AiTwotoneCloseCircle className='ml-2 text-xs text-green-400' />
-						</p>
+						{hasEnded ? (
+							<p className='flex items-center'>
+								Auction ended
+								<AiTwotoneCloseCircle className='ml-2 text-xs text-red-400' />
+							</p>
+						) : (
+							<p className='flex items-center'>
+								Auction in Progress
+								<AiTwotoneCloseCircle className='ml-2 text-xs text-green-400' />
+							</p>
+						)}
 					</div>
 				</div>
 			)}

@@ -5,6 +5,7 @@ import { FaEthereum } from 'react-icons/fa';
 import formatArdorImageUrl from 'helpers/formatArdorImageUrl';
 import axios from 'axios';
 import IArdorNFT from 'dto/NFT/IArdorNFT';
+import shortenWalletAddress from 'helpers/shortenWalletAddress';
 
 interface IArdorNFt {
 	data: IArdorNFT;
@@ -50,7 +51,7 @@ const ArdorNFT = ({ data }: IArdorNFt) => {
 					<div className='p-3 flex justify-between items-center'>
 						<p className='tablet:text-xs smallLaptop:text-base'>Creator</p>
 						<p className='tablet:text-xs smallLaptop:text-base'>
-							{data.accountRS && data.accountRS.substring(0, 12)}
+							{data.accountRS && shortenWalletAddress(data.accountRS)}
 						</p>
 					</div>
 				</div>

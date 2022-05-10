@@ -1,6 +1,7 @@
 import IBidOrder from 'dto/NFT/IBidOrder';
 import removeArdorZeroes from 'helpers/removeArdorZeroes';
 import React from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 interface IBid {
 	ardorBids: Array<IBidOrder>;
@@ -11,7 +12,7 @@ const Bids = ({ ardorBids }: IBid) => {
 			{ardorBids && ardorBids.length !== 0 ? (
 				ardorBids.map((data: IBidOrder) => (
 					<div
-						key={data.asset}
+						key={uuidv4()}
 						className='bg-gray-200 mb-4 p-3 flex justify-between items-center'
 					>
 						<div>

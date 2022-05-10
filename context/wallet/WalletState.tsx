@@ -244,14 +244,19 @@ const WalletState = (props: any) => {
 					const nft = await contract.methods.tokenURI(dat.tokenId).call();
 					const nftData: any = await axios.get(nft);
 					let item: any = {};
-					item.tokenId = dat.tokenId;
-					item.fileUrl = nftData.data.fileUrl;
 					item.name = nftData.data.name;
 					item.description = nftData.data.description;
-					item.owner = dat.owner;
+					item.fileUrl = nftData.data.fileUrl;
+					item.tokenId = dat.tokenId;
+					item.bidAmounts = dat.bidAmounts;
+					item.duration = dat.duration;
+					item.isActive = dat.isActive;
+					item.maxBid = dat.maxBid;
+					item.maxBidUser = dat.maxBidUser;
+					item.nftContractAddress = dat.nftContractAddress;
 					item.price = dat.price;
 					item.seller = dat.seller;
-					item.sold = dat.sold;
+					item.users = dat.users;
 					return item;
 				})
 			);
@@ -290,8 +295,8 @@ const WalletState = (props: any) => {
 				type: CREATE_NFT,
 			});
 			setTimeout(() => {
-				router.push('/explore');
-			}, 2000);
+				router.push('/');
+			}, 1500);
 		} catch (error) {
 			dispatch({
 				type: ERROR,

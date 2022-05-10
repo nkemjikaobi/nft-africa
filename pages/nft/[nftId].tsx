@@ -20,6 +20,8 @@ const ProductDetailPage = ({ nftId }: IProductDetailPage) => {
 	});
 	const walletContext = useContext(WalletContext);
 
+	const [imageUrl, setImageUrl] = useState<string>('');
+
 	const {
 		fetchSingleNft,
 		contract,
@@ -46,6 +48,41 @@ const ProductDetailPage = ({ nftId }: IProductDetailPage) => {
 		//eslint-disable-next-line
 	}, [contract]);
 
+	useEffect(() => {
+		let mounted = true;
+		if (mounted && singleNft !== null) {
+			setImageUrl(singleNft.fileUrl);
+		}
+
+		return () => {
+			mounted = false;
+		};
+		//eslint-disable-next-line
+	}, [singleNft]);
+
+	useEffect(() => {
+		let mounted = true;
+		if (mounted && singleArdorNft !== null) {
+			setImageUrl(singleArdorNft.fileUrl);
+		}
+
+		return () => {
+			mounted = false;
+		};
+		//eslint-disable-next-line
+	}, [singleArdorNft]);
+	useEffect(() => {
+		let mounted = true;
+		if (mounted && singleNft !== null) {
+			setImageUrl(singleNft.fileUrl);
+		}
+
+		return () => {
+			mounted = false;
+		};
+		//eslint-disable-next-line
+	}, [singleNft]);
+
 	return (
 		<BasePageLayout>
 			{singleNft === null && singleArdorNft === null ? (
@@ -65,15 +102,16 @@ const ProductDetailPage = ({ nftId }: IProductDetailPage) => {
 							singleNft={singleArdorNft}
 							showMagnified={showMagnified}
 							setShowMagnified={setShowMagnified}
+							setImageUrl={setImageUrl}
 						/>
 					)}
 
-					{showMagnified && (
+					{showMagnified && imageUrl && (
 						<div
 							className='absolute top-64 smallLaptop:top-40 4/4 mx-10 smallLaptop:mx-0 smallLaptop:left-1/4'
 							ref={node}
 						>
-							<MagnifiedNFT url={singleNft.fileUrl} />
+							<MagnifiedNFT url={imageUrl} />
 						</div>
 					)}
 				</>

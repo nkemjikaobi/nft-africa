@@ -105,7 +105,6 @@ const CreateNFT = () => {
 		setFinalUrl(url);
 		if (network === ETHEREUM) {
 			await handleEthereumMint(url);
-			router.push('/');
 		} else {
 			await mintArdorNft(res.path, name, 1, address);
 			setFinished(true);
@@ -134,7 +133,7 @@ const CreateNFT = () => {
 					Create NFT
 				</h1>
 
-				<div className='mb-8 relative border ml-16 tablet:ml-28 border-black border-dotted flex items-center justify-center w-64 h-64 tablet:w-96 tablet:h-64 rounded-lg'>
+				<div className='mb-8 relative border ml-16 tablet:ml-28 border-black border-dotted flex items-center justify-center w-64 h-64 tablet:w-96 tablet:h-[355px] rounded-lg'>
 					<label className='w-full h-full flex items-center justify-center cursor-pointer'>
 						<input
 							className='bg-gray-200 hidden p-5 border border-gray-300 rounded-md w-2/3 focus:border-black focus:outline-black'
@@ -142,7 +141,24 @@ const CreateNFT = () => {
 							onChange={e => handleImage(e)}
 						/>
 						{fileUrl !== '' ? (
-							<Image src={fileUrl} height={258} width={390} alt='nft preview' />
+							<>
+								<div className='hidden tablet:block'>
+									<Image
+										src={fileUrl}
+										height={365}
+										width={390}
+										alt='nft preview'
+									/>
+								</div>
+								<div className='block tablet:hidden'>
+									<Image
+										src={fileUrl}
+										height={400}
+										width={390}
+										alt='nft preview'
+									/>
+								</div>
+							</>
 						) : imageLoading ? (
 							<FaSpinner className='animate-spin h-16 w-16 mr-3 text-9xl' />
 						) : (
