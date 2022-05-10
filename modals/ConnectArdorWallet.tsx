@@ -7,6 +7,7 @@ import Link from 'next/link';
 import axios from 'axios';
 import WalletContext from 'context/wallet/WalletContext';
 import { FaSpinner } from 'react-icons/fa';
+import { QRCodeSVG } from 'qrcode.react';
 
 interface IConnectArdorWallet {
 	setConnectArdor: Function;
@@ -77,7 +78,8 @@ const ConnectArdorWallet = ({ setConnectArdor }: IConnectArdorWallet) => {
 				{qrCodeUrl !== '' ? (
 					<>
 						<div className='hidden tablet:block tablet:mb-8'>
-							<QRCode value={`${qrCodeUrl}`} />
+							{/* <QRCode value={`${qrCodeUrl}`} /> */}
+							<QRCodeSVG value={`${qrCodeUrl}`} />
 						</div>
 						<div className='block mb-8 break-normal p-5 text-sm ml-4 tablet:hidden'>
 							<Link href={qrCodeUrl}>{qrCodeUrl}</Link>

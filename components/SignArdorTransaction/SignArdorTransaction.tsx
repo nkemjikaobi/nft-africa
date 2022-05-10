@@ -6,6 +6,7 @@ import Link from 'next/link';
 import WalletContext from 'context/wallet/WalletContext';
 import { FaSpinner } from 'react-icons/fa';
 import axios from 'axios';
+import { QRCodeSVG } from 'qrcode.react';
 
 interface ISignArdorTransaction {
 	onClose: Function;
@@ -48,7 +49,6 @@ const SignArdorTransaction = ({
 			}
 		} catch (error) {}
 	};
-	
 
 	//Watch for when the user activates the token on device
 	useEffect(() => {
@@ -84,7 +84,8 @@ const SignArdorTransaction = ({
 				{url !== '' ? (
 					<>
 						<div className='hidden tablet:block tablet:mb-8'>
-							<QRCode value={`${url}`} />
+							{/* <QRCode value={`${url}`} /> */}
+							<QRCodeSVG value={`${url}`} />
 						</div>
 						<div className='block mb-8 break-normal p-5 text-sm ml-4 tablet:hidden'>
 							<Link href={url}>{url}</Link>
