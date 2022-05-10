@@ -127,7 +127,7 @@ const SingleEthereumNFT = ({
 							{singleNft.description}
 						</p>
 						<div className='flex justify-between items-center flex-row tablet:flex-col laptop:flex-row -ml-20 tablet:ml-0'>
-							<div className='tablet:-ml-[25%] laptop:ml-0'>
+							<div className='tablet:-ml-[45%] laptop:ml-0'>
 								<h4 className='font-bold'>Price</h4>
 								<p className='flex items-center mt-1'>
 									<FaEthereum />{' '}
@@ -138,7 +138,6 @@ const SingleEthereumNFT = ({
 										)}
 										ETH
 									</span>{' '}
-									<span className='text-gray-400 text-sm'>≈ $ 318.60</span>
 								</p>
 							</div>
 							<div className='mt-0 tablet:mt-8 tablet:-ml-[50%] laptop:ml-0 laptop:mt-0'>
@@ -148,7 +147,7 @@ const SingleEthereumNFT = ({
 								</p>
 							</div>
 						</div>
-						<div className='mt-4'>
+						<div className='mt-4 -ml-20 tablet:ml-0'>
 							Max Bid:
 							<span className='text-green-500 text-xl'>
 								{' '}

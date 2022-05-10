@@ -57,7 +57,7 @@ const MobileNavigation = ({ handleClick }: IMobileNavigation) => {
 							key={data.id}
 							className={`mb-3  ${
 								data.id === 4 &&
-								'border border-black rounded-md py-3 px-8 flex justify-center items-center'
+								'border border-black w-[90%] tablet:w-[40%] rounded-md py-3 px-8 flex justify-center items-center'
 							}`}
 							onClick={() => handleClick(data.id, data.route)}
 						>
@@ -70,7 +70,7 @@ const MobileNavigation = ({ handleClick }: IMobileNavigation) => {
 					))}
 
 					{isConnected && (
-						<li className='border border-black rounded-md py-3 px-8 flex justify-center items-center whitespace-nowrap'>
+						<li className='border border-black rounded-md py-3 px-8 w-[90%] tablet:w-[40%] flex justify-center items-center whitespace-nowrap'>
 							<div>
 								<span>
 									{network === ETHEREUM ? (

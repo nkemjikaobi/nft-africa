@@ -36,7 +36,7 @@ const NFTCard = ({ auctionedNfts, title, ardorNfts }: INFTCard) => {
 			} else {
 				setData(ardorNfts);
 			}
-		setLoading(false);
+			setLoading(false);
 		}
 		return () => {
 			mounted = false;
