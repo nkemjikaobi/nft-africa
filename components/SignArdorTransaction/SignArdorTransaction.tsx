@@ -85,7 +85,7 @@ const SignArdorTransaction = ({
 					<>
 						<div className='hidden tablet:block tablet:mb-8'>
 							<QRCode value={`${url}`} />
-							{/* <QRCodeSVG value={`${url}`} />m */}
+							{/* <QRCodeSVG value={`${url}`} /> */}
 						</div>
 						<div className='block mb-8 break-normal p-5 text-sm ml-4 tablet:hidden'>
 							<Link href={url}>{url}</Link>
