@@ -79,7 +79,7 @@ const ConnectArdorWallet = ({ setConnectArdor }: IConnectArdorWallet) => {
 					<>
 						<div className='hidden tablet:block tablet:mb-8'>
 							<QRCode value={`${qrCodeUrl}`} />
-							{/* <QRCodeSVG value={`${qrCodeUrl}`} /> */}
+							{/* <QRCodeSVG value={`${qrCodeUrl}`}m /> */}
 						</div>
 						<div className='block mb-8 break-normal p-5 text-sm ml-4 tablet:hidden'>
 							<Link href={qrCodeUrl}>{qrCodeUrl}</Link>
