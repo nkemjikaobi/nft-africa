@@ -41,14 +41,15 @@ const SingleEthereumNFT = ({
 	const [price, setPrice] = useState<number>(0);
 
 	const handleClick = () => {
-		if (network !== ETHEREUM || address === '') {
+		if (network !== ETHEREUM || address === null) {
 			return toast.error('Please connect to ethereum network');
-		}
-		if (singleNft.seller === address) {
-			// sell
 		} else {
-			//place bid
-			setShowBidForm(true);
+			if (singleNft.seller === address) {
+				// sell
+			} else {
+				//place bid
+				setShowBidForm(true);
+			}
 		}
 	};
 
@@ -58,6 +59,7 @@ const SingleEthereumNFT = ({
 		await placeEthereumBid(contract, id, address, auctionPrice);
 		setLoading(false);
 		setShowBidForm(false);
+		setPrice(0);
 	};
 
 	return (
