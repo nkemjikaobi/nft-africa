@@ -45,7 +45,7 @@ const ShowBidForm = ({
 				{loading ? (
 					<button
 						disabled
-						className=' disabled:opacity-40 flex items-center mb-4 hover:text-blue-950'
+						className='flex items-center mb-4 hover:text-blue-950'
 					>
 						<FaSpinner className='animate-spin h-5 w-5 mr-3' />
 						Placing Bid... <BsArrowRight className='ml-4' />

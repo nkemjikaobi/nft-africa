@@ -26,6 +26,7 @@ import {
 	FETCH_PERSONAL_ASSETS,
 	FETCH_AUCTIONED_NFTS,
 	PLACE_ETHEREUM_BID,
+	SELL_ETHEREUM_NFT,
 } from '../types';
 
 const contactReducer = (state: any, action: any) => {
@@ -78,6 +79,11 @@ const contactReducer = (state: any, action: any) => {
 			return {
 				...state,
 				message: 'Bid Placed',
+			};
+		case SELL_ETHEREUM_NFT:
+			return {
+				...state,
+				message: 'Asset sold',
 			};
 		case FETCH_SINGLE_NFT:
 			return {

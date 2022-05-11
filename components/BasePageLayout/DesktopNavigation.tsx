@@ -29,7 +29,7 @@ const DesktopNavigation = ({ handleClick }: IDesktopNavigation) => {
 					/>
 				</a>
 			</Link>
-			<ul className='flex justify-between items-center w-3/5 desktop:w-3/6'>
+			<ul className='flex justify-between items-center w-3/5'>
 				{DesktopNav.map(data => (
 					<li
 						key={data.id}

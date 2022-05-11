@@ -24,7 +24,7 @@ const EthereumNFT = ({ data }: IEthereumNFT) => {
 
 	useEffect(() => {
 		if (data) {
-			const seconds = parseInt(data.duration) * 100;
+			const seconds = parseInt(data.duration) * 1000;
 			const time: any = moment(seconds).fromNow();
 			setTimeToEnd(time);
 			if (time.includes('ago')) {

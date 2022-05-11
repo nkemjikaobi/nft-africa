@@ -27,6 +27,7 @@ import {
 	FETCH_PERSONAL_ASSETS,
 	FETCH_AUCTIONED_NFTS,
 	PLACE_ETHEREUM_BID,
+	SELL_ETHEREUM_NFT,
 } from '../types';
 import Web3 from 'web3';
 import Web3Modal from 'web3modal';
@@ -331,6 +332,30 @@ const WalletState = (props: any) => {
 		}
 	};
 
+	//Execute Sale
+	const sellEthereumNft = async (
+		contract: any,
+		tokenId: string,
+		address: string,
+		router: any
+	) => {
+		try {
+			await contract.methods.executeSale(tokenId).send({
+				from: address,
+			});
+
+			dispatch({
+				type: SELL_ETHEREUM_NFT,
+			});
+			router.push("/")
+		} catch (error) {
+			dispatch({
+				type: ERROR,
+				payload: (error as Error).message,
+			});
+		}
+	};
+
 	//Load Contract
 	const loadContract = async (web3: any) => {
 		try {
@@ -615,6 +640,7 @@ const WalletState = (props: any) => {
 				fetchPersonalAssets,
 				fetchAuctionedNfts,
 				placeEthereumBid,
+				sellEthereumNft,
 			}}
 		>
 			{props.children}

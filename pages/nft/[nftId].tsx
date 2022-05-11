@@ -13,7 +13,6 @@ interface IProductDetailPage {
 }
 const ProductDetailPage = ({ nftId }: IProductDetailPage) => {
 	const time = new Date();
-	time.setSeconds(time.getSeconds() + 600); // 10 minutes timer
 	const [showMagnified, setShowMagnified] = useState<boolean>(false);
 	const node = useClickOutside(() => {
 		setShowMagnified(false);

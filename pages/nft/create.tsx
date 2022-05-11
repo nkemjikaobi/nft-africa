@@ -62,7 +62,7 @@ const CreateNFT = () => {
 		}
 	};
 
-	const handleEthereumMint = async (url: string) => {
+const handleEthereumMint = async (url: string) => {
 		try {
 			//Get listing price
 			const listingPrice = await contract.methods
@@ -76,7 +76,8 @@ const CreateNFT = () => {
 				auctionPrice,
 				listingPrice,
 				address,
-				Math.floor(endDateTime / 100),
+				//Math.floor(endDateTime / 1000),
+				1652272857,
 				router
 			);
 			setLoading(false);
