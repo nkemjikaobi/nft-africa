@@ -23,10 +23,11 @@ import {
 	RESET_NFT_ITEM,
 	FETCH_ARDOR_BIDS,
 	PLACE_ARDOR_BID,
-	FETCH_PERSONAL_ASSETS,
+	FETCH_ARDOR_PERSONAL_ASSETS,
 	FETCH_AUCTIONED_NFTS,
 	PLACE_ETHEREUM_BID,
 	SELL_ETHEREUM_NFT,
+	FETCH_ETHEREUM_PERSONAL_ASSETS,
 } from '../types';
 
 const contactReducer = (state: any, action: any) => {
@@ -89,6 +90,11 @@ const contactReducer = (state: any, action: any) => {
 			return {
 				...state,
 				singleNft: action.payload,
+			};
+		case FETCH_ETHEREUM_PERSONAL_ASSETS:
+			return {
+				...state,
+				ethereumPersonalAssets: action.payload,
 			};
 		case DISCONNECT_WALLET:
 			return {
@@ -210,10 +216,10 @@ const contactReducer = (state: any, action: any) => {
 				message: action.payload.msg,
 				ardorPlaceOrderData: action.payload,
 			};
-		case FETCH_PERSONAL_ASSETS:
+		case FETCH_ARDOR_PERSONAL_ASSETS:
 			return {
 				...state,
-				personalAssets: action.payload,
+				ardorPersonalAssets: action.payload,
 			};
 		default:
 			return state;

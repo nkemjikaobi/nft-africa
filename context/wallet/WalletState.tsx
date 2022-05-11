@@ -24,7 +24,8 @@ import {
 	RESET_NFT_ITEM,
 	FETCH_ARDOR_BIDS,
 	PLACE_ARDOR_BID,
-	FETCH_PERSONAL_ASSETS,
+	FETCH_ARDOR_PERSONAL_ASSETS,
+	FETCH_ETHEREUM_PERSONAL_ASSETS,
 	FETCH_AUCTIONED_NFTS,
 	PLACE_ETHEREUM_BID,
 	SELL_ETHEREUM_NFT,
@@ -70,7 +71,8 @@ const WalletState = (props: any) => {
 		singleArdorNft: null,
 		ardorBids: [],
 		ardorPlaceOrderData: null,
-		personalAssets: null,
+		ardorPersonalAssets: null,
+		ethereumPersonalAssets: null,
 	};
 
 	const [state, dispatch] = useReducer(WalletReducer, initialState);
@@ -306,6 +308,49 @@ const WalletState = (props: any) => {
 		}
 	};
 
+	//Fetch ethereum personal assets
+	const fetchEthereumPersonalAssets = async (
+		contract: any,
+		address: string
+	) => {
+		try {
+			const assets = await contract.methods.fetchUserNft().call({
+				from: address,
+			});
+			console.log(assets);
+			// creator: '0x2223241f7d197cca53c1B13df8CfA38264017F04';
+			// owner: '0x6917889Fe7922AA9A88aB4FfdBf71391fdb06A40';
+			// price: '0';
+			// sold: true;
+			// tokenId: '5';
+			const data = await Promise.all(
+				assets.map(async (dat: any) => {
+					const nft = await contract.methods.tokenURI(dat.tokenId).call();
+					const nftData: any = await axios.get(nft);
+					let item: any = {};
+					item.name = nftData.data.name;
+					item.description = nftData.data.description;
+					item.fileUrl = nftData.data.fileUrl;
+					item.tokenId = dat.tokenId;
+					item.creator = dat.creator;
+					item.owner = dat.owner;
+					item.price = dat.price;
+					item.sold = dat.sold;
+					return item;
+				})
+			);
+			dispatch({
+				type: FETCH_ETHEREUM_PERSONAL_ASSETS,
+				payload: data,
+			});
+		} catch (error) {
+			dispatch({
+				type: ERROR,
+				payload: (error as Error).message,
+			});
+		}
+	};
+
 	//Place Bid on Ethereum Network
 	const placeEthereumBid = async (
 		contract: any,
@@ -347,7 +392,7 @@ const WalletState = (props: any) => {
 			dispatch({
 				type: SELL_ETHEREUM_NFT,
 			});
-			router.push("/")
+			router.push('/');
 		} catch (error) {
 			dispatch({
 				type: ERROR,
@@ -572,14 +617,15 @@ const WalletState = (props: any) => {
 		} catch (error) {}
 	};
 
-	const fetchPersonalAssets = async (address: string) => {
+	//Fetch ardor personal assets fetchEthereumPersonalAssets
+	const fetchArdorPersonalAssets = async (address: string) => {
 		try {
 			const res = await axios.get(
 				`${process.env.NEXT_PUBLIC_ARDOR_BASE_URL}/api/nftart/account-assets/${address}
 `
 			);
 			dispatch({
-				type: FETCH_PERSONAL_ASSETS,
+				type: FETCH_ARDOR_PERSONAL_ASSETS,
 				payload: res.data.data,
 			});
 		} catch (error) {}
@@ -616,7 +662,8 @@ const WalletState = (props: any) => {
 				singleArdorNft: state.singleArdorNft,
 				ardorBids: state.ardorBids,
 				ardorPlaceOrderData: state.ardorPlaceOrderData,
-				personalAssets: state.personalAssets,
+				ardorPersonalAssets: state.ardorPersonalAssets,
+				ethereumPersonalAssets: state.ethereumPersonalAssets,
 				clearError,
 				connectWallet,
 				disconnectWallet,
@@ -637,10 +684,11 @@ const WalletState = (props: any) => {
 				resetNFTItem,
 				fetchBids,
 				placeArdorBid,
-				fetchPersonalAssets,
+				fetchArdorPersonalAssets,
 				fetchAuctionedNfts,
 				placeEthereumBid,
 				sellEthereumNft,
+				fetchEthereumPersonalAssets,
 			}}
 		>
 			{props.children}

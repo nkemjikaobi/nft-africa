@@ -10,13 +10,16 @@ import EthereumNFT from 'components/EthereurmNFT/EthereumNFT';
 import ArdorNFT from 'components/ArdorNFT/ArdorNFT';
 import IArdorNFT from 'dto/NFT/IArdorNFT';
 import { v4 as uuidv4 } from 'uuid';
+import IEthereumAsset from 'dto/NFT/IEthereumAsset';
+import EthereumAssetCard from 'components/EthereumAssetCard/EthereumAssetCard';
 
 interface INFTCard {
-	auctionedNfts?: Array<INFT>;
+	auctionedNfts?: Array<INFT> | Array<IEthereumAsset>;
 	title: string;
 	ardorNfts?: Array<IArdorNFT>;
+	location: string;
 }
-const NFTCard = ({ auctionedNfts, title, ardorNfts }: INFTCard) => {
+const NFTCard = ({ auctionedNfts, title, ardorNfts, location }: INFTCard) => {
 	const router = useRouter();
 
 	const [active, setActive] = useState<string>(ETHEREUM);
@@ -103,7 +106,11 @@ const NFTCard = ({ auctionedNfts, title, ardorNfts }: INFTCard) => {
 					data &&
 					data.map((nft: any) =>
 						active === ETHEREUM ? (
-							<EthereumNFT data={nft} key={uuidv4()} />
+							location === 'profile' ? (
+								<EthereumAssetCard data={nft} key={uuidv4()} />
+							) : (
+								<EthereumNFT data={nft} key={uuidv4()} />
+							)
 						) : (
 							<ArdorNFT data={nft} key={uuidv4()} />
 						)

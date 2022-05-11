@@ -13,32 +13,32 @@ const ProfilePage = () => {
 	const walletContext = useContext(WalletContext);
 
 	const {
-		auctionedNfts,
 		contract,
-		fetchAuctionedNfts,
-		fetchPersonalAssets,
-		personalAssets,
+		fetchArdorPersonalAssets,
+		ardorPersonalAssets,
 		address,
+		fetchEthereumPersonalAssets,
+		ethereumPersonalAssets,
 	} = walletContext;
 
 	//Fetch NFT's on the ethereum network
 	useEffect(() => {
 		let mounted = true;
 		if (mounted && contract !== null) {
-			fetchAuctionedNfts(contract);
+			fetchEthereumPersonalAssets(contract, address);
 		}
 
 		return () => {
 			mounted = false;
 		};
 		//eslint-disable-next-line
-	}, [contract]);
+	}, [contract, address]);
 
 	//Fetch personal assets
 	useEffect(() => {
 		let mounted = true;
 		if (mounted && address) {
-			fetchPersonalAssets(address);
+			fetchArdorPersonalAssets(address);
 		}
 
 		return () => {
@@ -91,8 +91,9 @@ const ProfilePage = () => {
 				<div className='mt-[10%] laptop:mt-[3%]'>
 					<NFTCard
 						title='Your Assets'
-						auctionedNfts={auctionedNfts}
-						ardorNfts={personalAssets}
+						auctionedNfts={ethereumPersonalAssets}
+						ardorNfts={ardorPersonalAssets}
+						location="profile"
 					/>
 				</div>
 			</BasePageLayout>

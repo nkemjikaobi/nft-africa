@@ -62,7 +62,7 @@ const CreateNFT = () => {
 		}
 	};
 
-const handleEthereumMint = async (url: string) => {
+	const handleEthereumMint = async (url: string) => {
 		try {
 			//Get listing price
 			const listingPrice = await contract.methods
