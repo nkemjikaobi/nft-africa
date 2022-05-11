@@ -76,8 +76,7 @@ const handleEthereumMint = async (url: string) => {
 				auctionPrice,
 				listingPrice,
 				address,
-				//Math.floor(endDateTime / 1000),
-				1652272857,
+				Math.floor(endDateTime / 1000),
 				router
 			);
 			setLoading(false);
