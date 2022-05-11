@@ -17,7 +17,7 @@ interface INFTCard {
 	auctionedNfts?: Array<INFT> | Array<IEthereumAsset>;
 	title: string;
 	ardorNfts?: Array<IArdorNFT>;
-	location: string;
+	location?: string;
 }
 const NFTCard = ({ auctionedNfts, title, ardorNfts, location }: INFTCard) => {
 	const router = useRouter();
