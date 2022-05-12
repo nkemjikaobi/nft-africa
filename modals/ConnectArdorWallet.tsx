@@ -48,62 +48,56 @@ const ConnectArdorWallet = ({ setConnectArdor }: IConnectArdorWallet) => {
 	}, [hasGeneratedQrCodeUrl, qrCodeId]);
 
 	return (
-		<div className='text-white relative bg-black rounded-lg p-10'>
-			<Toaster position='top-right' />
-			<div className='absolute left-0 tablet:right-5 top-0 tablet:top-10 cursor-pointer'>
-				<AiOutlineClose onClick={() => setConnectArdor(false)} />
-			</div>
-			<div className='flex flex-col justify-center items-center'>
-				{/* <h4 className='mb-4 text-2xl font-bold'>Login with SIGBRO</h4> */}
-				<div className='mb-4 mt-4'>
-					<Image
-						src='/images/sigbro.png'
-						className='mb-4'
-						alt='sigbro'
-						height={65}
-						width={300}
-					/>
-					<div className='hidden tablet:block tablet:mb-8'>
-						<p className='text-sm text-center tablet:text-base'>
-							Please scan the barcode below
-						</p>
-					</div>
-					<div className='block break-normal tablet:hidden'>
-						<p className='text-sm text-center tablet:text-base'>
-							Please click the link below
-						</p>
-					</div>
+		<div className='flex flex-col justify-center items-center'>
+			{/* <h4 className='mb-4 text-2xl font-bold'>Login with SIGBRO</h4> */}
+			<div className='mb-4 mt-4'>
+				<Image
+					src='/images/sigbro.png'
+					className='mb-4'
+					alt='sigbro'
+					height={65}
+					width={300}
+				/>
+				<div className='hidden tablet:block tablet:mb-8'>
+					<p className='text-sm text-center tablet:text-base'>
+						Please scan the barcode below
+					</p>
 				</div>
-
-				{qrCodeUrl !== '' ? (
-					<>
-						<div className='hidden tablet:block tablet:mb-8'>
-							<QRCode value={`${qrCodeUrl}`} />
-							{/* <QRCodeSVG value={`${qrCodeUrl}`}m /> */}
-						</div>
-						<div className='block mb-8 break-normal p-5 text-sm ml-4 tablet:hidden'>
-							<Link href={qrCodeUrl}>{qrCodeUrl}</Link>
-						</div>
-					</>
-				) : (
-					<>
-						<div className='hidden tablet:block tablet:mb-4'>
-							<FaSpinner className='animate-spin h-5 w-5 mr-3' />
-							Generating Qrcode...
-						</div>
-						<div className='mb-4 block tablet:hidden'>
-							<FaSpinner className='animate-spin h-5 w-5 mr-3' />
-							Generating Qrlink...
-						</div>
-					</>
-				)}
-
-				<Link href='https://www.nxter.org/how-to-install-and-set-up-the-sigbro-app-on-android/'>
-					<a target={'_blank'} className='mb-4 hover:text-blue-950'>
-						Dont have Sigbro?
-					</a>
-				</Link>
+				<div className='block break-normal tablet:hidden'>
+					<p className='text-sm text-center tablet:text-base'>
+						Please click the link below
+					</p>
+				</div>
 			</div>
+
+			{qrCodeUrl !== '' ? (
+				<>
+					<div className='hidden tablet:block tablet:mb-8'>
+						<QRCode value={`${qrCodeUrl}`} />
+						{/* <QRCodeSVG value={`${qrCodeUrl}`}m /> */}
+					</div>
+					<div className='block mb-8 break-normal p-5 text-sm ml-4 tablet:hidden'>
+						<Link href={qrCodeUrl}>{qrCodeUrl}</Link>
+					</div>
+				</>
+			) : (
+				<>
+					<div className='hidden tablet:block tablet:mb-4'>
+						<FaSpinner className='animate-spin h-5 w-5 mr-3' />
+						Generating Qrcode...
+					</div>
+					<div className='mb-4 block tablet:hidden'>
+						<FaSpinner className='animate-spin h-5 w-5 mr-3' />
+						Generating Qrlink...
+					</div>
+				</>
+			)}
+
+			<Link href='https://www.nxter.org/how-to-install-and-set-up-the-sigbro-app-on-android/'>
+				<a target={'_blank'} className='mb-4 hover:text-blue-950'>
+					Dont have Sigbro?
+				</a>
+			</Link>
 		</div>
 	);
 };

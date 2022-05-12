@@ -10,6 +10,7 @@ import ConnectArdorWallet from 'modals/ConnectArdorWallet';
 import ChooseNetwork from 'modals/ChooseNetwork';
 import { useRouter } from 'next/router';
 import { ARDOR, ETHEREUM } from 'constants/index';
+import BaseModal from 'components/BaseModal/BaseModal';
 
 interface IBasePageLayout {
 	children: any;
@@ -198,20 +199,14 @@ const BasePageLayout = ({
 					</>
 				)}
 			</section>
-			{connectArdor && (
-				<div className='fixed left-[15%] tablet:left-[25%] laptop:left-[30%] top-[30%] w-[70%] tablet:w-[60%] laptop:w-[40%]'>
-					<ConnectArdorWallet setConnectArdor={setConnectArdor} />
-				</div>
-			)}
-			{chooseNetwork && (
-				<div className='fixed left-[10%] laptop:left-[30%] top-[30%] w-[80%] laptop:w-[40%]'>
-					<ChooseNetwork
-						setChooseNetwork={setChooseNetwork}
-						setNetwork={setNetwork}
-						handleConnect={handleConnect}
-					/>
-				</div>
-			)}
+
+			<BaseModal isVisible={connectArdor} onClose={setConnectArdor}>
+				<ConnectArdorWallet setConnectArdor={setConnectArdor} />
+			</BaseModal>
+
+			<BaseModal isVisible={chooseNetwork} onClose={setChooseNetwork}>
+				<ChooseNetwork setNetwork={setNetwork} handleConnect={handleConnect} />
+			</BaseModal>
 		</div>
 	);
 };

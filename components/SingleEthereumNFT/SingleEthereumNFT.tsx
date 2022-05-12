@@ -16,6 +16,7 @@ import 'moment-timezone';
 import moment from 'moment';
 import ChoiceModal from 'modals/ChoiceModal';
 import { useRouter } from 'next/router';
+import BaseModal from 'components/BaseModal/BaseModal';
 
 interface ISingleEthereumNFT {
 	singleNft: INFT;
@@ -222,31 +223,27 @@ const SingleEthereumNFT = ({
 					</div>
 				</div>
 			)}
-			{showBidForm && (
-				<div className='fixed left-[15%] tablet:left-[25%] laptop:left-[30%] top-[30%] w-[70%] tablet:w-[60%] laptop:w-[40%]'>
-					<ShowBidForm
-						handlePlaceBid={handlePlaceBid}
-						setShowBidForm={setShowBidForm}
-						name={singleNft.name}
-						price={price}
-						setPrice={setPrice}
-						loading={loading}
-						network={network}
-						tokenId={singleNft.tokenId}
-					/>
-				</div>
-			)}
-			{choiceModal && (
-				<div className='fixed left-[15%] tablet:left-[25%] laptop:left-[30%] top-[30%] w-[70%] tablet:w-[60%] laptop:w-[40%]'>
-					<ChoiceModal
-						handleEthereumNftSale={handleEthereumNftSale}
-						setChoiceModal={setChoiceModal}
-						name={singleNft.name}
-						loading={loading}
-						tokenId={singleNft.tokenId}
-					/>
-				</div>
-			)}
+			<BaseModal isVisible={showBidForm} onClose={setShowBidForm}>
+				<ShowBidForm
+					handlePlaceBid={handlePlaceBid}
+					name={singleNft.name}
+					price={price}
+					setPrice={setPrice}
+					loading={loading}
+					network={network}
+					tokenId={singleNft.tokenId}
+				/>
+			</BaseModal>
+
+			<BaseModal isVisible={choiceModal} onClose={setChoiceModal}>
+				<ChoiceModal
+					handleEthereumNftSale={handleEthereumNftSale}
+					setChoiceModal={setChoiceModal}
+					name={singleNft.name}
+					loading={loading}
+					tokenId={singleNft.tokenId}
+				/>
+			</BaseModal>
 		</>
 	);
 };

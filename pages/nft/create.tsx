@@ -14,6 +14,7 @@ import ConnectArdorWallet from 'modals/ConnectArdorWallet';
 import SignArdorTransaction from 'components/SignArdorTransaction/SignArdorTransaction';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import BaseModal from 'components/BaseModal/BaseModal';
 
 const CreateNFT = () => {
 	const [name, setName] = useState<string>('');
@@ -266,15 +267,9 @@ const CreateNFT = () => {
 					)}
 				</div>
 			</div>
-			{finished && (
-				<div className='fixed left-[15%] tablet:left-[25%] laptop:left-[30%] top-[30%] w-[70%] tablet:w-[60%] laptop:w-[40%]'>
-					<SignArdorTransaction
-						onClose={setFinished}
-						data={ardorMintedData}
-						callBack={callBack}
-					/>
-				</div>
-			)}
+			<BaseModal isVisible={finished} onClose={callBack}>
+				<SignArdorTransaction onClose={setFinished} data={ardorMintedData} />
+			</BaseModal>
 		</BasePageLayout>
 	);
 };

@@ -18,38 +18,33 @@ const ChoiceModal = ({
 	handleEthereumNftSale,
 }: IChoiceModal) => {
 	return (
-		<div className='text-white relative bg-black rounded-lg p-10'>
-			<div className='absolute right-5 top-10 cursor-pointer'>
-				<AiOutlineClose onClick={() => setChoiceModal(false)} />
-			</div>
-			<div className='flex flex-col justify-center items-center'>
-				<h4 className='mb-4 text-base tablet:text-xl font-bold mt-8'>
-					Are you sure you want to sell {name}
-				</h4>
-				<div>
+		<div className='flex flex-col justify-center items-center'>
+			<h4 className='mb-4 text-base tablet:text-xl font-bold mt-8'>
+				Are you sure you want to sell {name}
+			</h4>
+			<div>
+				<button
+					onClick={() => setChoiceModal(false)}
+					className='flex items-center mb-4 hover:text-blue-950'
+				>
+					No <BsArrowRight className='ml-4' />
+				</button>
+				{loading ? (
 					<button
-						onClick={() => setChoiceModal(false)}
+						disabled
 						className='flex items-center mb-4 hover:text-blue-950'
 					>
-						No <BsArrowRight className='ml-4' />
+						<FaSpinner className='animate-spin h-5 w-5 mr-3' />
+						Selling Asset... <BsArrowRight className='ml-4' />
 					</button>
-					{loading ? (
-						<button
-							disabled
-							className='flex items-center mb-4 hover:text-blue-950'
-						>
-							<FaSpinner className='animate-spin h-5 w-5 mr-3' />
-							Selling Asset... <BsArrowRight className='ml-4' />
-						</button>
-					) : (
-						<button
-							onClick={() => handleEthereumNftSale(tokenId)}
-							className='flex items-center mb-4 hover:text-blue-950'
-						>
-							Yes <BsArrowRight className='ml-4' />
-						</button>
-					)}
-				</div>
+				) : (
+					<button
+						onClick={() => handleEthereumNftSale(tokenId)}
+						className='flex items-center mb-4 hover:text-blue-950'
+					>
+						Yes <BsArrowRight className='ml-4' />
+					</button>
+				)}
 			</div>
 		</div>
 	);

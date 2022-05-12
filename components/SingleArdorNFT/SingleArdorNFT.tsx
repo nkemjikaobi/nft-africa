@@ -15,6 +15,7 @@ import addArdorZeroes from 'helpers/addArdorZeroes';
 import IArdorNFT from 'dto/NFT/IArdorNFT';
 import { ARDOR } from 'constants/index';
 import shortenWalletAddress from 'helpers/shortenWalletAddress';
+import BaseModal from 'components/BaseModal/BaseModal';
 
 interface ISingleArdorNFT {
 	singleNft: IArdorNFT;
@@ -183,27 +184,21 @@ const SingleArdorNFT = ({
 				</div>
 			)}
 
-			{showBidForm && (
-				<div className='fixed left-[15%] tablet:left-[25%] laptop:left-[30%] top-[30%] w-[70%] tablet:w-[60%] laptop:w-[40%]'>
-					<ShowBidForm
-						handlePlaceBid={handlePlaceBid}
-						setShowBidForm={setShowBidForm}
-						name={singleNft.name}
-						price={price}
-						setPrice={setPrice}
-						network={network}
-					/>
-				</div>
-			)}
-			{timeToSign && (
-				<div className='fixed left-[15%] tablet:left-[25%] laptop:left-[30%] top-[30%] w-[70%] tablet:w-[60%] laptop:w-[40%]'>
-					<SignArdorTransaction
-						onClose={setTimeToSign}
-						data={ardorPlaceOrderData}
-						callBack={callBack}
-					/>
-				</div>
-			)}
+			<BaseModal isVisible={showBidForm} onClose={setShowBidForm}>
+				<ShowBidForm
+					handlePlaceBid={handlePlaceBid}
+					name={singleNft.name}
+					price={price}
+					setPrice={setPrice}
+					network={network}
+				/>
+			</BaseModal>
+			<BaseModal isVisible={timeToSign} onClose={callBack}>
+				<SignArdorTransaction
+					onClose={setTimeToSign}
+					data={ardorPlaceOrderData}
+				/>
+			</BaseModal>
 		</>
 	);
 };
