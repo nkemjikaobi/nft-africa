@@ -1,5 +1,4 @@
 import React from 'react';
-import { AiOutlineClose } from 'react-icons/ai';
 import { BsArrowRight } from 'react-icons/bs';
 import { FaSpinner } from 'react-icons/fa';
 

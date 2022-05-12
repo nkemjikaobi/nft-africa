@@ -1,5 +1,4 @@
 import React from 'react';
-import { AiOutlineClose } from 'react-icons/ai';
 import { ARDOR, ETHEREUM } from 'constants/index';
 import { BsArrowRight } from 'react-icons/bs';
 

@@ -1,13 +1,9 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { AiOutlineClose } from 'react-icons/ai';
-import toast, { Toaster } from 'react-hot-toast';
 import Image from 'next/image';
 import QRCode from 'react-qr-code';
 import Link from 'next/link';
-import axios from 'axios';
 import WalletContext from 'context/wallet/WalletContext';
 import { FaSpinner } from 'react-icons/fa';
-import { QRCodeSVG } from 'qrcode.react';
 
 interface IConnectArdorWallet {
 	setConnectArdor: Function;
