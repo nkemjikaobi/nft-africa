@@ -40,9 +40,9 @@ const MobileNavigation = ({ handleClick }: IMobileNavigation) => {
 					</a>
 				</Link>
 				{isOpen ? (
-					<AiOutlineClose onClick={() => setIsOpen(false)} />
+					<AiOutlineClose className='cursor-pointer' onClick={() => setIsOpen(false)} />
 				) : (
-					<GiHamburgerMenu onClick={() => setIsOpen(true)} />
+					<GiHamburgerMenu className='cursor-pointer' onClick={() => setIsOpen(true)} />
 				)}
 			</div>
 			{isOpen && (

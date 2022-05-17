@@ -5,6 +5,7 @@ import MobileFooter from 'components/BasePageLayout/MobileFooter';
 import MobileNavigation from 'components/BasePageLayout/MobileNavigation';
 import { useContext, useEffect } from 'react';
 import WalletContext from 'context/wallet/WalletContext';
+import AuthContext from 'context/auth/AuthContext';
 import toast, { Toaster } from 'react-hot-toast';
 import ConnectArdorWallet from 'modals/ConnectArdorWallet';
 import ChooseNetwork from 'modals/ChooseNetwork';
@@ -24,7 +25,16 @@ const BasePageLayout = ({
 	showFooter,
 }: IBasePageLayout) => {
 	const walletContext = useContext(WalletContext);
+	const authContext = useContext(AuthContext);
+
 	const router = useRouter();
+
+	const {
+		error: authError,
+		message: authMessage,
+		clearMessage: clearAuthMessage,
+		clearError: clearAuthError,
+	} = authContext;
 
 	const {
 		connectWallet,
@@ -104,6 +114,34 @@ const BasePageLayout = ({
 		};
 		//eslint-disable-next-line
 	}, [error]);
+
+	//Handle Auth Messages
+	useEffect(() => {
+		let mounted = true;
+
+		if (mounted && authMessage !== null) {
+			toast.success(authMessage);
+			setTimeout(() => clearAuthMessage(), 3000);
+		}
+		return () => {
+			mounted = false;
+		};
+		//eslint-disable-next-line
+	}, [authMessage]);
+
+	//Handle Auth Errors
+	useEffect(() => {
+		let mounted = true;
+
+		if (mounted && authError !== null) {
+			toast.error(authError);
+			setTimeout(() => clearAuthError(), 3000);
+		}
+		return () => {
+			mounted = false;
+		};
+		//eslint-disable-next-line
+	}, [authError]);
 
 	//monitior account changed and monitor disconnect
 	useEffect(() => {
