@@ -29,3 +29,9 @@ export const FETCH_ARDOR_PERSONAL_ASSETS = 'FETCH_ARDOR_PERSONAL_ASSETS';
 
 //Reset NFT Detail Page
 export const RESET_NFT_ITEM = 'RESET_NFT_ITEM';
+
+//Authentication
+export const REGISTER_USER = 'REGISTER_USER';
+export const REGISTER_FAIL = 'REGISTER_FAIL';
+export const LOGIN_USER = 'LOGIN_USER';
+export const LOGIN_FAIL = 'LOGIN_FAIL';

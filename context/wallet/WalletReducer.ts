@@ -30,7 +30,7 @@ import {
 	FETCH_ETHEREUM_PERSONAL_ASSETS,
 } from '../types';
 
-const contactReducer = (state: any, action: any) => {
+const WalletReducer = (state: any, action: any) => {
 	switch (action.type) {
 		case CONNECT_WALLET:
 			const count = localStorage.getItem('count');
@@ -225,4 +225,4 @@ const contactReducer = (state: any, action: any) => {
 			return state;
 	}
 };
-export default contactReducer;
+export default WalletReducer;
