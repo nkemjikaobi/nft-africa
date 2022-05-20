@@ -5,13 +5,13 @@ import CatalogueSkeleton from 'skeletons/CatalogueSkeleton';
 import { useRouter } from 'next/router';
 
 const Catalogue = () => {
-	const [loading, setLoading] = useState(true);
+	const [loading, setLoading] = useState(false);
 	const router = useRouter();
 
 	useEffect(() => {
 		let mounted = true;
 		if (mounted) {
-			setTimeout(() => setLoading(false), 1000);
+			//setTimeout(() => setLoading(false), 1000);
 		}
 
 		return () => {
