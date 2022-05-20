@@ -29,10 +29,6 @@ const DesktopNavigation = ({ handleClick }: IDesktopNavigation) => {
 					/>
 				</a>
 			</Link>
-			<li onClick={() => router.push('/auth/login')}>test2</li>
-			<Link href='/auth/sign-up'>
-				<a>test</a>
-			</Link>
 			<ul className='flex justify-between items-center w-3/5'>
 				{DesktopNav.map(data => (
 					<li
