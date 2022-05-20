@@ -122,12 +122,3 @@ const ProductDetailPage = () => {
 
 export default ProductDetailPage;
 
-export const getServerSideProps: GetServerSideProps = async ({
-	query: { nftId },
-}) => {
-	return {
-		props: {
-			nftId: nftId,
-		},
-	};
-};
