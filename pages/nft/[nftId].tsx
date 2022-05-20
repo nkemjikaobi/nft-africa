@@ -7,17 +7,17 @@ import { GetServerSideProps } from 'next';
 import NFTDetailSkeleton from 'skeletons/NFTDetailSkeleton';
 import SingleEthereumNFT from 'components/SingleEthereumNFT/SingleEthereumNFT';
 import SingleArdorNFT from 'components/SingleArdorNFT/SingleArdorNFT';
+import { useRouter } from 'next/router';
 
-interface IProductDetailPage {
-	nftId: string;
-}
-const ProductDetailPage = ({ nftId }: IProductDetailPage) => {
+const ProductDetailPage = () => {
 	const time = new Date();
 	const [showMagnified, setShowMagnified] = useState<boolean>(false);
 	const node = useClickOutside(() => {
 		setShowMagnified(false);
 	});
 	const walletContext = useContext(WalletContext);
+
+	const router = useRouter();
 
 	const [imageUrl, setImageUrl] = useState<string>('');
 
@@ -33,6 +33,7 @@ const ProductDetailPage = ({ nftId }: IProductDetailPage) => {
 	useEffect(() => {
 		let mounted = true;
 		if (mounted && contract !== null) {
+			const nftId: any = router.query.nftId;
 			if (nftId.length > 10) {
 				fetchSingleArdorNft(nftId);
 			} else {
