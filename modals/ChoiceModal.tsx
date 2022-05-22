@@ -1,6 +1,7 @@
 import React from 'react';
 import { BsArrowRight } from 'react-icons/bs';
 import { FaSpinner } from 'react-icons/fa';
+import { Dialog } from '@headlessui/react';
 
 interface IChoiceModal {
 	setChoiceModal: Function;
@@ -18,9 +19,9 @@ const ChoiceModal = ({
 }: IChoiceModal) => {
 	return (
 		<div className='flex flex-col justify-center items-center'>
-			<h4 className='mb-4 text-base tablet:text-xl font-bold mt-8'>
+			<Dialog.Title as='h4' className='mb-4 text-base tablet:text-xl font-bold mt-8'>
 				Are you sure you want to sell {name}
-			</h4>
+			</Dialog.Title>
 			<div>
 				<button
 					onClick={() => setChoiceModal(false)}

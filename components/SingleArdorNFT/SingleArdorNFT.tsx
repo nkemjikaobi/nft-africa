@@ -15,7 +15,7 @@ import addArdorZeroes from 'helpers/addArdorZeroes';
 import IArdorNFT from 'dto/NFT/IArdorNFT';
 import { ARDOR } from 'constants/index';
 import shortenWalletAddress from 'helpers/shortenWalletAddress';
-import BaseModal from 'components/BaseModal/BaseModal';
+import Modal from 'components/Modal/Modal';
 
 interface ISingleArdorNFT {
 	singleNft: IArdorNFT;
@@ -93,27 +93,23 @@ const SingleArdorNFT = ({
 
 	return (
 		<>
-			{singleNft && (
+			{singleNft && imageCID !== '' && (
 				<div
-					className={`mt-64 flex flex-col tablet:flex-row items-center tablet:items-start smallLaptop:items-center justify-between mx-40 tablet:mx-10 smallLaptop:mx-40 ${
-						showBidForm && 'blur-lg'
-					} ${showMagnified && 'blur-lg'} ${timeToSign && 'blur-lg'}`}
+					className='mt-64 flex flex-col tablet:flex-row items-center tablet:items-start smallLaptop:items-center justify-between mx-40 tablet:mx-10 smallLaptop:mx-40'
 				>
 					<Toaster position='top-right' />
 					<div className='flex flex-col -mt-16 w-[500%] tablet:w-[70%] tablet:mt-0 tablet:mr-0 laptop:mr-16'>
 						<div className='mb-8 tablet:hidden'>
 							<h4 className='font-extrabold text-2xl'>{singleNft.name}</h4>
 						</div>
-						{imageCID !== '' && (
-							<Image
-								src={imageCID}
-								alt={singleNft.name}
-								width={500}
-								height={500}
-								className='cursor-pointer'
-								onClick={() => setShowMagnified(true)}
-							/>
-						)}
+						<Image
+							src={imageCID}
+							alt={singleNft.name}
+							width={500}
+							height={500}
+							className='cursor-pointer'
+							onClick={() => setShowMagnified(true)}
+						/>
 
 						<div className='mt-8 mb-4'>
 							<h4 className='text-sm text-gray-400'>Contract address</h4>
@@ -184,7 +180,7 @@ const SingleArdorNFT = ({
 				</div>
 			)}
 
-			<BaseModal isVisible={showBidForm} onClose={setShowBidForm}>
+			<Modal visibility={showBidForm} toggleVisibility={setShowBidForm}>
 				<ShowBidForm
 					handlePlaceBid={handlePlaceBid}
 					name={singleNft.name}
@@ -192,13 +188,13 @@ const SingleArdorNFT = ({
 					setPrice={setPrice}
 					network={network}
 				/>
-			</BaseModal>
-			<BaseModal isVisible={timeToSign} onClose={callBack}>
+			</Modal>
+			<Modal visibility={timeToSign} toggleVisibility={callBack}>
 				<SignArdorTransaction
 					onClose={setTimeToSign}
 					data={ardorPlaceOrderData}
 				/>
-			</BaseModal>
+			</Modal>
 		</>
 	);
 };

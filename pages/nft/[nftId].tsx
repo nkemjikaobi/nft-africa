@@ -8,6 +8,7 @@ import NFTDetailSkeleton from 'skeletons/NFTDetailSkeleton';
 import SingleEthereumNFT from 'components/SingleEthereumNFT/SingleEthereumNFT';
 import SingleArdorNFT from 'components/SingleArdorNFT/SingleArdorNFT';
 import { useRouter } from 'next/router';
+import Modal from 'components/Modal/Modal';
 
 const ProductDetailPage = () => {
 	const time = new Date();
@@ -106,14 +107,9 @@ const ProductDetailPage = () => {
 						/>
 					)}
 
-					{showMagnified && imageUrl && (
-						<div
-							className='absolute top-64 smallLaptop:top-40 4/4 mx-10 smallLaptop:mx-0 smallLaptop:left-1/4'
-							ref={node}
-						>
-							<MagnifiedNFT url={imageUrl} />
-						</div>
-					)}
+					<Modal toggleVisibility={setShowMagnified} visibility={showMagnified}>
+						<MagnifiedNFT url={imageUrl && imageUrl} />
+					</Modal>
 				</>
 			)}
 		</BasePageLayout>

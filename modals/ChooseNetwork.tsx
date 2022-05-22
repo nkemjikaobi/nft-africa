@@ -1,6 +1,7 @@
 import React from 'react';
 import { ARDOR, ETHEREUM } from 'constants/index';
 import { BsArrowRight } from 'react-icons/bs';
+import { Dialog } from '@headlessui/react';
 
 interface IChooseNetwork {
 	setNetwork: Function;
@@ -9,9 +10,12 @@ interface IChooseNetwork {
 const ChooseNetwork = ({ setNetwork, handleConnect }: IChooseNetwork) => {
 	return (
 		<div className='flex flex-col justify-center items-center'>
-			<h4 className='mb-4 text-base tablet:text-xl font-bold mt-8'>
+			<Dialog.Title
+				as='h4'
+				className='mb-4 text-base tablet:text-xl font-bold mt-8'
+			>
 				Choose Network
-			</h4>
+			</Dialog.Title>
 			<div>
 				<select
 					className='p-5 text-black border border-gray-300 rounded-md  mb-4 focus:outline-none'
