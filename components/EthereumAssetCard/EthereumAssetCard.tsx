@@ -1,22 +1,20 @@
 import React, { useContext } from 'react';
-import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { FaEthereum } from 'react-icons/fa';
 import convertToEther from 'helpers/convertToEther';
 import { AiTwotoneCloseCircle } from 'react-icons/ai';
-import WalletContext from 'context/wallet/WalletContext';
 import 'moment-timezone';
 import shortenWalletAddress from 'helpers/shortenWalletAddress';
 import IEthereumAsset from 'dto/NFT/IEthereumAsset';
+import { BLUR_DATA_URL } from 'constants/index';
+import useWallet from 'hooks/useWallet';
 
 interface IEthereumAssetCard {
 	data: IEthereumAsset;
 }
 const EthereumAssetCard = ({ data }: IEthereumAssetCard) => {
-	const router = useRouter();
 
-	const walletContext = useContext(WalletContext);
-	const { web3, isGuest, guestWeb3 } = walletContext;
+	const { web3, isGuest, guestWeb3 } = useWallet();
 
 	return (
 		<>
@@ -32,6 +30,8 @@ const EthereumAssetCard = ({ data }: IEthereumAssetCard) => {
 							width={500}
 							height={500}
 							alt='nft image'
+							placeholder='blur'
+							blurDataURL={`${BLUR_DATA_URL}`}
 						/>
 					)}
 					<div className='p-3 flex justify-between items-center'>

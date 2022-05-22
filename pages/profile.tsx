@@ -2,15 +2,13 @@ import BasePageLayout from 'components/BasePageLayout/BasePageLayout';
 import Tabs from 'components/Tabs/Tabs';
 import shortenWalletAddress from 'helpers/shortenWalletAddress';
 import Image from 'next/image';
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaEthereum } from 'react-icons/fa';
-import WalletContext from 'context/wallet/WalletContext';
 import NFTCard from 'components/NFTCard/NFTCard';
+import useWallet from 'hooks/useWallet';
 
 const ProfilePage = () => {
 	const [active, setActive] = useState<number>(1);
-
-	const walletContext = useContext(WalletContext);
 
 	const {
 		contract,
@@ -19,7 +17,7 @@ const ProfilePage = () => {
 		address,
 		fetchEthereumPersonalAssets,
 		ethereumPersonalAssets,
-	} = walletContext;
+	} = useWallet();
 
 	//Fetch NFT's on the ethereum network
 	useEffect(() => {

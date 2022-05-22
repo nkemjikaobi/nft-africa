@@ -1,12 +1,9 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { AiOutlineClose } from 'react-icons/ai';
-import { Toaster } from 'react-hot-toast';
+import React, { useEffect, useState } from 'react';
 import QRCode from 'react-qr-code';
 import Link from 'next/link';
-import WalletContext from 'context/wallet/WalletContext';
 import { FaSpinner } from 'react-icons/fa';
 import axios from 'axios';
-import { QRCodeSVG } from 'qrcode.react';
+import useWallet from 'hooks/useWallet';
 
 interface ISignArdorTransaction {
 	onClose: Function;
@@ -17,11 +14,10 @@ const SignArdorTransaction = ({
 	onClose,
 	data,
 }: ISignArdorTransaction) => {
-	const walletContext = useContext(WalletContext);
 	const [uuid, setUuid] = useState('');
 	const [url, setUrl] = useState('');
 	const [ardorToken, setArdorToken] = useState<any>('');
-	const { verifyToken } = walletContext;
+	const { verifyToken } = useWallet();
 
 	//Verify the token
 	useEffect(() => {

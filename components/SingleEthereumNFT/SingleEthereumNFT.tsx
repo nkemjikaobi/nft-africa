@@ -1,10 +1,9 @@
 import CountdownTimer from 'components/Countdown/CountdownTimer';
 import NFTHistory from 'components/NFTHistory/NFTHistory';
-import WalletContext from 'context/wallet/WalletContext';
 import convertToEther from 'helpers/convertToEther';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaEthereum } from 'react-icons/fa';
 import { History } from 'componentData/DetailPage/History';
 import INFT from 'dto/NFT/INFT';
@@ -13,10 +12,11 @@ import ShowBidForm from 'modals/ShowBidForm';
 import { ETHEREUM } from 'constants/index';
 import shortenWalletAddress from 'helpers/shortenWalletAddress';
 import 'moment-timezone';
-import moment from 'moment';
 import ChoiceModal from 'modals/ChoiceModal';
 import { useRouter } from 'next/router';
 import Modal from 'components/Modal/Modal';
+import { BLUR_DATA_URL } from 'constants/index';
+import useWallet from 'hooks/useWallet';
 
 interface ISingleEthereumNFT {
 	singleNft: INFT;
@@ -30,7 +30,6 @@ const SingleEthereumNFT = ({
 	setShowMagnified,
 	time,
 }: ISingleEthereumNFT) => {
-	const walletContext = useContext(WalletContext);
 
 	const {
 		web3,
@@ -41,7 +40,7 @@ const SingleEthereumNFT = ({
 		guestWeb3,
 		placeEthereumBid,
 		sellEthereumNft,
-	} = walletContext;
+	} = useWallet();
 
 	const [loading, setLoading] = useState<boolean>(false);
 	const [showBidForm, setShowBidForm] = useState<boolean>(false);
@@ -112,6 +111,8 @@ const SingleEthereumNFT = ({
 							height={500}
 							className='cursor-pointer'
 							onClick={() => setShowMagnified(true)}
+							placeholder='blur'
+							blurDataURL={`${BLUR_DATA_URL}`}
 						/>
 						<div className='mt-8 mb-4'>
 							<h4 className='text-sm text-gray-400'>Contract address</h4>

@@ -1,14 +1,14 @@
 import BasePageLayout from 'components/BasePageLayout/BasePageLayout';
 import MagnifiedNFT from 'components/MagnifiedNFT/MagnifiedNFT';
 import useClickOutside from 'hooks/useClickOutside';
-import React, { useContext, useEffect, useState } from 'react';
-import WalletContext from 'context/wallet/WalletContext';
+import React, { useEffect, useState } from 'react';
 import { GetServerSideProps } from 'next';
 import NFTDetailSkeleton from 'skeletons/NFTDetailSkeleton';
 import SingleEthereumNFT from 'components/SingleEthereumNFT/SingleEthereumNFT';
 import SingleArdorNFT from 'components/SingleArdorNFT/SingleArdorNFT';
 import { useRouter } from 'next/router';
 import Modal from 'components/Modal/Modal';
+import useWallet from 'hooks/useWallet';
 
 const ProductDetailPage = () => {
 	const time = new Date();
@@ -16,7 +16,6 @@ const ProductDetailPage = () => {
 	const node = useClickOutside(() => {
 		setShowMagnified(false);
 	});
-	const walletContext = useContext(WalletContext);
 
 	const router = useRouter();
 
@@ -29,7 +28,7 @@ const ProductDetailPage = () => {
 		fetchSingleArdorNft,
 		singleArdorNft,
 		resetNFTItem,
-	} = walletContext;
+	} = useWallet();
 
 	useEffect(() => {
 		let mounted = true;

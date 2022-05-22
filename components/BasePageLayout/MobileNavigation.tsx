@@ -1,15 +1,14 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { AiOutlineClose } from 'react-icons/ai';
 import { DesktopNav } from 'componentData/Navigation/DesktopNav';
 import Link from 'next/link';
 import useClickOutside from 'hooks/useClickOutside';
 import Image from 'next/image';
-import WalletContext from 'context/wallet/WalletContext';
 import { ETHEREUM } from 'constants/index';
 import removeArdorZeroes from 'helpers/removeArdorZeroes';
-import { FaUserAlt } from 'react-icons/fa';
 import { useRouter } from 'next/router';
+import useWallet from 'hooks/useWallet';
 
 interface IMobileNavigation {
 	handleClick: Function;
@@ -20,9 +19,8 @@ const MobileNavigation = ({ handleClick }: IMobileNavigation) => {
 		setIsOpen(false);
 	});
 
-	const walletContext = useContext(WalletContext);
-	const { network, ardorUserData, isConnected, balance, web3Modal } =
-		walletContext;
+	const { network, ardorUserData, isConnected, balance } =
+		useWallet();
 
 	const router = useRouter();
 

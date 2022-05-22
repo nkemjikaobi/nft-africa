@@ -1,15 +1,16 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { FaEthereum, FaGavel } from 'react-icons/fa';
 import convertToEther from 'helpers/convertToEther';
 import { FcAlarmClock } from 'react-icons/fc';
 import { AiTwotoneCloseCircle } from 'react-icons/ai';
-import WalletContext from 'context/wallet/WalletContext';
 import INFT from 'dto/NFT/INFT';
 import 'moment-timezone';
 import moment from 'moment';
 import shortenWalletAddress from 'helpers/shortenWalletAddress';
+import { BLUR_DATA_URL } from 'constants/index';
+import useWallet from 'hooks/useWallet';
 
 interface IEthereumNFT {
 	data: INFT;
@@ -17,8 +18,7 @@ interface IEthereumNFT {
 const EthereumNFT = ({ data }: IEthereumNFT) => {
 	const router = useRouter();
 
-	const walletContext = useContext(WalletContext);
-	const { web3, isGuest, guestWeb3 } = walletContext;
+	const { web3, isGuest, guestWeb3 } = useWallet();
 	const [timeToEnd, setTimeToEnd] = useState<number>(0);
 	const [hasEnded, setHasEnded] = useState<boolean>(false);
 
@@ -48,6 +48,8 @@ const EthereumNFT = ({ data }: IEthereumNFT) => {
 							width={500}
 							height={500}
 							alt='nft image'
+							placeholder='blur'
+							blurDataURL={`${BLUR_DATA_URL}`}
 						/>
 					)}
 					<div className='p-3 flex justify-between items-center'>

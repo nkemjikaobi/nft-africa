@@ -1,13 +1,11 @@
-import CountdownTimer from 'components/Countdown/CountdownTimer';
 import NFTHistory from 'components/NFTHistory/NFTHistory';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { History } from 'componentData/DetailPage/History';
 import formatArdorImageUrl from 'helpers/formatArdorImageUrl';
 import axios from 'axios';
 import Bids from 'components/Bids/Bids';
-import WalletContext from 'context/wallet/WalletContext';
 import ShowBidForm from 'modals/ShowBidForm';
 import toast, { Toaster } from 'react-hot-toast';
 import SignArdorTransaction from 'components/SignArdorTransaction/SignArdorTransaction';
@@ -16,6 +14,8 @@ import IArdorNFT from 'dto/NFT/IArdorNFT';
 import { ARDOR } from 'constants/index';
 import shortenWalletAddress from 'helpers/shortenWalletAddress';
 import Modal from 'components/Modal/Modal';
+import { BLUR_DATA_URL } from 'constants/index';
+import useWallet from 'hooks/useWallet';
 
 interface ISingleArdorNFT {
 	singleNft: IArdorNFT;
@@ -35,8 +35,6 @@ const SingleArdorNFT = ({
 	const [timeToSign, setTimeToSign] = useState<boolean>(false);
 	const [price, setPrice] = useState<number>(0);
 
-	const walletContext = useContext(WalletContext);
-
 	const {
 		fetchBids,
 		ardorBids,
@@ -44,7 +42,7 @@ const SingleArdorNFT = ({
 		placeArdorBid,
 		ardorPlaceOrderData,
 		network,
-	} = walletContext;
+	} = useWallet();
 
 	const fetchImage = async (cid: string) => {
 		try {
@@ -94,9 +92,7 @@ const SingleArdorNFT = ({
 	return (
 		<>
 			{singleNft && imageCID !== '' && (
-				<div
-					className='mt-64 flex flex-col tablet:flex-row items-center tablet:items-start smallLaptop:items-center justify-between mx-40 tablet:mx-10 smallLaptop:mx-40'
-				>
+				<div className='mt-64 flex flex-col tablet:flex-row items-center tablet:items-start smallLaptop:items-center justify-between mx-40 tablet:mx-10 smallLaptop:mx-40'>
 					<Toaster position='top-right' />
 					<div className='flex flex-col -mt-16 w-[500%] tablet:w-[70%] tablet:mt-0 tablet:mr-0 laptop:mr-16'>
 						<div className='mb-8 tablet:hidden'>
@@ -109,6 +105,8 @@ const SingleArdorNFT = ({
 							height={500}
 							className='cursor-pointer'
 							onClick={() => setShowMagnified(true)}
+							placeholder='blur'
+							blurDataURL={`${BLUR_DATA_URL}`}
 						/>
 
 						<div className='mt-8 mb-4'>

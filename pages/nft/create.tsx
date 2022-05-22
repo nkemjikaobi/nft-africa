@@ -1,20 +1,19 @@
 import BasePageLayout from 'components/BasePageLayout/BasePageLayout';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BsArrowRight } from 'react-icons/bs';
 import * as ipfsClient from 'ipfs-http-client';
 import toast, { Toaster } from 'react-hot-toast';
-import WalletContext from 'context/wallet/WalletContext';
 import { BsImageFill } from 'react-icons/bs';
 import { FaSpinner } from 'react-icons/fa';
 import { AiOutlineClose } from 'react-icons/ai';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { ARDOR, ETHEREUM } from 'constants/index';
-import ConnectArdorWallet from 'modals/ConnectArdorWallet';
+import { ETHEREUM } from 'constants/index';
 import SignArdorTransaction from 'components/SignArdorTransaction/SignArdorTransaction';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import Modal from 'components/Modal/Modal';
+import useWallet from 'hooks/useWallet';
 
 const CreateNFT = () => {
 	const [name, setName] = useState<string>('');
@@ -26,7 +25,6 @@ const CreateNFT = () => {
 	const [loading, setLoading] = useState<boolean>(false);
 	const [imageLoading, setImageLoading] = useState<boolean>(false);
 	const [finished, setFinished] = useState<boolean>(false);
-	const walletContext = useContext(WalletContext);
 
 	const [startDate, setStartDate] = useState(new Date());
 	const [endDate, setEndDate] = useState(new Date());
@@ -41,7 +39,7 @@ const CreateNFT = () => {
 		isConnected,
 		network,
 		ardorMintedData,
-	} = walletContext;
+	} = useWallet();
 
 	const router = useRouter();
 

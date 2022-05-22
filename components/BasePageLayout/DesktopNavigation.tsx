@@ -1,19 +1,18 @@
 import { DesktopNav } from 'componentData/Navigation/DesktopNav';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useContext } from 'react';
-import WalletContext from 'context/wallet/WalletContext';
+import React from 'react';
 import { ETHEREUM } from 'constants/index';
 import removeArdorZeroes from 'helpers/removeArdorZeroes';
 import { FaUserAlt } from 'react-icons/fa';
 import { useRouter } from 'next/router';
+import useWallet from 'hooks/useWallet';
 
 interface IDesktopNavigation {
 	handleClick: Function;
 }
 const DesktopNavigation = ({ handleClick }: IDesktopNavigation) => {
-	const walletContext = useContext(WalletContext);
-	const { isConnected, balance, network, ardorUserData } = walletContext;
+	const { isConnected, balance, network, ardorUserData } = useWallet();
 
 	const router = useRouter();
 

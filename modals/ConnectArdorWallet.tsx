@@ -1,15 +1,14 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect } from 'react';
 import Image from 'next/image';
 import QRCode from 'react-qr-code';
 import Link from 'next/link';
-import WalletContext from 'context/wallet/WalletContext';
 import { FaSpinner } from 'react-icons/fa';
+import useWallet from 'hooks/useWallet';
 
 interface IConnectArdorWallet {
 	setConnectArdor: Function;
 }
 const ConnectArdorWallet = ({ setConnectArdor }: IConnectArdorWallet) => {
-	const walletContext = useContext(WalletContext);
 	const {
 		generateAuth,
 		qrCodeUrl,
@@ -18,7 +17,7 @@ const ConnectArdorWallet = ({ setConnectArdor }: IConnectArdorWallet) => {
 		qrCodeId,
 		hasGeneratedQrCodeUrl,
 		verifyToken,
-	} = walletContext;
+	} = useWallet();
 
 	//Verify the token
 	useEffect(() => {

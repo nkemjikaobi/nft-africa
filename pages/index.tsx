@@ -2,11 +2,10 @@ import BasePageLayout from 'components/BasePageLayout/BasePageLayout';
 import Catalogue from 'components/Catalogue/Catalogue';
 import NFTCard from 'components/NFTCard/NFTCard';
 import type { NextPage } from 'next';
-import WalletContext from 'context/wallet/WalletContext';
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
+import useWallet from 'hooks/useWallet';
 
 const Home: NextPage = () => {
-	const walletContext = useContext(WalletContext);
 
 	const {
 		fetchAuctionedNfts,
@@ -14,7 +13,7 @@ const Home: NextPage = () => {
 		auctionedNfts,
 		fetchArdorNfts,
 		ardorNfts,
-	} = walletContext;
+	} = useWallet();
 
 	//Fetch NFT's on the ethereum network
 	useEffect(() => {

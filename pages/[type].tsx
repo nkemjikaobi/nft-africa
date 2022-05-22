@@ -1,18 +1,17 @@
 import BasePageLayout from 'components/BasePageLayout/BasePageLayout';
 import NFTCard from 'components/NFTCard/NFTCard';
 import React from 'react';
-import WalletContext from 'context/wallet/WalletContext';
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import { GetServerSideProps } from 'next';
+import useWallet from 'hooks/useWallet';
 
 interface IListingPage {
 	type: string;
 }
 const ListingPage = ({ type }: IListingPage) => {
-	const walletContext = useContext(WalletContext);
 
 	const { fetchAuctionedNfts, contract, auctionedNfts, fetchArdorNfts, ardorNfts } =
-		walletContext;
+		useWallet();
 
 	useEffect(() => {
 		let mounted = true;

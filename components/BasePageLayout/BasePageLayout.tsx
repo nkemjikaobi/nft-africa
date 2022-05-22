@@ -4,7 +4,6 @@ import DesktopNavigation from 'components/BasePageLayout/DesktopNavigation';
 import MobileFooter from 'components/BasePageLayout/MobileFooter';
 import MobileNavigation from 'components/BasePageLayout/MobileNavigation';
 import { useContext, useEffect } from 'react';
-import WalletContext from 'context/wallet/WalletContext';
 import AuthContext from 'context/auth/AuthContext';
 import toast, { Toaster } from 'react-hot-toast';
 import ConnectArdorWallet from 'modals/ConnectArdorWallet';
@@ -12,6 +11,7 @@ import ChooseNetwork from 'modals/ChooseNetwork';
 import { useRouter } from 'next/router';
 import { ARDOR, ETHEREUM } from 'constants/index';
 import Modal from 'components/Modal/Modal';
+import useWallet from 'hooks/useWallet';
 
 interface IBasePageLayout {
 	children: any;
@@ -24,7 +24,6 @@ const BasePageLayout = ({
 	showNavigation,
 	showFooter,
 }: IBasePageLayout) => {
-	const walletContext = useContext(WalletContext);
 	const authContext = useContext(AuthContext);
 
 	const router = useRouter();
@@ -54,7 +53,7 @@ const BasePageLayout = ({
 		web3Modal,
 		network,
 		verifyToken,
-	} = walletContext;
+	} = useWallet();
 
 	const reconnectWallet = async () => {
 		await connectWallet();
@@ -206,7 +205,6 @@ const BasePageLayout = ({
 	const [connectArdor, setConnectArdor] = useState<boolean>(false);
 	const [chooseNetwork, setChooseNetwork] = useState<boolean>(false);
 	const [networkk, setNetwork] = useState<string>(`${ETHEREUM}`);
-
 
 	return (
 		<div>
