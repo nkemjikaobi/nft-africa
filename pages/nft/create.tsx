@@ -14,7 +14,7 @@ import ConnectArdorWallet from 'modals/ConnectArdorWallet';
 import SignArdorTransaction from 'components/SignArdorTransaction/SignArdorTransaction';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import BaseModal from 'components/BaseModal/BaseModal';
+import Modal from 'components/Modal/Modal';
 
 const CreateNFT = () => {
 	const [name, setName] = useState<string>('');
@@ -125,9 +125,7 @@ const CreateNFT = () => {
 	return (
 		<BasePageLayout>
 			<div
-				className={`tablet:container tablet:w-600 text-center mb-32 ${
-					finished && 'blur-lg'
-				}`}
+				className='tablet:container tablet:w-600 text-center mb-32'
 			>
 				<Toaster position='top-right' />
 				<h1 className='uppercase text-2xl tablet:text-5xl font-extrabold mb-8 mt-64'>
@@ -267,9 +265,9 @@ const CreateNFT = () => {
 					)}
 				</div>
 			</div>
-			<BaseModal isVisible={finished} onClose={callBack}>
+			<Modal visibility={finished} toggleVisibility={callBack}>
 				<SignArdorTransaction onClose={setFinished} data={ardorMintedData} />
-			</BaseModal>
+			</Modal>
 		</BasePageLayout>
 	);
 };

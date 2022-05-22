@@ -11,7 +11,7 @@ import ConnectArdorWallet from 'modals/ConnectArdorWallet';
 import ChooseNetwork from 'modals/ChooseNetwork';
 import { useRouter } from 'next/router';
 import { ARDOR, ETHEREUM } from 'constants/index';
-import BaseModal from 'components/BaseModal/BaseModal';
+import Modal from 'components/Modal/Modal';
 
 interface IBasePageLayout {
 	children: any;
@@ -197,7 +197,7 @@ const BasePageLayout = ({
 		setChooseNetwork(false);
 		if (networkk === ARDOR) {
 			setConnectArdor(true);
-			setNetwork(`${ETHEREUM}`);
+			//setNetwork(`${ETHEREUM}`); not sure why this was needed.
 		} else {
 			return await connectWallet();
 		}
@@ -207,11 +207,10 @@ const BasePageLayout = ({
 	const [chooseNetwork, setChooseNetwork] = useState<boolean>(false);
 	const [networkk, setNetwork] = useState<string>(`${ETHEREUM}`);
 
+
 	return (
 		<div>
-			<section
-				className={`${connectArdor && 'blur-lg'} ${chooseNetwork && 'blur-lg'}`}
-			>
+			<section>
 				{showNavigation && (
 					<>
 						<Toaster position='top-right' />
@@ -238,13 +237,13 @@ const BasePageLayout = ({
 				)}
 			</section>
 
-			<BaseModal isVisible={connectArdor} onClose={setConnectArdor}>
-				<ConnectArdorWallet setConnectArdor={setConnectArdor} />
-			</BaseModal>
-
-			<BaseModal isVisible={chooseNetwork} onClose={setChooseNetwork}>
+			<Modal toggleVisibility={setChooseNetwork} visibility={chooseNetwork}>
 				<ChooseNetwork setNetwork={setNetwork} handleConnect={handleConnect} />
-			</BaseModal>
+			</Modal>
+
+			<Modal visibility={connectArdor} toggleVisibility={setConnectArdor}>
+				<ConnectArdorWallet setConnectArdor={setConnectArdor} />
+			</Modal>
 		</div>
 	);
 };

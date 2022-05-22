@@ -2,6 +2,7 @@ import { ETHEREUM } from 'constants/index';
 import React from 'react';
 import { BsArrowRight } from 'react-icons/bs';
 import { FaSpinner } from 'react-icons/fa';
+import { Dialog } from '@headlessui/react';
 
 interface IShowBidForm {
 	name: string;
@@ -23,9 +24,12 @@ const ShowBidForm = ({
 }: IShowBidForm) => {
 	return (
 		<div className='flex flex-col justify-center items-center'>
-			<h4 className='mb-4 text-base tablet:text-xl font-bold mt-8'>
+			<Dialog.Title
+				as='h4'
+				className='mb-4 text-base tablet:text-xl font-bold mt-8'
+			>
 				Place Bid on {name}
-			</h4>
+			</Dialog.Title>
 			<div>
 				<label>Price in {network === ETHEREUM ? 'ETH' : 'IGNIS'}</label>
 				<input

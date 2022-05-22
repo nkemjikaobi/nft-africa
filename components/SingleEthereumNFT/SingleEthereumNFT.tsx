@@ -16,7 +16,7 @@ import 'moment-timezone';
 import moment from 'moment';
 import ChoiceModal from 'modals/ChoiceModal';
 import { useRouter } from 'next/router';
-import BaseModal from 'components/BaseModal/BaseModal';
+import Modal from 'components/Modal/Modal';
 
 interface ISingleEthereumNFT {
 	singleNft: INFT;
@@ -100,11 +100,7 @@ const SingleEthereumNFT = ({
 	return (
 		<>
 			{singleNft && (
-				<div
-					className={`mt-64 flex flex-col tablet:flex-row items-center tablet:items-start smallLaptop:items-center justify-between mx-40 tablet:mx-10 smallLaptop:mx-40 ${
-						showBidForm && 'blur-lg'
-					} ${choiceModal && 'blur-lg'} ${showMagnified && 'blur-lg'}`}
-				>
+				<div className='mt-64 flex flex-col tablet:flex-row items-center tablet:items-start smallLaptop:items-center justify-between mx-40 tablet:mx-10 smallLaptop:mx-40'>
 					<div className='flex flex-col -mt-16 tablet:mt-0 tablet:mr-0 laptop:mr-16'>
 						<div className='mb-8 tablet:hidden'>
 							<h4 className='font-extrabold text-2xl'>{singleNft.name}</h4>
@@ -223,7 +219,7 @@ const SingleEthereumNFT = ({
 					</div>
 				</div>
 			)}
-			<BaseModal isVisible={showBidForm} onClose={setShowBidForm}>
+			<Modal visibility={showBidForm} toggleVisibility={setShowBidForm}>
 				<ShowBidForm
 					handlePlaceBid={handlePlaceBid}
 					name={singleNft.name}
@@ -233,9 +229,9 @@ const SingleEthereumNFT = ({
 					network={network}
 					tokenId={singleNft.tokenId}
 				/>
-			</BaseModal>
+			</Modal>
 
-			<BaseModal isVisible={choiceModal} onClose={setChoiceModal}>
+			<Modal visibility={choiceModal} toggleVisibility={setChoiceModal}>
 				<ChoiceModal
 					handleEthereumNftSale={handleEthereumNftSale}
 					setChoiceModal={setChoiceModal}
@@ -243,7 +239,7 @@ const SingleEthereumNFT = ({
 					loading={loading}
 					tokenId={singleNft.tokenId}
 				/>
-			</BaseModal>
+			</Modal>
 		</>
 	);
 };
