@@ -262,7 +262,7 @@ const CreateNFT = () => {
 					)}
 				</div>
 			</div>
-			<Modal visibility={finished} toggleVisibility={callBack}>
+			<Modal visibility={finished} callBack={callBack}>
 				<SignArdorTransaction onClose={setFinished} data={ardorMintedData} />
 			</Modal>
 		</BasePageLayout>

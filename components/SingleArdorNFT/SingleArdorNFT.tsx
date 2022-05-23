@@ -186,7 +186,7 @@ const SingleArdorNFT = ({
 					network={network}
 				/>
 			</Modal>
-			<Modal visibility={timeToSign} toggleVisibility={callBack}>
+			<Modal visibility={timeToSign} callBack={callBack}>
 				<SignArdorTransaction
 					onClose={setTimeToSign}
 					data={ardorPlaceOrderData}

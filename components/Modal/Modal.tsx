@@ -1,16 +1,34 @@
 import { Dialog, Transition } from '@headlessui/react';
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
 
 interface IModal {
-	toggleVisibility: Function;
+	toggleVisibility?: Function;
 	visibility: boolean;
 	children: any;
+	callBack?: Function;
 }
 
-const Modal = ({ toggleVisibility, visibility, children }: IModal) => {
+const Modal = ({
+	toggleVisibility,
+	visibility,
+	children,
+	callBack,
+}: IModal) => {
 	const closeModal = () => {
-		toggleVisibility(false);
+		toggleVisibility && toggleVisibility(false);
+		callBack && callBack();
 	};
+
+	useEffect(() => {
+		/**
+		 * Run the close modal function when the component unmounts
+		 */
+		return () => {
+			closeModal();
+		};
+
+		//eslint-disable-next-line
+	}, []);
 
 	return (
 		<>
