@@ -3,8 +3,7 @@ import DesktopFooter from 'components/BasePageLayout/DesktopFooter';
 import DesktopNavigation from 'components/BasePageLayout/DesktopNavigation';
 import MobileFooter from 'components/BasePageLayout/MobileFooter';
 import MobileNavigation from 'components/BasePageLayout/MobileNavigation';
-import { useContext, useEffect } from 'react';
-import AuthContext from 'context/auth/AuthContext';
+import { useEffect } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import ConnectArdorWallet from 'modals/ConnectArdorWallet';
 import ChooseNetwork from 'modals/ChooseNetwork';
@@ -12,6 +11,7 @@ import { useRouter } from 'next/router';
 import { ARDOR, ETHEREUM } from 'constants/index';
 import Modal from 'components/Modal/Modal';
 import useWallet from 'hooks/useWallet';
+import useAuth from 'hooks/useAuth';
 
 interface IBasePageLayout {
 	children: any;
@@ -24,7 +24,6 @@ const BasePageLayout = ({
 	showNavigation,
 	showFooter,
 }: IBasePageLayout) => {
-	const authContext = useContext(AuthContext);
 
 	const router = useRouter();
 
@@ -33,7 +32,7 @@ const BasePageLayout = ({
 		message: authMessage,
 		clearMessage: clearAuthMessage,
 		clearError: clearAuthError,
-	} = authContext;
+	} = useAuth();
 
 	const {
 		connectWallet,

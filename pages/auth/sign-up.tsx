@@ -1,17 +1,17 @@
 import BasePageLayout from 'components/BasePageLayout/BasePageLayout';
 import IRegisterData from 'dto/Auth/IRegisterData';
 import Link from 'next/link';
-import React, { useContext, useEffect, useState } from 'react';
-import toast, { Toaster } from 'react-hot-toast';
+import React, { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import { AiOutlineEye } from 'react-icons/ai';
 import { BsArrowRight } from 'react-icons/bs';
 import { Country, State } from 'country-state-city';
 import ICountry from 'dto/Auth/ICountry';
 import IState from 'dto/Auth/IState';
 import { v4 as uuidv4 } from 'uuid';
-import AuthContext from 'context/auth/AuthContext';
 import { FaSpinner } from 'react-icons/fa';
 import { useRouter } from 'next/router';
+import useAuth from 'hooks/useAuth';
 
 const SignUpPage = () => {
 	const [registerData, setRegisterData] = useState<IRegisterData>({
@@ -29,9 +29,7 @@ const SignUpPage = () => {
 	const [allStates, setAllStates] = useState<Array<IState>>([]);
 	const [loading, setLoading] = useState<boolean>(false);
 
-	const authContext = useContext(AuthContext);
-
-	const { registerUser } = authContext;
+	const { registerUser } = useAuth();
 
 	const router = useRouter();
 
