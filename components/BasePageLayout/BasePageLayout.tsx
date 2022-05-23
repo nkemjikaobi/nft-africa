@@ -4,14 +4,16 @@ import DesktopNavigation from 'components/BasePageLayout/DesktopNavigation';
 import MobileFooter from 'components/BasePageLayout/MobileFooter';
 import MobileNavigation from 'components/BasePageLayout/MobileNavigation';
 import { useEffect } from 'react';
-import toast, { Toaster } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
 import ConnectArdorWallet from 'modals/ConnectArdorWallet';
 import ChooseNetwork from 'modals/ChooseNetwork';
 import { useRouter } from 'next/router';
 import { ARDOR, ETHEREUM } from 'constants/index';
 import Modal from 'components/Modal/Modal';
 import useWallet from 'hooks/useWallet';
-import useAuth from 'hooks/useAuth';
+import useAlert from 'hooks/useAlert';
+import showToast from 'helpers/showToast';
+import IAlert from 'dto/Alert/IAlert';
 
 interface IBasePageLayout {
 	children: any;
@@ -24,22 +26,11 @@ const BasePageLayout = ({
 	showNavigation,
 	showFooter,
 }: IBasePageLayout) => {
-
 	const router = useRouter();
 
-	const {
-		error: authError,
-		message: authMessage,
-		clearMessage: clearAuthMessage,
-		clearError: clearAuthError,
-	} = useAuth();
 
 	const {
 		connectWallet,
-		message,
-		error,
-		clearMessage,
-		clearError,
 		monitorAccountChanged,
 		monitorDisconnect,
 		provider,
@@ -53,6 +44,8 @@ const BasePageLayout = ({
 		network,
 		verifyToken,
 	} = useWallet();
+
+	const { alerts } = useAlert();
 
 	const reconnectWallet = async () => {
 		await connectWallet();
@@ -85,61 +78,18 @@ const BasePageLayout = ({
 		//eslint-disable-next-line
 	}, []);
 
-	//Handle Messages
+	//Handle Notifications
 	useEffect(() => {
 		let mounted = true;
 
-		if (mounted && message !== null) {
-			toast.success(message);
-			setTimeout(() => clearMessage(), 3000);
+		if (mounted && alerts.length > 0) {
+			alerts.map((alert: IAlert) => showToast(alert.message, alert.type));
 		}
 		return () => {
 			mounted = false;
 		};
 		//eslint-disable-next-line
-	}, [message]);
-
-	//Handle Errors
-	useEffect(() => {
-		let mounted = true;
-
-		if (mounted && error !== null) {
-			toast.error(error);
-			setTimeout(() => clearError(), 3000);
-		}
-		return () => {
-			mounted = false;
-		};
-		//eslint-disable-next-line
-	}, [error]);
-
-	//Handle Auth Messages
-	useEffect(() => {
-		let mounted = true;
-
-		if (mounted && authMessage !== null) {
-			toast.success(authMessage);
-			setTimeout(() => clearAuthMessage(), 3000);
-		}
-		return () => {
-			mounted = false;
-		};
-		//eslint-disable-next-line
-	}, [authMessage]);
-
-	//Handle Auth Errors
-	useEffect(() => {
-		let mounted = true;
-
-		if (mounted && authError !== null) {
-			toast.error(authError);
-			setTimeout(() => clearAuthError(), 3000);
-		}
-		return () => {
-			mounted = false;
-		};
-		//eslint-disable-next-line
-	}, [authError]);
+	}, [alerts]);
 
 	//monitior account changed and monitor disconnect
 	useEffect(() => {

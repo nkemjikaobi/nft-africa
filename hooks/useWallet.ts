@@ -9,10 +9,8 @@ import WalletContext from 'context/wallet/WalletContext';
 const useWallet = () => {
 	const {
 		//methods
-		clearError,
 		connectWallet,
 		disconnectWallet,
-		clearMessage,
 		monitorAccountChanged,
 		monitorDisconnect,
 		loadContract,
@@ -39,8 +37,6 @@ const useWallet = () => {
 		address,
 		isConnected,
 		balance,
-		error,
-		message,
 		web3,
 		provider,
 		symbol,
@@ -70,10 +66,8 @@ const useWallet = () => {
 
 	return {
 		//methods
-		clearError,
 		connectWallet,
 		disconnectWallet,
-		clearMessage,
 		monitorAccountChanged,
 		monitorDisconnect,
 		loadContract,
@@ -100,8 +94,6 @@ const useWallet = () => {
 		address,
 		isConnected,
 		balance,
-		error,
-		message,
 		web3,
 		provider,
 		symbol,

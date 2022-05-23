@@ -2,9 +2,6 @@ import { ARDOR, ETHEREUM } from 'constants/index';
 import IArdorNFT from 'dto/NFT/IArdorNFT';
 import {
 	CONNECT_WALLET,
-	ERROR,
-	CLEAR_ERROR,
-	CLEAR_MESSAGE,
 	DISCONNECT_WALLET,
 	MONITOR_ACCOUNT_CHANGED,
 	MONITOR_DISCONNECT,
@@ -25,21 +22,17 @@ import {
 	PLACE_ARDOR_BID,
 	FETCH_ARDOR_PERSONAL_ASSETS,
 	FETCH_AUCTIONED_NFTS,
-	PLACE_ETHEREUM_BID,
-	SELL_ETHEREUM_NFT,
 	FETCH_ETHEREUM_PERSONAL_ASSETS,
 } from '../types';
 
 const WalletReducer = (state: any, action: any) => {
 	switch (action.type) {
 		case CONNECT_WALLET:
-			const count = localStorage.getItem('count');
 			return {
 				...state,
 				address: action.payload.accounts[0],
 				isConnected: true,
 				balance: action.payload.balance,
-				message: count !== '1' ? 'Wallet connected' : null,
 				web3: action.payload.web3,
 				web3Modal: action.payload.web3Modal,
 				providerOptions: action.payload.providerOptions,
@@ -64,7 +57,6 @@ const WalletReducer = (state: any, action: any) => {
 		case CREATE_NFT:
 			return {
 				...state,
-				message: 'NFT Minted and Created',
 			};
 		case FETCH_ALL_NFTS:
 			return {
@@ -75,16 +67,6 @@ const WalletReducer = (state: any, action: any) => {
 			return {
 				...state,
 				auctionedNfts: action.payload,
-			};
-		case PLACE_ETHEREUM_BID:
-			return {
-				...state,
-				message: 'Bid Placed',
-			};
-		case SELL_ETHEREUM_NFT:
-			return {
-				...state,
-				message: 'Asset sold',
 			};
 		case FETCH_SINGLE_NFT:
 			return {
@@ -102,7 +84,6 @@ const WalletReducer = (state: any, action: any) => {
 				address: null,
 				isConnected: false,
 				balance: '',
-				message: 'Wallet Disconnected',
 				web3: null,
 				web3Modal: null,
 				providerOptions: null,
@@ -115,7 +96,6 @@ const WalletReducer = (state: any, action: any) => {
 				address: null,
 				isConnected: false,
 				balance: '',
-				message: 'Wallet Disconnected',
 				isGuest: true,
 				qrCodeUrl: '',
 				qrCodeId: '',
@@ -126,7 +106,6 @@ const WalletReducer = (state: any, action: any) => {
 		case MONITOR_DISCONNECT:
 			return {
 				...state,
-				error: action.payload,
 				isConnected: false,
 				balance: '',
 				address: null,
@@ -138,21 +117,6 @@ const WalletReducer = (state: any, action: any) => {
 				address: null,
 				isConnected: false,
 				balance: '',
-			};
-		case ERROR:
-			return {
-				...state,
-				error: action.payload,
-			};
-		case CLEAR_ERROR:
-			return {
-				...state,
-				error: null,
-			};
-		case CLEAR_MESSAGE:
-			return {
-				...state,
-				message: null,
 			};
 		//ARDOR
 		case GENERATE_AUTH:
@@ -173,7 +137,6 @@ const WalletReducer = (state: any, action: any) => {
 			return {
 				...state,
 				ardorUserData: action.payload.result,
-				message: count1 !== '1' ? 'Wallet connected' : null,
 				isConnected: true,
 				address: action.payload.result.accountRS,
 				network: ARDOR,
@@ -197,7 +160,6 @@ const WalletReducer = (state: any, action: any) => {
 			return {
 				...state,
 				ardorMintedData: action.payload,
-				message: 'Asset Issued',
 			};
 		case RESET_NFT_ITEM:
 			return {
@@ -213,7 +175,6 @@ const WalletReducer = (state: any, action: any) => {
 		case PLACE_ARDOR_BID:
 			return {
 				...state,
-				message: action.payload.msg,
 				ardorPlaceOrderData: action.payload,
 			};
 		case FETCH_ARDOR_PERSONAL_ASSETS:

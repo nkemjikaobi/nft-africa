@@ -10,31 +10,23 @@ const useAuth = () => {
 	const {
 		//methods
 		registerUser,
-		clearError,
-		clearMessage,
 
 		//state variables
 		token,
 		isAuthenticated,
 		loading,
 		user,
-		error,
-		message,
 	} = useContext(AuthContext);
 
 	return {
 		//methods
 		registerUser,
-		clearError,
-		clearMessage,
 
 		//state variables
 		token,
 		isAuthenticated,
 		loading,
 		user,
-		error,
-		message,
 	};
 };
 

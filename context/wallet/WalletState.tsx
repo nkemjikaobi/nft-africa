@@ -3,9 +3,6 @@ import WalletContext from './WalletContext';
 import WalletReducer from './WalletReducer';
 import {
 	CONNECT_WALLET,
-	ERROR,
-	CLEAR_ERROR,
-	CLEAR_MESSAGE,
 	DISCONNECT_WALLET,
 	MONITOR_ACCOUNT_CHANGED,
 	MONITOR_DISCONNECT,
@@ -27,8 +24,6 @@ import {
 	FETCH_ARDOR_PERSONAL_ASSETS,
 	FETCH_ETHEREUM_PERSONAL_ASSETS,
 	FETCH_AUCTIONED_NFTS,
-	PLACE_ETHEREUM_BID,
-	SELL_ETHEREUM_NFT,
 } from '../types';
 import Web3 from 'web3';
 import Web3Modal from 'web3modal';
@@ -38,7 +33,8 @@ import axios from 'axios';
 import convertToEther from 'helpers/convertToEther';
 import { NextRouter } from 'next/router';
 import INFT from 'dto/NFT/INFT';
-import { ARDOR, ETHEREUM } from 'constants/index';
+import { ARDOR, ETHEREUM, NotificationType } from 'constants/index';
+import useAlert from 'hooks/useAlert';
 
 const WalletState = (props: any) => {
 	const initialState = {
@@ -46,8 +42,6 @@ const WalletState = (props: any) => {
 		isConnected: false,
 		isGuest: true,
 		balance: '',
-		error: null,
-		message: null,
 		web3: null,
 		provider: null,
 		symbol: '',
@@ -76,6 +70,8 @@ const WalletState = (props: any) => {
 	};
 
 	const [state, dispatch] = useReducer(WalletReducer, initialState);
+
+	const { setAlert } = useAlert();
 
 	//Connect Wallet on Ethereum Network
 	const connectWallet = async () => {
@@ -107,10 +103,7 @@ const WalletState = (props: any) => {
 				let balance;
 				await web3.eth.getBalance(`${accounts[0]}`, function (err, result) {
 					if (err) {
-						dispatch({
-							type: ERROR,
-							payload: err.message,
-						});
+						setAlert(err.message, NotificationType.ERROR);
 					} else {
 						balance = convertToEther(web3, result);
 					}
@@ -129,12 +122,16 @@ const WalletState = (props: any) => {
 				localStorage.setItem('isWalletConnected', 'true');
 				localStorage.setItem('count', '1');
 				localStorage.setItem('network', ETHEREUM);
+
+				const count = localStorage.getItem('count');
+
+				// count !== '1'
+				// 	? setAlert('Wallet Connected', NotificationType.SUCCESS)
+				// 	: null;
+				setAlert('wallet connected', NotificationType.SUCCESS);
 			}
 		} catch (error) {
-			dispatch({
-				type: ERROR,
-				payload: (error as Error).message,
-			});
+			setAlert((error as Error).message, NotificationType.ERROR);
 		}
 	};
 
@@ -155,10 +152,7 @@ const WalletState = (props: any) => {
 				},
 			});
 		} catch (error) {
-			dispatch({
-				type: ERROR,
-				payload: (error as Error).message,
-			});
+			setAlert((error as Error).message, NotificationType.ERROR);
 		}
 	};
 
@@ -189,10 +183,7 @@ const WalletState = (props: any) => {
 				payload: data,
 			});
 		} catch (error) {
-			dispatch({
-				type: ERROR,
-				payload: (error as Error).message,
-			});
+			setAlert((error as Error).message, NotificationType.ERROR);
 		}
 	};
 
@@ -231,10 +222,7 @@ const WalletState = (props: any) => {
 				payload: data,
 			});
 		} catch (error) {
-			dispatch({
-				type: ERROR,
-				payload: (error as Error).message,
-			});
+			setAlert((error as Error).message, NotificationType.ERROR);
 		}
 	};
 
@@ -269,10 +257,7 @@ const WalletState = (props: any) => {
 				payload: singleNft[0],
 			});
 		} catch (error) {
-			dispatch({
-				type: ERROR,
-				payload: (error as Error).message,
-			});
+			setAlert((error as Error).message, NotificationType.ERROR);
 		}
 	};
 
@@ -297,14 +282,14 @@ const WalletState = (props: any) => {
 			dispatch({
 				type: CREATE_NFT,
 			});
+
+			setAlert('NFT Minted and Created', NotificationType.SUCCESS);
+
 			setTimeout(() => {
 				router.push('/');
 			}, 1500);
 		} catch (error) {
-			dispatch({
-				type: ERROR,
-				payload: (error as Error).message,
-			});
+			setAlert((error as Error).message, NotificationType.ERROR);
 		}
 	};
 
@@ -344,10 +329,7 @@ const WalletState = (props: any) => {
 				payload: data,
 			});
 		} catch (error) {
-			dispatch({
-				type: ERROR,
-				payload: (error as Error).message,
-			});
+			setAlert((error as Error).message, NotificationType.ERROR);
 		}
 	};
 
@@ -366,14 +348,9 @@ const WalletState = (props: any) => {
 
 			await fetchSingleNft(contract, tokenId);
 
-			dispatch({
-				type: PLACE_ETHEREUM_BID,
-			});
+			setAlert('Bid Placed', NotificationType.SUCCESS);
 		} catch (error) {
-			dispatch({
-				type: ERROR,
-				payload: (error as Error).message,
-			});
+			setAlert((error as Error).message, NotificationType.ERROR);
 		}
 	};
 
@@ -389,15 +366,10 @@ const WalletState = (props: any) => {
 				from: address,
 			});
 
-			dispatch({
-				type: SELL_ETHEREUM_NFT,
-			});
+			setAlert('Asset Sold', NotificationType.SUCCESS);
 			router.push('/');
 		} catch (error) {
-			dispatch({
-				type: ERROR,
-				payload: (error as Error).message,
-			});
+			setAlert((error as Error).message, NotificationType.ERROR);
 		}
 	};
 
@@ -414,25 +386,8 @@ const WalletState = (props: any) => {
 				payload: contract,
 			});
 		} catch (error) {
-			dispatch({
-				type: ERROR,
-				payload: (error as Error).message,
-			});
+			setAlert((error as Error).message, NotificationType.ERROR);
 		}
-	};
-
-	//Clear Error
-	const clearError = () => {
-		dispatch({
-			type: CLEAR_ERROR,
-		});
-	};
-
-	//Clear Message
-	const clearMessage = () => {
-		dispatch({
-			type: CLEAR_MESSAGE,
-		});
 	};
 
 	//Disconnect wallet
@@ -447,6 +402,7 @@ const WalletState = (props: any) => {
 				type: DISCONNECT_ARDOR_WALLET,
 			});
 		}
+		setAlert('Wallet Disconnected', NotificationType.SUCCESS);
 		localStorage.removeItem('isWalletConnected');
 		localStorage.removeItem('count');
 		localStorage.removeItem('network');
@@ -461,10 +417,10 @@ const WalletState = (props: any) => {
 		provider.on('disconnect', (code: number, reason: string) => {
 			dispatch({
 				type: MONITOR_DISCONNECT,
-				payload: reason,
 			});
 			localStorage.removeItem('isWalletConnected');
 			localStorage.removeItem('count');
+			setAlert(reason, NotificationType.ERROR);
 		});
 	};
 	//Monitor account changed
@@ -532,12 +488,15 @@ const WalletState = (props: any) => {
 				localStorage.setItem('network', ARDOR);
 				localStorage.setItem('qrCodeId', qrCodeId);
 				localStorage.setItem('ardorToken', ardorToken);
+
+				const count = localStorage.getItem('count');
+
+				count !== '1'
+					? setAlert('Wallet Connected', NotificationType.SUCCESS)
+					: null;
 			}
 		} catch (error) {
-			dispatch({
-				type: ERROR,
-				payload: 'Token is invalid',
-			});
+			setAlert('Token is invalid', NotificationType.ERROR);
 		}
 	};
 
@@ -564,11 +523,12 @@ const WalletState = (props: any) => {
 				`${process.env.NEXT_PUBLIC_ARDOR_BASE_URL}/api/nftart/mint`,
 				{ cid, name, quantity, account }
 			);
-			console.log(res);
 			dispatch({
 				type: MINT_ARDOR_NFT,
 				payload: res.data.data,
 			});
+
+			setAlert('Asset Issued', NotificationType.SUCCESS);
 		} catch (error) {}
 	};
 
@@ -614,6 +574,7 @@ const WalletState = (props: any) => {
 				type: PLACE_ARDOR_BID,
 				payload: res.data.data,
 			});
+			setAlert(res.data.data.msg, NotificationType.SUCCESS);
 		} catch (error) {}
 	};
 
@@ -637,8 +598,6 @@ const WalletState = (props: any) => {
 				address: state.address,
 				isConnected: state.isConnected,
 				balance: state.balance,
-				error: state.error,
-				message: state.message,
 				web3: state.web3,
 				provider: state.provider,
 				symbol: state.symbol,
@@ -664,10 +623,8 @@ const WalletState = (props: any) => {
 				ardorPlaceOrderData: state.ardorPlaceOrderData,
 				ardorPersonalAssets: state.ardorPersonalAssets,
 				ethereumPersonalAssets: state.ethereumPersonalAssets,
-				clearError,
 				connectWallet,
 				disconnectWallet,
-				clearMessage,
 				monitorAccountChanged,
 				monitorDisconnect,
 				loadContract,

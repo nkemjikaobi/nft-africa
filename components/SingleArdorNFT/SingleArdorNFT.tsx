@@ -7,7 +7,7 @@ import formatArdorImageUrl from 'helpers/formatArdorImageUrl';
 import axios from 'axios';
 import Bids from 'components/Bids/Bids';
 import ShowBidForm from 'modals/ShowBidForm';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import SignArdorTransaction from 'components/SignArdorTransaction/SignArdorTransaction';
 import addArdorZeroes from 'helpers/addArdorZeroes';
 import IArdorNFT from 'dto/NFT/IArdorNFT';
@@ -93,7 +93,6 @@ const SingleArdorNFT = ({
 		<>
 			{singleNft && imageCID !== '' && (
 				<div className='mt-64 flex flex-col tablet:flex-row items-center tablet:items-start smallLaptop:items-center justify-between mx-40 tablet:mx-10 smallLaptop:mx-40'>
-					<Toaster position='top-right' />
 					<div className='flex flex-col -mt-16 w-[500%] tablet:w-[70%] tablet:mt-0 tablet:mr-0 laptop:mr-16'>
 						<div className='mb-8 tablet:hidden'>
 							<h4 className='font-extrabold text-2xl'>{singleNft.name}</h4>

@@ -2,7 +2,7 @@ import BasePageLayout from 'components/BasePageLayout/BasePageLayout';
 import React, { useEffect, useState } from 'react';
 import { BsArrowRight } from 'react-icons/bs';
 import * as ipfsClient from 'ipfs-http-client';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import { BsImageFill } from 'react-icons/bs';
 import { FaSpinner } from 'react-icons/fa';
 import { AiOutlineClose } from 'react-icons/ai';
@@ -125,7 +125,6 @@ const CreateNFT = () => {
 			<div
 				className='tablet:container tablet:w-600 text-center mb-32'
 			>
-				<Toaster position='top-right' />
 				<h1 className='uppercase text-2xl tablet:text-5xl font-extrabold mb-8 mt-64'>
 					Create NFT
 				</h1>
