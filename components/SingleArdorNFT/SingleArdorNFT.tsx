@@ -102,7 +102,7 @@ const SingleArdorNFT = ({
 							alt={singleNft.name}
 							width={500}
 							height={500}
-							className='cursor-pointer'
+							className='cursor-zoom-in'
 							onClick={() => setShowMagnified(true)}
 							placeholder='blur'
 							blurDataURL={`${BLUR_DATA_URL}`}
