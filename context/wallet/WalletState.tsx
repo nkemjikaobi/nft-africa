@@ -125,10 +125,9 @@ const WalletState = (props: any) => {
 
 				const count = localStorage.getItem('count');
 
-				// count !== '1'
-				// 	? setAlert('Wallet Connected', NotificationType.SUCCESS)
-				// 	: null;
-				setAlert('wallet connected', NotificationType.SUCCESS);
+				count !== '1'
+					? setAlert('Wallet Connected', NotificationType.SUCCESS)
+					: null;
 			}
 		} catch (error) {
 			setAlert((error as Error).message, NotificationType.ERROR);

@@ -25,6 +25,7 @@ const Modal = ({
 		 */
 		return () => {
 			closeModal();
+			
 		};
 
 		//eslint-disable-next-line

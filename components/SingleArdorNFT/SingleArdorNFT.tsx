@@ -81,7 +81,9 @@ const SingleArdorNFT = ({
 	const handlePlaceBid = async () => {
 		await placeArdorBid(singleNft.asset, 1, addArdorZeroes(price), address);
 		setShowBidForm(false);
-		setTimeToSign(true);
+		setTimeout(() => {
+			setTimeToSign(true);
+		}, 1000);
 	};
 
 	const callBack = () => {

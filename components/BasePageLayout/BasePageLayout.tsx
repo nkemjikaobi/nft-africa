@@ -28,7 +28,6 @@ const BasePageLayout = ({
 }: IBasePageLayout) => {
 	const router = useRouter();
 
-
 	const {
 		connectWallet,
 		monitorAccountChanged,
@@ -44,6 +43,10 @@ const BasePageLayout = ({
 		network,
 		verifyToken,
 	} = useWallet();
+
+	const [connectArdor, setConnectArdor] = useState<boolean>(false);
+	const [chooseNetwork, setChooseNetwork] = useState<boolean>(false);
+	const [networkk, setNetwork] = useState<string>(`${ETHEREUM}`);
 
 	const { alerts } = useAlert();
 
@@ -144,16 +147,14 @@ const BasePageLayout = ({
 	const handleConnect = async () => {
 		setChooseNetwork(false);
 		if (networkk === ARDOR) {
-			setConnectArdor(true);
+			setTimeout(() => {
+				setConnectArdor(true);
+			}, 1000);
 			//setNetwork(`${ETHEREUM}`); not sure why this was needed.
 		} else {
 			return await connectWallet();
 		}
 	};
-
-	const [connectArdor, setConnectArdor] = useState<boolean>(false);
-	const [chooseNetwork, setChooseNetwork] = useState<boolean>(false);
-	const [networkk, setNetwork] = useState<string>(`${ETHEREUM}`);
 
 	return (
 		<div>

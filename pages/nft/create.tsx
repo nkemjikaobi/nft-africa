@@ -106,7 +106,9 @@ const CreateNFT = () => {
 			await handleEthereumMint(url);
 		} else {
 			await mintArdorNft(res.path, name, 1, address);
-			setFinished(true);
+			setTimeout(() => {
+				setFinished(true);
+			}, 1000);
 			setLoading(false);
 		}
 	};
@@ -122,9 +124,7 @@ const CreateNFT = () => {
 	}, [finished]);
 	return (
 		<BasePageLayout>
-			<div
-				className='tablet:container tablet:w-600 text-center mb-32'
-			>
+			<div className='tablet:container tablet:w-600 text-center mb-32'>
 				<h1 className='uppercase text-2xl tablet:text-5xl font-extrabold mb-8 mt-64'>
 					Create NFT
 				</h1>
