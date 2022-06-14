@@ -32,6 +32,8 @@ const useWallet = () => {
 		placeEthereumBid,
 		sellEthereumNft,
 		fetchEthereumPersonalAssets,
+		getLocation,
+		addLocation,
 
 		//state variables
 		address,
@@ -62,6 +64,8 @@ const useWallet = () => {
 		ardorPlaceOrderData,
 		ardorPersonalAssets,
 		ethereumPersonalAssets,
+		location,
+		showLocationModal,
 	} = useContext(WalletContext);
 
 	return {
@@ -89,6 +93,8 @@ const useWallet = () => {
 		placeEthereumBid,
 		sellEthereumNft,
 		fetchEthereumPersonalAssets,
+		getLocation,
+		addLocation,
 
 		//state variables
 		address,
@@ -119,6 +125,8 @@ const useWallet = () => {
 		ardorPlaceOrderData,
 		ardorPersonalAssets,
 		ethereumPersonalAssets,
+		location,
+		showLocationModal,
 	};
 };
 

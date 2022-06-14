@@ -42,6 +42,7 @@ const SingleArdorNFT = ({
 		placeArdorBid,
 		ardorPlaceOrderData,
 		network,
+		location
 	} = useWallet();
 
 	const fetchImage = async (cid: string) => {
@@ -79,6 +80,11 @@ const SingleArdorNFT = ({
 	};
 
 	const handlePlaceBid = async () => {
+		if (!location) {
+			return toast.error(
+				'No location detected...Refresh the page and wait for the prompt'
+			);
+		}
 		await placeArdorBid(singleNft.asset, 1, addArdorZeroes(price), address);
 		setShowBidForm(false);
 		setTimeout(() => {

@@ -23,6 +23,7 @@ import {
 	FETCH_ARDOR_PERSONAL_ASSETS,
 	FETCH_AUCTIONED_NFTS,
 	FETCH_ETHEREUM_PERSONAL_ASSETS,
+	GET_LOCATION,
 } from '../types';
 
 const WalletReducer = (state: any, action: any) => {
@@ -89,6 +90,8 @@ const WalletReducer = (state: any, action: any) => {
 				providerOptions: null,
 				provider: null,
 				isGuest: true,
+				location: '',
+				showLocationModal: false,
 			};
 		case DISCONNECT_ARDOR_WALLET:
 			return {
@@ -102,6 +105,8 @@ const WalletReducer = (state: any, action: any) => {
 				hasGeneratedQrCodeUrl: false,
 				ardorToken: '',
 				ardorUserData: null,
+				location: '',
+				showLocationModal: false,
 			};
 		case MONITOR_DISCONNECT:
 			return {
@@ -110,6 +115,8 @@ const WalletReducer = (state: any, action: any) => {
 				balance: '',
 				address: null,
 				isGuest: true,
+				location: '',
+				showLocationModal: false,
 			};
 		case MONITOR_ACCOUNT_CHANGED:
 			return {
@@ -117,6 +124,8 @@ const WalletReducer = (state: any, action: any) => {
 				address: null,
 				isConnected: false,
 				balance: '',
+				location: '',
+				showLocationModal: false,
 			};
 		//ARDOR
 		case GENERATE_AUTH:
@@ -181,6 +190,16 @@ const WalletReducer = (state: any, action: any) => {
 			return {
 				...state,
 				ardorPersonalAssets: action.payload,
+			};
+		case GET_LOCATION:
+			return {
+				...state,
+				location:
+					action.payload && action.payload.location
+						? action.payload.location
+						: '',
+				showLocationModal:
+					action.payload && action.payload.location ? false : true,
 			};
 		default:
 			return state;

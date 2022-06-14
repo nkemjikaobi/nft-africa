@@ -36,3 +36,7 @@ export const LOGIN_FAIL = 'LOGIN_FAIL';
 //For Alerts
 export const SET_ALERT = 'SET_ALERT';
 export const REMOVE_ALERT = 'REMOVE_ALERT';
+
+//For Location
+export const GET_LOCATION = 'GET_LOCATION';
+export const ADD_LOCATION = 'ADD_LOCATION';

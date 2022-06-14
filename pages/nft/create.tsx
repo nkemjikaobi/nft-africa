@@ -38,6 +38,7 @@ const CreateNFT = () => {
 		createNft,
 		isConnected,
 		network,
+		location,
 		ardorMintedData,
 	} = useWallet();
 
@@ -76,6 +77,7 @@ const CreateNFT = () => {
 				listingPrice,
 				address,
 				Math.floor(endDateTime / 1000),
+				location,
 				router
 			);
 			setLoading(false);
@@ -87,6 +89,11 @@ const CreateNFT = () => {
 	const handleSubmit = async () => {
 		if (!isConnected) {
 			return toast.error('Connect Wallet');
+		}
+		if (!location) {
+			return toast.error(
+				'No location detected...Refresh the page and wait for the prompt'
+			);
 		}
 		if (
 			name === '' ||

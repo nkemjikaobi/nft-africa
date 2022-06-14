@@ -19,18 +19,6 @@ const Modal = ({
 		callBack && callBack();
 	};
 
-	useEffect(() => {
-		/**
-		 * Run the close modal function when the component unmounts
-		 */
-		return () => {
-			closeModal();
-			
-		};
-
-		//eslint-disable-next-line
-	}, []);
-
 	return (
 		<>
 			<Transition appear show={visibility} as={Fragment}>

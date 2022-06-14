@@ -30,7 +30,6 @@ const SingleEthereumNFT = ({
 	setShowMagnified,
 	time,
 }: ISingleEthereumNFT) => {
-
 	const {
 		web3,
 		isGuest,
@@ -40,6 +39,7 @@ const SingleEthereumNFT = ({
 		guestWeb3,
 		placeEthereumBid,
 		sellEthereumNft,
+		location,
 	} = useWallet();
 
 	const [loading, setLoading] = useState<boolean>(false);
@@ -80,6 +80,11 @@ const SingleEthereumNFT = ({
 	};
 
 	const handleEthereumNftSale = async (id: string) => {
+		if (!location) {
+			return toast.error(
+				'No location detected...Refresh the page and wait for the prompt'
+			);
+		}
 		setLoading(true);
 		await sellEthereumNft(contract, id, address, router);
 		setLoading(false);

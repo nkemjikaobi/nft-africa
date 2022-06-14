@@ -14,6 +14,7 @@ import useWallet from 'hooks/useWallet';
 import useAlert from 'hooks/useAlert';
 import showToast from 'helpers/showToast';
 import IAlert from 'dto/Alert/IAlert';
+import ChooseCountry from 'modals/ChooseCountry';
 
 interface IBasePageLayout {
 	children: any;
@@ -42,11 +43,18 @@ const BasePageLayout = ({
 		web3Modal,
 		network,
 		verifyToken,
+		location,
+		getLocation,
+		address,
+		addLocation,
+		showLocationModal,
 	} = useWallet();
 
 	const [connectArdor, setConnectArdor] = useState<boolean>(false);
 	const [chooseNetwork, setChooseNetwork] = useState<boolean>(false);
+	const [checkCountry, setCheckCountry] = useState<boolean>(false);
 	const [networkk, setNetwork] = useState<string>(`${ETHEREUM}`);
+	const [country, setCountry] = useState<string>('');
 
 	const { alerts } = useAlert();
 
@@ -80,6 +88,18 @@ const BasePageLayout = ({
 		};
 		//eslint-disable-next-line
 	}, []);
+
+	useEffect(() => {
+		let mounted = true;
+
+		if (mounted && address !== null && location === '') {
+			getLocation(address);
+		}
+		return () => {
+			mounted = false;
+		};
+		//eslint-disable-next-line
+	}, [address, location]);
 
 	//Handle Notifications
 	useEffect(() => {
@@ -156,6 +176,10 @@ const BasePageLayout = ({
 		}
 	};
 
+	const handleCountry = () => {
+		showLocationModal ? setCheckCountry(true) : setCheckCountry(false);
+	};
+
 	return (
 		<div>
 			<section>
@@ -187,6 +211,16 @@ const BasePageLayout = ({
 
 			<Modal toggleVisibility={setChooseNetwork} visibility={chooseNetwork}>
 				<ChooseNetwork setNetwork={setNetwork} handleConnect={handleConnect} />
+			</Modal>
+
+			<Modal callBack={handleCountry} visibility={showLocationModal}>
+				<ChooseCountry
+					setCountry={setCountry}
+					addLocation={addLocation}
+					country={country}
+					address={address}
+					setCheckCountry={setCheckCountry}
+				/>
 			</Modal>
 
 			<Modal visibility={connectArdor} toggleVisibility={setConnectArdor}>

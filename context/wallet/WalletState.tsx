@@ -24,6 +24,7 @@ import {
 	FETCH_ARDOR_PERSONAL_ASSETS,
 	FETCH_ETHEREUM_PERSONAL_ASSETS,
 	FETCH_AUCTIONED_NFTS,
+	GET_LOCATION,
 } from '../types';
 import Web3 from 'web3';
 import Web3Modal from 'web3modal';
@@ -67,6 +68,8 @@ const WalletState = (props: any) => {
 		ardorPlaceOrderData: null,
 		ardorPersonalAssets: null,
 		ethereumPersonalAssets: null,
+		location: '',
+		showLocationModal: false,
 	};
 
 	const [state, dispatch] = useReducer(WalletReducer, initialState);
@@ -268,11 +271,12 @@ const WalletState = (props: any) => {
 		listingPrice: string,
 		address: string,
 		duration: number,
+		location: string,
 		router: NextRouter
 	) => {
 		try {
 			await contract.methods
-				.createToken(finalUrl, duration, auctionPrice)
+				.createToken(finalUrl, duration, auctionPrice, location)
 				.send({
 					from: address,
 					value: listingPrice,
@@ -591,6 +595,30 @@ const WalletState = (props: any) => {
 		} catch (error) {}
 	};
 
+	//Get user location
+	const getLocation = async (address: string) => {
+		try {
+			const res = await axios.get(
+				`${process.env.NEXT_PUBLIC_ARDOR_BASE_URL}/api/auth/get-location?address=${address}`
+			);
+			dispatch({
+				type: GET_LOCATION,
+				payload: res.data.data,
+			});
+		} catch (error) {}
+	};
+	//Add location for a user
+	const addLocation = async (user_address: string, location: string) => {
+		try {
+			await axios.post(
+				`${process.env.NEXT_PUBLIC_ARDOR_BASE_URL}/api/auth/log-address`,
+				{ user_address, location }
+			);
+			setAlert('Location updated', NotificationType.SUCCESS);
+			getLocation(user_address);
+		} catch (error) {}
+	};
+
 	return (
 		<WalletContext.Provider
 			value={{
@@ -622,6 +650,8 @@ const WalletState = (props: any) => {
 				ardorPlaceOrderData: state.ardorPlaceOrderData,
 				ardorPersonalAssets: state.ardorPersonalAssets,
 				ethereumPersonalAssets: state.ethereumPersonalAssets,
+				location: state.location,
+				showLocationModal: state.showLocationModal,
 				connectWallet,
 				disconnectWallet,
 				monitorAccountChanged,
@@ -645,6 +675,8 @@ const WalletState = (props: any) => {
 				placeEthereumBid,
 				sellEthereumNft,
 				fetchEthereumPersonalAssets,
+				getLocation,
+				addLocation,
 			}}
 		>
 			{props.children}

@@ -141,6 +141,12 @@
 				"internalType": "address[]",
 				"name": "users",
 				"type": "address[]"
+			},
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "location",
+				"type": "string"
 			}
 		],
 		"name": "AuctionCreated",
@@ -209,6 +215,12 @@
 				"internalType": "bool",
 				"name": "sold",
 				"type": "bool"
+			},
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "location",
+				"type": "string"
 			}
 		],
 		"name": "MarketItemCreated",
@@ -316,6 +328,11 @@
 				"internalType": "uint128",
 				"name": "_price",
 				"type": "uint128"
+			},
+			{
+				"internalType": "string",
+				"name": "location",
+				"type": "string"
 			}
 		],
 		"name": "createToken",
@@ -397,6 +414,11 @@
 						"internalType": "address[]",
 						"name": "users",
 						"type": "address[]"
+					},
+					{
+						"internalType": "string",
+						"name": "location",
+						"type": "string"
 					}
 				],
 				"internalType": "struct NFTMarket.auction[]",
@@ -437,6 +459,11 @@
 						"internalType": "bool",
 						"name": "sold",
 						"type": "bool"
+					},
+					{
+						"internalType": "string",
+						"name": "location",
+						"type": "string"
 					}
 				],
 				"internalType": "struct NFTMarket.marketItems[]",
@@ -526,6 +553,11 @@
 				"internalType": "bool",
 				"name": "sold",
 				"type": "bool"
+			},
+			{
+				"internalType": "string",
+				"name": "location",
+				"type": "string"
 			}
 		],
 		"stateMutability": "view",
@@ -774,6 +806,11 @@
 				"internalType": "bool",
 				"name": "isActive",
 				"type": "bool"
+			},
+			{
+				"internalType": "string",
+				"name": "location",
+				"type": "string"
 			}
 		],
 		"stateMutability": "view",
